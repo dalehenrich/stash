@@ -1,0 +1,17 @@
+RwComponentLoadConfiguration {
+	#name : 'Main',
+	#comment : '',
+	#projectName : 'stash',
+	#version : '0.1.0',
+	#conditionalPackages : {
+		[
+			'common'
+		] : {
+			'core' : {
+				#packageNames : [
+					'stash-Core'
+				]
+			}
+		}
+	}
+}
