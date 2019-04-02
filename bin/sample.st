@@ -4,7 +4,7 @@ Example executable script
 "
 Class {
      #name : 'ExampleScript',
-     #superclass : 'Script',
+     #superclass : 'StashScript',
      #category : 'Examples'
 }
 
