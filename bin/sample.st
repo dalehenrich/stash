@@ -8,14 +8,8 @@ Class {
      #category : 'Examples'
 }
 
-{ #category : 'installing' }
-ExampleScript class >> doInstall: projectName [
-
-     "do what it takes to install the named project"
-]
-
 { #category : 'launching' }
-ExampleScript class >> launch: launcher command: command [
+ExampleScript class >> executeCommand: command [
      | opts args projectName |
      "for help: ./configSpec -h"
      command
@@ -29,7 +23,7 @@ ExampleScript class >> launch: launcher command: command [
      projectName := args at: 1.
      opts
           at: 'help'
-          ifPresent: [ self usage: launcher ]
+          ifPresent: [ self usage ]
           ifAbsent: [
                opts at: 'install' ifPresent: [:installArg |
                     self doInstall: projectName ].
