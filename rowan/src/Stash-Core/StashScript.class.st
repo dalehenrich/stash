@@ -10,6 +10,12 @@ Class {
 	#category : 'Stash-Core'
 }
 
+{ #category : 'initialization' }
+StashScript class >> initialize [
+
+	Globals addAssociation: (UserGlobals associationAt: self theNonMetaClass name asSymbol)
+]
+
 { #category : 'instance creation' }
 StashScript class >> stashFilePath: stashFilePath topazArgs: topazArgs stashArgs: stashArgs workingDir: workingDir [
 
