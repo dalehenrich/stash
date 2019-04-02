@@ -1,4 +1,4 @@
-RwComponentSpecification {
+RwSimpleProjectSpecification {
 	#specName : 'stash',
 	#version : '0.3.0',
 	#projectUrl : 'https://github.com/dalehenrich/stash',
@@ -16,6 +16,5 @@ RwComponentSpecification {
 	],
 	#defaultGroupNames : [
 		'core'
-	],
-	#projectsPath : 'rowan/projects'
+	]
 }
