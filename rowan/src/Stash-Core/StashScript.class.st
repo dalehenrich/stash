@@ -3,22 +3,34 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'stashFile',
-		'topazArgString',
-		'stashArgString',
-		'workingDirectoryPath'
+		'topazArgs',
+		'stashArgs',
+		'workingDirectory'
 	],
 	#category : 'Stash-Core'
 }
 
 { #category : 'instance creation' }
-StashScript class >> stashFile: stashFile topazArgs: topazArgs stashArgs: stashArgs workingDir: workingDir [
+StashScript class >> stashFilePath: stashFilePath topazArgs: topazArgs stashArgs: stashArgs workingDir: workingDir [
 
 	^ self new
-		stashFile: stashFile;
+		stashFilePath: stashFilePath;
 		topazArgString: topazArgs; 
 		stashArgString: stashArgs; 
 		workingDirectoryPath: workingDir;
 		yourself
+]
+
+{ #category : 'script utilities' }
+StashScript >> basename [
+
+	^ self scriptFile basename
+]
+
+{ #category : 'script utilities' }
+StashScript >> dirname [
+
+	^ self scriptFile parent
 ]
 
 { #category : 'script execution' }
@@ -26,15 +38,15 @@ StashScript >> executeScript [
 ]
 
 { #category : 'accessing' }
-StashScript >> stashArgString [
+StashScript >> stashArgs [
 
-	^ stashArgString
+	^ stashArgs
 ]
 
 { #category : 'accessing' }
 StashScript >> stashArgString: aString [
 
-	stashArgString := aString
+	stashArgs := aString
 ]
 
 { #category : 'accessing' }
@@ -44,31 +56,31 @@ StashScript >> stashFile [
 ]
 
 { #category : 'accessing' }
-StashScript >> stashFile: aString [
+StashScript >> stashFilePath: aString [
 
-	stashFile := aString
+	stashFile := aString asFileReference
 ]
 
 { #category : 'accessing' }
-StashScript >> topazArgString [
+StashScript >> topazArgs [
 
-	^topazArgString
+	^topazArgs
 ]
 
 { #category : 'accessing' }
 StashScript >> topazArgString: aString [
 
-	topazArgString := aString
+	topazArgs := aString
 ]
 
 { #category : 'accessing' }
-StashScript >> workingDirectoryPath [
+StashScript >> workingDirectory [
 
-	^ workingDirectoryPath
+	^ workingDirectory
 ]
 
 { #category : 'accessing' }
 StashScript >> workingDirectoryPath: aString [
 
-	workingDirectoryPath := aString
+	workingDirectory := aString asFileReference
 ]

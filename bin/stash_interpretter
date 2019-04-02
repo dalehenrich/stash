@@ -37,7 +37,7 @@ $GS_HOME/bin/startTopaz $topazArgs << EOF
 		loadTonelClassFile: stashFile.
 	scriptClassDefinition := (projectDefinition packages values any) classDefinitions values any.
 	stash := (System myUserProfile symbolList objectNamed: scriptClassDefinition name) 
-		stashFile: stashFile 
+		stashFilePath: stashFile 
 		topazArgs: '$topazArgs' 
 		stashArgs: '$stashArgs' 
 		workingDir: '$pwd'.
