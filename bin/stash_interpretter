@@ -25,5 +25,14 @@ for argument in "$*" ; do
 	fi
 done
 
-echo "startTopaz $topazArgs < $stashFile $stashArgs"
+$GS_HOME/bin/startTopaz $topazArgs << EOF
 
+	login
+
+	print
+	Rowan classTools stashClassLoadTool 
+		loadTonelClassFile: '$stashFile'.
+%
+	exit
+
+EOF
