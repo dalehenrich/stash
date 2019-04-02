@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+#
+#	command line interpretter for stash script
+#	
+#	arguments up to the first -- are interpreted as arguments to 
+#		$GS_HOME/bin/startTopaz.
+#	arguments after the first -- are passed to the smalltalk
+#		command-line interpreter
+#
+
+stashFile="$1"
+shift
+topazArgs=""
+stashArgs=""
+doneTopaz="false"
+for argument in "$*" ; do
+	if [ "$argument" = "--" ] ; then
+		doneTopaz="true"
+	else
+		if [ "${doneTopaz}" = "true" ] ; then
+			stashArgs"$stashArgs $argument"
+		else
+			topazArgs="$topazArgs $argument"
+		fi
+	fi
+done
+
+echo "startTopaz $topazArgs < $stashFile $stashArgs"
+
+
+| reader fileName definitions snapshot cypressLoader patch |
+reader := TonelCypressReader new.
+fileName := '/home/dhenrich/rogue/_homes/rogue/_home/server/stones/gs_350_g/sample.st'.
+definitions := (reader fileUtils
+	readStreamFor: fileName
+  do: [ :s | 
+		s nextLine. "skip the first line with #!"
+		TonelParser parseStream: s forReader: reader ]) flattened.
+snapshot := CypressSnapshot definitions: definitions.
+
+cypressLoader := CypressLoader new.
+patch := snapshot patchRelativeToBase: CypressSnapshot empty.
+patch := CypressSnapshot empty patchRelativeToBase: snapshot.
+patch applyTo: cypressLoader.
+snapshot definitions do: [:ea | cypressLoader provisions addAll: ea provisions].
+cypressLoader load.

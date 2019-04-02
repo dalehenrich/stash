@@ -1,4 +1,4 @@
-#!/home/dhenrich/rogue/_homes/rogue/_home/bin/stash
+#!/home/dhenrich/rogue/_homes/rogue/_home/shared/repos/stash/bin/stash_interpretter
 "
 Example executable script
 "
