@@ -15,6 +15,6 @@ RwSimpleProjectSpecification {
 		'Main'
 	],
 	#defaultGroupNames : [
-		'core'
+		'tools'
 	]
 }

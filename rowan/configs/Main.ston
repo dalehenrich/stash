@@ -3,6 +3,10 @@ RwProjectLoadConfiguration {
 	#comment : '',
 	#projectName : 'stash',
 	#version : '0.1.0',
+	#definedGroupNames : {
+		'core' : [ ],
+		'tools' : [ 'core' ]
+	},
 	#conditionalPackages : {
 		[
 			'common'
@@ -11,6 +15,21 @@ RwProjectLoadConfiguration {
 				#packageNames : [
 					'Stash-Core'
 				]
+			},
+			'tools' : {
+				#packageNames : [
+					'Stash-Tools',
+					'Stash-Tools-Extensions'
+				]
+			}
+		}
+	},
+	#conditionalPackageMapSpecs : {
+		'gemstone' : {
+			'SystemUser' : {
+				#packageNameToPlatformPropertiesMap : {
+					'Stash-Tools-Extensions' : { 'symbolDictName' : 'RowanTools' }
+				}
 			}
 		}
 	}
