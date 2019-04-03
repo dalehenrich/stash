@@ -14,17 +14,21 @@ shift
 topazArgs=""
 stashArgs=""
 doneTopaz="false"
-for argument in "$*" ; do
+for argument in $* ; do
+#	echo "===>$argument"
 	if [ "$argument" = "--" ] ; then
 		doneTopaz="true"
 	else
 		if [ "${doneTopaz}" = "true" ] ; then
-			stashArgs"$stashArgs $argument"
+			stashArgs="$stashArgs $argument"
 		else
 			topazArgs="$topazArgs $argument"
 		fi
 	fi
 done
+
+#	echo "topaz args: $topazArgs"
+#	echo "stash args: $stashArgs"
 
 file=`mktemp`
 
@@ -53,5 +57,6 @@ cat - > $file << EOF
 EOF
 
 # echo $file
+#	$GS_HOME/bin/startTopaz $topazArgs
 
 $GS_HOME/bin/startTopaz $topazArgs < $file
