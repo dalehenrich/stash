@@ -42,8 +42,11 @@ EXAMPLES
      ./exampleScript --help
      ./exampleScript -h
 
-     ./exampleScript --print="hi there"
-     ./exampleScript -p "hi there"
+     ./exampleScript --print="\`hi there\`"
+     ./exampleScript -p "\`hi there\`"
+
+     ./exampleScript --print=hi
+     ./exampleScript -p hi
 
      ./exampleScript --print
      ./exampleScript -p

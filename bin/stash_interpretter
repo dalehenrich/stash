@@ -8,7 +8,7 @@
 #		command-line interpreter
 #
 
-echo "0: $@"
+#	echo "0: $@"
 stashFile=`realpath $1`
 pwd=`pwd`
 shift
@@ -17,9 +17,9 @@ shift
 stashArgs="$*" 
 topazArgs=""
 doneTopaz="false"
-echo "1: $@"
+#	echo "1: $@"
 for argument in $@ ; do
-	echo "===>$argument"
+#	echo "===>$argument"
 	if [ "$argument" = "--" ] ; then
 		doneTopaz="true"
 	else
@@ -29,8 +29,8 @@ for argument in $@ ; do
 	fi
 done
 
-	echo "topaz args: $topazArgs"
-	echo "stash args: $stashArgs"
+#	echo "topaz args: $topazArgs"
+#	echo "stash args: $stashArgs"
 
 file=`mktemp`
 
@@ -58,6 +58,10 @@ cat - > $file << EOF
 
 EOF
 
+#
+#	for debugging, open topaz for interactive execution and input $file
+#		(comment out redirected startTopaz)
+#
 # echo $file
 #	$GS_HOME/bin/startTopaz $topazArgs
 
