@@ -15,7 +15,8 @@ RwProjectLoadConfiguration {
 				#packageNames : [
 					'Stash-Core',
 					'Stash-CommandLine',
-					'Stash-CommandLine-Tests'
+					'Stash-CommandLine-Tests',
+					'Stash-Kernel-Extensions'
 				]
 			},
 			'tools' : {
@@ -30,7 +31,8 @@ RwProjectLoadConfiguration {
 		'gemstone' : {
 			'SystemUser' : {
 				#packageNameToPlatformPropertiesMap : {
-					'Stash-Tools-Extensions' : { 'symbolDictName' : 'RowanTools' }
+					'Stash-Tools-Extensions' : { 'symbolDictName' : 'RowanTools' },
+					'Stash-Kernel-Extensions' : { 'symbolDictName' : 'Globals' }
 				}
 			}
 		}

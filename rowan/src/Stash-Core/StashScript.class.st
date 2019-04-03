@@ -40,7 +40,19 @@ StashScript >> dirname [
 ]
 
 { #category : 'script execution' }
+StashScript >> executeCommand: command [
+
+	self subclassResponsibility: #executeCommand:
+]
+
+{ #category : 'script execution' }
 StashScript >> executeScript [
+
+	| command |
+	command := StashCommandLine 
+		commandLine: self class name asString, self stashArgs 
+		redirectTarget: nil.
+	^ self executeCommand: command
 ]
 
 { #category : 'accessing' }

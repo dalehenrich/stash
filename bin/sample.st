@@ -9,43 +9,44 @@ Class {
 }
 
 { #category : 'launching' }
-ExampleScript class >> executeCommand: command [
-     | opts args projectName |
-     "for help: ./configSpec -h"
+ExampleScript >> executeCommand: command [
+     | opts args |
      command
           getOptsMixedLongShort: {
                #('help' $h #'none').
-               #('install' nil #'none').
+               #('print' $p #'optional').
                }
           optionsAndArguments: [ :options :operands |
           opts := options.
           args := operands ].
-     projectName := args at: 1.
      opts
           at: 'help'
           ifPresent: [ self usage ]
           ifAbsent: [
-               opts at: 'install' ifPresent: [:installArg |
-                    self doInstall: projectName ].
-               "do things with projectName"]
+               opts at: 'print' ifPresent: [:optionalArg |
+                    GsFile gciLogServer: optionalArg printString ].
+          ].
+			^ '--example script executed--'
 ]
 
 { #category : 'usage' }
-ExampleScript class >> usage: launcher [
+ExampleScript >> usage: script [
      self manPageClass
           viewManPage:
 'NAME
      exampleScript - example
 SYNOPSIS
-     exampleScript [-h|--help] [--install] <project-name>
+     exampleScript [-h|--help] [-p string |--print=<string]
 DESCRIPTION
 EXAMPLES
      ./exampleScript --help
      ./exampleScript -h
 
-     ./exampleScript --install
+     ./exampleScript --print="hi there"
+     ./exampleScript -p "hi there"
 
-     ./exampleScript --install ExampleProject
+     ./exampleScript --print
+     ./exampleScript -p
 '
-          launcher: launcher
+          script: script
 ]
