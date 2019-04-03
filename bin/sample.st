@@ -8,25 +8,24 @@ Class {
      #category : 'Examples'
 }
 
-{ #category : 'launching' }
-ExampleScript >> executeCommand: command [
-     | opts args |
-     command
-          getOptsMixedLongShort: {
-               #('help' $h #'none').
-               #('print' $p #'optional').
-               }
-          optionsAndArguments: [ :options :operands |
-          opts := options.
-          args := operands ].
-     opts
-          at: 'help'
-          ifPresent: [ ^ self usage ]
-          ifAbsent: [
-               opts at: 'print' ifPresent: [:optionalArg |
-                    Transcript cr; show: optionalArg asString ].
-          ].
-			^ '--example script executed--'
+{ #category : 'script execution' }
+ExampleScript >> scriptOptions [
+	^ {
+			#('help' $h #'none').
+			#('print' $p #'optional').
+	}
+]
+
+{ #category : 'script execution' }
+ExampleScript >> executeScript [
+	opts
+		at: 'help'
+    ifAbsent: [
+			opts at: 'print' 
+				ifPresent: [:optionalArg |
+					^ optionalArg asString ].
+			^ 'noop' ]
+    ifPresent: [ ^ self usage ]
 ]
 
 { #category : 'usage' }
@@ -40,7 +39,7 @@ ExampleScript >> usage [
 'NAME
      exampleScript - example
 SYNOPSIS
-     exampleScript [-h|--help] [-p string |--print=<string]
+     exampleScript [-h|--help] [-p [<arg>] | --print[=<arg>]]
 DESCRIPTION
 EXAMPLES
      ./exampleScript --help

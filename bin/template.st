@@ -9,23 +9,23 @@ Class {
 }
 
 { #category : 'script execution' }
-ExampleScript >> executeCommand: command [
-	"Called to initiate execution of the script"
-	| opts args |
-	command
-		getOptsMixedLongShort: {
+ExampleScript >> scriptOptions [
+	"specify the command line options"
+	^ {
 			#('help' $h #'none').
 			#('print' nil #'optional').
-			}
-		optionsAndArguments: [ :options :operands |
-			opts := options.
-      args := operands ].
-		^ opts
+	}
+]
+
+{ #category : 'script execution' }
+ExampleScript >> executeScript [
+	"Called to initiate execution of the script"
+	^ opts
 			at: 'help'
-				ifAbsent: [ 
+			ifAbsent: [ 
 'PUT YOUR SCRIPT CODE HERE'
 				 ]
-				ifPresent: [ self usage ] ]
+			ifPresent: [ self usage ] ]
 
 { #category : 'usage' }
 ExampleScript >> usage [
@@ -39,7 +39,7 @@ ExampleScript >> usage [
 'NAME
      TEMPLATE - example
 SYNOPSIS
-     TEMPLATE [-h|--help] [--print=arg]
+     TEMPLATE [-h|--help] [--print=<arg>]
 DESCRIPTION
 EXAMPLES
 	TEMPLATE --help

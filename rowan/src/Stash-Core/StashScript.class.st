@@ -5,7 +5,10 @@ Class {
 		'stashFile',
 		'topazArgs',
 		'stashArgs',
-		'workingDirectory'
+		'workingDirectory',
+		'opts',
+		'args',
+		'command'
 	],
 	#category : 'Stash-Core'
 }
@@ -28,9 +31,21 @@ StashScript class >> stashFilePath: stashFilePath topazArgs: topazArgs stashArgs
 ]
 
 { #category : 'script utilities' }
+StashScript >> args [
+
+	^args
+]
+
+{ #category : 'script utilities' }
 StashScript >> basename [
 
 	^ self scriptFile basename
+]
+
+{ #category : 'script utilities' }
+StashScript >> command [
+
+	^ command
 ]
 
 { #category : 'script utilities' }
@@ -40,25 +55,42 @@ StashScript >> dirname [
 ]
 
 { #category : 'script execution' }
-StashScript >> executeCommand: command [
-
-	self subclassResponsibility: #executeCommand:
-]
-
-{ #category : 'script execution' }
 StashScript >> executeScript [
 
-	| command |
-	command := StashCommandLine 
-		commandLine: self class name asString, self stashArgs 
-		redirectTarget: nil.
-	^ self executeCommand: command
+	self subclassResponsibility: #executeScript
 ]
 
-{ #category : 'accessing' }
+{ #category : 'script utilities' }
 StashScript >> manPageClass [
 
 	^ StashManPage
+]
+
+{ #category : 'script utilities' }
+StashScript >> opts [
+
+	^opts
+]
+
+{ #category : 'script execution' }
+StashScript >> scriptOptions [
+
+	self subclassResponsibility: #scriptOptions
+]
+
+{ #category : 'script execution' }
+StashScript >> setupAndExecuteScript [
+
+	command := StashCommandLine 
+		commandLine: self class name asString, self stashArgs 
+		redirectTarget: nil.
+     command
+		getOptsMixedLongShort: self scriptOptions
+		optionsAndArguments: [ :options :operands |
+			opts := options.
+			args := operands ].
+
+	^ self executeScript
 ]
 
 { #category : 'accessing' }

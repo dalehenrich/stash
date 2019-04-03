@@ -55,7 +55,7 @@ cat - > $file << EOF
 		topazArgs: '$topazArgs' 
 		stashArgs: '$stashArgs' 
 		workingDir: '$pwd'.
-	stash executeScript
+	stash setupAndExecuteScript
 %
 
 	output pop
