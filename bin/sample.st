@@ -24,7 +24,7 @@ ExampleScript >> executeCommand: command [
           ifPresent: [ self usage ]
           ifAbsent: [
                opts at: 'print' ifPresent: [:optionalArg |
-                    GsFile gciLogServer: optionalArg printString ].
+                    Transcript cr; show: optionalArg asString ].
           ].
 			^ '--example script executed--'
 ]
