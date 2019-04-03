@@ -1,5 +1,5 @@
 Class {
-	#name : 'TDCommandLine',
+	#name : 'StashCommandLine',
 	#superclass : 'Object',
 	#instVars : [
 		'commandLine',
@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-TDCommandLine class >> commandLine: commandLine redirectTarget: redirectTarget [
+StashCommandLine class >> commandLine: commandLine redirectTarget: redirectTarget [
   ^ self new
     commandLine: commandLine;
     redirectTarget: redirectTarget;
@@ -20,14 +20,14 @@ TDCommandLine class >> commandLine: commandLine redirectTarget: redirectTarget [
 ]
 
 { #category : 'parsing' }
-TDCommandLine class >> fromStream: aStream forEachCommand: aBlock [
+StashCommandLine class >> fromStream: aStream forEachCommand: aBlock [
   "multi-line input"
 
   self fromStream: aStream selectLine: [:cmdLine | true] forEachCommand: aBlock
 ]
 
 { #category : 'parsing' }
-TDCommandLine class >> fromStream: aStream selectLine: selectLineBlock forEachCommand: aBlock [
+StashCommandLine class >> fromStream: aStream selectLine: selectLineBlock forEachCommand: aBlock [
   "multi-line input"
 
   | cmdLines line escaped lastLine |
@@ -58,7 +58,7 @@ TDCommandLine class >> fromStream: aStream selectLine: selectLineBlock forEachCo
 ]
 
 { #category : 'private' }
-TDCommandLine class >> isolate: aString [
+StashCommandLine class >> isolate: aString [
   | isolated command final escaped skipComment |
   isolated := OrderedCollection new.
   command := WriteStream on: String new.
@@ -90,7 +90,7 @@ TDCommandLine class >> isolate: aString [
 ]
 
 { #category : 'parsing' }
-TDCommandLine class >> line: cmdLineString forEachCommand: aBlock [
+StashCommandLine class >> line: cmdLineString forEachCommand: aBlock [
   "single command line"
 
   (self isolate: cmdLineString)
@@ -105,7 +105,7 @@ TDCommandLine class >> line: cmdLineString forEachCommand: aBlock [
 ]
 
 { #category : 'private' }
-TDCommandLine class >> scan: aString delim: delim [
+StashCommandLine class >> scan: aString delim: delim [
   | scanned command stream final escaped |
   scanned := OrderedCollection new.
   command := WriteStream on: String new.
@@ -141,37 +141,37 @@ TDCommandLine class >> scan: aString delim: delim [
 ]
 
 { #category : 'private' }
-TDCommandLine >> argPtrs [
+StashCommandLine >> argPtrs [
   self tokens.	"ensure argPtrs defined"
   ^ argPtrs
 ]
 
 { #category : 'accessing' }
-TDCommandLine >> command [
+StashCommandLine >> command [
   ^ self rawTokens at: 1
 ]
 
 { #category : 'private' }
-TDCommandLine >> commandArgPtr [
+StashCommandLine >> commandArgPtr [
   ^ self argPtrs at: 1
 ]
 
 { #category : 'accessing' }
-TDCommandLine >> commandLine [
+StashCommandLine >> commandLine [
   ^ commandLine
 ]
 
 { #category : 'private' }
-TDCommandLine >> commandLine: aString [
+StashCommandLine >> commandLine: aString [
   commandLine := aString trimBoth
 ]
 
 { #category : 'private' }
-TDCommandLine >> getCommandLongOpts: optionSpec short: shortOptionAliases do: optionBlock argsDo: argBlock [
+StashCommandLine >> getCommandLongOpts: optionSpec short: shortOptionAliases do: optionBlock argsDo: argBlock [
   | optionStream optionString |
   optionString := commandLine copyFrom: self commandArgPtr to: commandLine size.
   optionStream := ReadStream on: optionString.
-  TDCommandGetOpts
+  StashCommandGetOpts
     getOptsLongFor: optionStream
     longOptionSpec: optionSpec
     shortOptionAliases: shortOptionAliases
@@ -180,11 +180,11 @@ TDCommandLine >> getCommandLongOpts: optionSpec short: shortOptionAliases do: op
 ]
 
 { #category : 'private' }
-TDCommandLine >> getCommandOpts: optionSpec do: optionBlock argsDo: argBlock [
+StashCommandLine >> getCommandOpts: optionSpec do: optionBlock argsDo: argBlock [
   | optionStream optionString |
   optionString := commandLine copyFrom: self commandArgPtr to: commandLine size.
   optionStream := ReadStream on: optionString.
-  TDCommandGetOpts
+  StashCommandGetOpts
     getOptsFor: optionStream
     spec: optionSpec
     do: optionBlock
@@ -192,7 +192,7 @@ TDCommandLine >> getCommandOpts: optionSpec do: optionBlock argsDo: argBlock [
 ]
 
 { #category : 'private' }
-TDCommandLine >> getCommandOpts: optionSpec optionsAndArguments: optsAndArgsBlock [
+StashCommandLine >> getCommandOpts: optionSpec optionsAndArguments: optsAndArgsBlock [
   | options args |
   options := Dictionary new.
   args := OrderedCollection new.
@@ -204,7 +204,7 @@ TDCommandLine >> getCommandOpts: optionSpec optionsAndArguments: optsAndArgsBloc
 ]
 
 { #category : 'parsing' }
-TDCommandLine >> getOpts: optionSpec optionsAndArguments: optsAndArgsBlock [
+StashCommandLine >> getOpts: optionSpec optionsAndArguments: optsAndArgsBlock [
   | options args |
   options := Dictionary new.
   args := OrderedCollection new.
@@ -223,7 +223,7 @@ TDCommandLine >> getOpts: optionSpec optionsAndArguments: optsAndArgsBlock [
 ]
 
 { #category : 'parsing' }
-TDCommandLine >> getOpts: optionSpecs subOpts: subOptionSpecs optionsAndArguments: optsAndArgsBlock [
+StashCommandLine >> getOpts: optionSpecs subOpts: subOptionSpecs optionsAndArguments: optsAndArgsBlock [
   | options arguments subCommandArgPtrIndex subCommandLine subCommand subOptions subArguments |
   self
     getOptsMixedLongShort: optionSpecs
@@ -234,7 +234,7 @@ TDCommandLine >> getOpts: optionSpecs subOpts: subOptionSpecs optionsAndArgument
   subCommandLine := self commandLine
     copyFrom: (self argPtrs at: subCommandArgPtrIndex)
     to: self commandLine size.
-  TDCommandLine
+  self class
     line: subCommandLine
     forEachCommand: [ :aCommand | 
       subCommand := aCommand.
@@ -252,7 +252,7 @@ TDCommandLine >> getOpts: optionSpecs subOpts: subOptionSpecs optionsAndArgument
 ]
 
 { #category : 'parsing' }
-TDCommandLine >> getOptsLong: longOptionSpec optionsAndArguments: optsAndArgsBlock [
+StashCommandLine >> getOptsLong: longOptionSpec optionsAndArguments: optsAndArgsBlock [
   ^ self
     getOptsLong: longOptionSpec
     short: Dictionary new
@@ -260,7 +260,7 @@ TDCommandLine >> getOptsLong: longOptionSpec optionsAndArguments: optsAndArgsBlo
 ]
 
 { #category : 'parsing' }
-TDCommandLine >> getOptsLong: longOptionSpec short: shortOptionAliases optionsAndArguments: optsAndArgsBlock [
+StashCommandLine >> getOptsLong: longOptionSpec short: shortOptionAliases optionsAndArguments: optsAndArgsBlock [
   | options args |
   options := Dictionary new.
   args := OrderedCollection new.
@@ -281,7 +281,7 @@ TDCommandLine >> getOptsLong: longOptionSpec short: shortOptionAliases optionsAn
 ]
 
 { #category : 'parsing' }
-TDCommandLine >> getOptsMixedLongShort: mixedOptionSpecs optionsAndArguments: optsAndArgsBlock [
+StashCommandLine >> getOptsMixedLongShort: mixedOptionSpecs optionsAndArguments: optsAndArgsBlock [
   "mixedOptionSpecs is an array of option specs, for example:
 
     {#('directory' $d #'required').
@@ -312,13 +312,13 @@ TDCommandLine >> getOptsMixedLongShort: mixedOptionSpecs optionsAndArguments: op
 ]
 
 { #category : 'obsolete' }
-TDCommandLine >> getSubCommandLongOpts: optionSpec short: shortOptionAliases do: optionBlock argsDo: argBlock [
+StashCommandLine >> getSubCommandLongOpts: optionSpec short: shortOptionAliases do: optionBlock argsDo: argBlock [
   | optionStream optionString |
   optionString := commandLine
     copyFrom: self subCommandArgPtr
     to: commandLine size.
   optionStream := ReadStream on: optionString.
-  TDCommandGetOpts
+  StashCommandGetOpts
     getOptsLongFor: optionStream
     longOptionSpec: optionSpec
     shortOptionAliases: shortOptionAliases
@@ -327,13 +327,13 @@ TDCommandLine >> getSubCommandLongOpts: optionSpec short: shortOptionAliases do:
 ]
 
 { #category : 'obsolete' }
-TDCommandLine >> getSubCommandOpts: optionSpec do: optionBlock argsDo: argBlock [
+StashCommandLine >> getSubCommandOpts: optionSpec do: optionBlock argsDo: argBlock [
   | optionStream optionString |
   optionString := commandLine
     copyFrom: self subCommandArgPtr
     to: commandLine size.
   optionStream := ReadStream on: optionString.
-  TDCommandGetOpts
+  StashCommandGetOpts
     getOptsFor: optionStream
     spec: optionSpec
     do: optionBlock
@@ -341,7 +341,7 @@ TDCommandLine >> getSubCommandOpts: optionSpec do: optionBlock argsDo: argBlock 
 ]
 
 { #category : 'obsolete' }
-TDCommandLine >> getSubCommandOpts: optionSpec optionsAndArguments: optsAndArgsBlock [
+StashCommandLine >> getSubCommandOpts: optionSpec optionsAndArguments: optsAndArgsBlock [
   | options args |
   options := Dictionary new.
   args := OrderedCollection new.
@@ -353,18 +353,18 @@ TDCommandLine >> getSubCommandOpts: optionSpec optionsAndArguments: optsAndArgsB
 ]
 
 { #category : 'obsolete' }
-TDCommandLine >> hasSubCommand [
+StashCommandLine >> hasSubCommand [
   hasSubCommand ifNil: [ hasSubCommand := false ].
   ^ hasSubCommand
 ]
 
 { #category : 'obsolete' }
-TDCommandLine >> hasSubCommand: aBool [
+StashCommandLine >> hasSubCommand: aBool [
   hasSubCommand := aBool
 ]
 
 { #category : 'private' }
-TDCommandLine >> parseMixedLongShortOpts: mixedOptionSpecs [
+StashCommandLine >> parseMixedLongShortOpts: mixedOptionSpecs [
   "mixedOptionSpecs is an array of option specs, for example:
 
     {#('directory' $d #'required').
@@ -393,40 +393,40 @@ TDCommandLine >> parseMixedLongShortOpts: mixedOptionSpecs [
 ]
 
 { #category : 'printing' }
-TDCommandLine >> printOn: aStream [
+StashCommandLine >> printOn: aStream [
 	aStream nextPutAll: self class name asString , '(' , self commandLine printString , ')'
 ]
 
 { #category : 'private' }
-TDCommandLine >> rawTokens [
+StashCommandLine >> rawTokens [
   tokens ifNil: [ tokens := self tokenize: self commandLine ].
   ^ tokens
 ]
 
 { #category : 'accessing' }
-TDCommandLine >> redirectTarget [
+StashCommandLine >> redirectTarget [
   ^ redirectTarget
 ]
 
 { #category : 'private' }
-TDCommandLine >> redirectTarget: aString [
+StashCommandLine >> redirectTarget: aString [
   redirectTarget := aString
 ]
 
 { #category : 'accessing' }
-TDCommandLine >> subCommand [
+StashCommandLine >> subCommand [
   self rawTokens size < 2
     ifTrue: [ self error: 'expected a subcommand' ].
   ^ self rawTokens at: 2
 ]
 
 { #category : 'obsolete' }
-TDCommandLine >> subCommandArgPtr [
+StashCommandLine >> subCommandArgPtr [
   ^ self argPtrs at: 2
 ]
 
 { #category : 'private' }
-TDCommandLine >> tokenize: aString [
+StashCommandLine >> tokenize: aString [
   | list token final escaped delimited stream count |
   list := OrderedCollection new.
   argPtrs := OrderedCollection new.
@@ -468,7 +468,7 @@ TDCommandLine >> tokenize: aString [
 ]
 
 { #category : 'parsing' }
-TDCommandLine >> tokens [
+StashCommandLine >> tokens [
   ^ self hasSubCommand
     ifTrue: [ 
       self rawTokens.
@@ -477,6 +477,6 @@ TDCommandLine >> tokens [
 ]
 
 { #category : 'private' }
-TDCommandLine >> tokens: aCollection [
+StashCommandLine >> tokens: aCollection [
   tokens := aCollection
 ]

@@ -1,17 +1,17 @@
 Class {
-	#name : 'TDCommandGetOptsTestCase',
+	#name : 'StashCommandGetOptsTestCase',
 	#superclass : 'TestCase',
 	#category : 'Stash-CommandLine-Tests'
 }
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> assert: aString includesSubstring: subString [
+StashCommandGetOptsTestCase >> assert: aString includesSubstring: subString [
 
 	self assert: (aString _findString: aString startingAt: 1 ignoreCase: false) ~~ 0
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> longOptionSpec [
+StashCommandGetOptsTestCase >> longOptionSpec [
   ^ Dictionary new
     at: 'argA' put: #'none';
     at: 'argB' put: #'none';
@@ -20,7 +20,7 @@ TDCommandGetOptsTestCase >> longOptionSpec [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> shortOptionAliases [
+StashCommandGetOptsTestCase >> shortOptionAliases [
   ^ Dictionary new
     at: $a put: 'argA';
     at: $b put: 'argB';
@@ -29,9 +29,9 @@ TDCommandGetOptsTestCase >> shortOptionAliases [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> test01 [
+StashCommandGetOptsTestCase >> test01 [
   | parser |
-  parser := TDCommandGetOpts parseCommand: (ReadStream on: 'testopt').
+  parser := StashCommandGetOpts parseCommand: (ReadStream on: 'testopt').
   self assert: parser command = 'testopt'.
   parser
     getOpts: 'abc:'
@@ -40,13 +40,13 @@ TDCommandGetOptsTestCase >> test01 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> test02 [
+StashCommandGetOptsTestCase >> test02 [
   | parser options processedOption |
   options := Dictionary new
     add: $a -> nil;
     add: $b -> nil;
     yourself.
-  parser := TDCommandGetOpts parseCommand: (ReadStream on: 'testopt -a -b').
+  parser := StashCommandGetOpts parseCommand: (ReadStream on: 'testopt -a -b').
   self assert: parser command = 'testopt'.
   processedOption := false.
   parser
@@ -59,13 +59,13 @@ TDCommandGetOptsTestCase >> test02 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> test03 [
+StashCommandGetOptsTestCase >> test03 [
   | parser options processedOption |
   options := Dictionary new
     add: $a -> nil;
     add: $b -> nil;
     yourself.
-  parser := TDCommandGetOpts parseCommand: (ReadStream on: 'testopt -ab').
+  parser := StashCommandGetOpts parseCommand: (ReadStream on: 'testopt -ab').
   self assert: parser command = 'testopt'.
   processedOption := false.
   parser
@@ -78,13 +78,13 @@ TDCommandGetOptsTestCase >> test03 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> test04 [
+StashCommandGetOptsTestCase >> test04 [
   | parser options processedOption |
   options := Dictionary new
     add: $a -> nil;
     add: $b -> nil;
     yourself.
-  parser := TDCommandGetOpts parseCommand: (ReadStream on: 'testopt -ba').
+  parser := StashCommandGetOpts parseCommand: (ReadStream on: 'testopt -ba').
   self assert: parser command = 'testopt'.
   processedOption := false.
   parser
@@ -97,12 +97,12 @@ TDCommandGetOptsTestCase >> test04 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> test05 [
+StashCommandGetOptsTestCase >> test05 [
   | parser options processedOption |
   options := Dictionary new
     add: $c -> 'foo';
     yourself.
-  parser := TDCommandGetOpts parseCommand: (ReadStream on: 'testopt -c foo').
+  parser := StashCommandGetOpts parseCommand: (ReadStream on: 'testopt -c foo').
   self assert: parser command = 'testopt'.
   processedOption := false.
   parser
@@ -115,12 +115,12 @@ TDCommandGetOptsTestCase >> test05 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> test06 [
+StashCommandGetOptsTestCase >> test06 [
   | parser options processedOption |
   options := Dictionary new
     add: $c -> 'foo';
     yourself.
-  parser := TDCommandGetOpts parseCommand: (ReadStream on: 'testopt -cfoo').
+  parser := StashCommandGetOpts parseCommand: (ReadStream on: 'testopt -cfoo').
   self assert: parser command = 'testopt'.
   processedOption := false.
   parser
@@ -133,9 +133,9 @@ TDCommandGetOptsTestCase >> test06 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> test07 [
+StashCommandGetOptsTestCase >> test07 [
   | parser processedNonOption |
-  parser := TDCommandGetOpts parseCommand: (ReadStream on: 'testopt arg1').
+  parser := StashCommandGetOpts parseCommand: (ReadStream on: 'testopt arg1').
   self assert: parser command = 'testopt'.
   processedNonOption := false.
   parser
@@ -148,12 +148,12 @@ TDCommandGetOptsTestCase >> test07 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> test08 [
+StashCommandGetOptsTestCase >> test08 [
   | parser options processedOption processNonOption |
   options := Dictionary new
     add: $a -> nil;
     yourself.
-  parser := TDCommandGetOpts parseCommand: (ReadStream on: 'testopt -a arg1').
+  parser := StashCommandGetOpts parseCommand: (ReadStream on: 'testopt -a arg1').
   self assert: parser command = 'testopt'.
   processNonOption := processedOption := false.
   parser
@@ -169,12 +169,12 @@ TDCommandGetOptsTestCase >> test08 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> test09 [
+StashCommandGetOptsTestCase >> test09 [
   | parser options processedOption processNonOption |
   options := Dictionary new
     add: $c -> 'foo';
     yourself.
-  parser := TDCommandGetOpts
+  parser := StashCommandGetOpts
     parseCommand: (ReadStream on: 'testopt -c foo arg1').
   self assert: parser command = 'testopt'.
   processNonOption := processedOption := false.
@@ -191,12 +191,12 @@ TDCommandGetOptsTestCase >> test09 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> test10 [
+StashCommandGetOptsTestCase >> test10 [
   | parser options processedOption processNonOption |
   options := Dictionary new
     add: $a -> nil;
     yourself.
-  parser := TDCommandGetOpts parseCommand: (ReadStream on: 'testopt -a -- -b').
+  parser := StashCommandGetOpts parseCommand: (ReadStream on: 'testopt -a -- -b').
   self assert: parser command = 'testopt'.
   processNonOption := processedOption := false.
   parser
@@ -212,12 +212,12 @@ TDCommandGetOptsTestCase >> test10 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> test11 [
+StashCommandGetOptsTestCase >> test11 [
   | parser options processedOption processNonOption |
   options := Dictionary new
     add: $a -> nil;
     yourself.
-  parser := TDCommandGetOpts parseCommand: (ReadStream on: 'testopt -a -').
+  parser := StashCommandGetOpts parseCommand: (ReadStream on: 'testopt -a -').
   self assert: parser command = 'testopt'.
   processNonOption := processedOption := false.
   parser
@@ -233,12 +233,12 @@ TDCommandGetOptsTestCase >> test11 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> test15 [
+StashCommandGetOptsTestCase >> test15 [
   | parser options processedOption processNonOption |
   options := Dictionary new
     add: $c -> 'foo -d xxx';
     yourself.
-  parser := TDCommandGetOpts
+  parser := StashCommandGetOpts
     parseCommand:
       (ReadStream on: 'testopt -c `foo -d xxx` arg1 `arg2 and -e friends`').
   self assert: parser command = 'testopt'.
@@ -257,9 +257,9 @@ TDCommandGetOptsTestCase >> test15 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> testLong01 [
+StashCommandGetOptsTestCase >> testLong01 [
   | parser |
-  parser := TDCommandGetOpts parseCommand: (ReadStream on: 'testopt').
+  parser := StashCommandGetOpts parseCommand: (ReadStream on: 'testopt').
   self assert: parser command = 'testopt'.
   parser
     getOptsLong: self longOptionSpec
@@ -268,13 +268,13 @@ TDCommandGetOptsTestCase >> testLong01 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> testLong02 [
+StashCommandGetOptsTestCase >> testLong02 [
   | parser options processedOption |
   options := Dictionary new
     add: 'argA' -> nil;
     add: 'argB' -> nil;
     yourself.
-  parser := TDCommandGetOpts
+  parser := StashCommandGetOpts
     parseCommand: (ReadStream on: 'testopt --argA --argB').
   self assert: parser command = 'testopt'.
   processedOption := false.
@@ -288,12 +288,12 @@ TDCommandGetOptsTestCase >> testLong02 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> testLong05 [
+StashCommandGetOptsTestCase >> testLong05 [
   | parser options processedOption |
   options := Dictionary new
     add: 'argC' -> 'foo';
     yourself.
-  parser := TDCommandGetOpts parseCommand: (ReadStream on: 'testopt --argC=foo').
+  parser := StashCommandGetOpts parseCommand: (ReadStream on: 'testopt --argC=foo').
   self assert: parser command = 'testopt'.
   processedOption := false.
   parser
@@ -306,9 +306,9 @@ TDCommandGetOptsTestCase >> testLong05 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> testLong07 [
+StashCommandGetOptsTestCase >> testLong07 [
   | parser processedNonOption |
-  parser := TDCommandGetOpts parseCommand: (ReadStream on: 'testopt arg1').
+  parser := StashCommandGetOpts parseCommand: (ReadStream on: 'testopt arg1').
   self assert: parser command = 'testopt'.
   processedNonOption := false.
   parser
@@ -321,12 +321,12 @@ TDCommandGetOptsTestCase >> testLong07 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> testLong08 [
+StashCommandGetOptsTestCase >> testLong08 [
   | parser options processedOption processNonOption |
   options := Dictionary new
     add: 'argA' -> nil;
     yourself.
-  parser := TDCommandGetOpts
+  parser := StashCommandGetOpts
     parseCommand: (ReadStream on: 'testopt --argA arg1').
   self assert: parser command = 'testopt'.
   processNonOption := processedOption := false.
@@ -343,12 +343,12 @@ TDCommandGetOptsTestCase >> testLong08 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> testLong09 [
+StashCommandGetOptsTestCase >> testLong09 [
   | parser options processedOption processNonOption |
   options := Dictionary new
     add: 'argC' -> 'foo';
     yourself.
-  parser := TDCommandGetOpts
+  parser := StashCommandGetOpts
     parseCommand: (ReadStream on: 'testopt --argC=foo arg1').
   self assert: parser command = 'testopt'.
   processNonOption := processedOption := false.
@@ -365,12 +365,12 @@ TDCommandGetOptsTestCase >> testLong09 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> testLong10 [
+StashCommandGetOptsTestCase >> testLong10 [
   | parser options processedOption processNonOption |
   options := Dictionary new
     add: 'argA' -> nil;
     yourself.
-  parser := TDCommandGetOpts
+  parser := StashCommandGetOpts
     parseCommand: (ReadStream on: 'testopt --argA -- --argB').
   self assert: parser command = 'testopt'.
   processNonOption := processedOption := false.
@@ -387,12 +387,12 @@ TDCommandGetOptsTestCase >> testLong10 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> testLong11 [
+StashCommandGetOptsTestCase >> testLong11 [
   | parser options processedOption processNonOption |
   options := Dictionary new
     add: 'argA' -> nil;
     yourself.
-  parser := TDCommandGetOpts parseCommand: (ReadStream on: 'testopt --argA -').
+  parser := StashCommandGetOpts parseCommand: (ReadStream on: 'testopt --argA -').
   self assert: parser command = 'testopt'.
   processNonOption := processedOption := false.
   parser
@@ -408,12 +408,12 @@ TDCommandGetOptsTestCase >> testLong11 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> testLong14 [
+StashCommandGetOptsTestCase >> testLong14 [
   | parser options processedOption processNonOption |
   options := Dictionary new
     add: 'argC' -> 'foo';
     yourself.
-  parser := TDCommandGetOpts
+  parser := StashCommandGetOpts
     parseCommand: (ReadStream on: 'testopt --argC=foo arg1 arg2').
   self assert: parser command = 'testopt'.
   processNonOption := processedOption := false.
@@ -430,12 +430,12 @@ TDCommandGetOptsTestCase >> testLong14 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> testLong15 [
+StashCommandGetOptsTestCase >> testLong15 [
   | parser options processedOption processNonOption |
   options := Dictionary new
     add: 'argC' -> 'foo -d xxx';
     yourself.
-  parser := TDCommandGetOpts
+  parser := StashCommandGetOpts
     parseCommand:
       (ReadStream on: 'testopt --argC=`foo -d xxx` arg1 `arg2 and -e friends`').
   self assert: parser command = 'testopt'.
@@ -454,13 +454,13 @@ TDCommandGetOptsTestCase >> testLong15 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> testLong21 [
+StashCommandGetOptsTestCase >> testLong21 [
   | parser options processedOption processNonOption parsedOptions optionsSpec |
   options := Dictionary new
     add: 'directory' -> '/tmp/fileout';
     add: 'category' -> nil;
     yourself.
-  parser := TDCommandGetOpts
+  parser := StashCommandGetOpts
     parseCommand:
       (ReadStream
         on:
@@ -489,13 +489,13 @@ TDCommandGetOptsTestCase >> testLong21 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> testMixed02 [
+StashCommandGetOptsTestCase >> testMixed02 [
   | parser options processedOption |
   options := Dictionary new
     add: 'argA' -> nil;
     add: 'argB' -> nil;
     yourself.
-  parser := TDCommandGetOpts parseCommand: (ReadStream on: 'testopt --argA -b').
+  parser := StashCommandGetOpts parseCommand: (ReadStream on: 'testopt --argA -b').
   self assert: parser command = 'testopt'.
   processedOption := false.
   parser
@@ -509,14 +509,14 @@ TDCommandGetOptsTestCase >> testMixed02 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> testMixed12 [
+StashCommandGetOptsTestCase >> testMixed12 [
   | parser options processedOption processNonOption |
   options := Dictionary new
     add: 'argA' -> nil;
     add: 'argB' -> nil;
     add: 'argC' -> 'foo';
     yourself.
-  parser := TDCommandGetOpts
+  parser := StashCommandGetOpts
     parseCommand: (ReadStream on: 'testopt --argA -b -c foo arg1').
   self assert: parser command = 'testopt'.
   processNonOption := processedOption := false.
@@ -534,14 +534,14 @@ TDCommandGetOptsTestCase >> testMixed12 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> testMixed13 [
+StashCommandGetOptsTestCase >> testMixed13 [
   | parser options processedOption processNonOption |
   options := Dictionary new
     add: 'argA' -> nil;
     add: 'argB' -> nil;
     add: 'argC' -> 'foo';
     yourself.
-  parser := TDCommandGetOpts
+  parser := StashCommandGetOpts
     parseCommand: (ReadStream on: 'testopt -a --argB --argC=foo arg1').
   self assert: parser command = 'testopt'.
   processNonOption := processedOption := false.
@@ -559,14 +559,14 @@ TDCommandGetOptsTestCase >> testMixed13 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> testMixed14 [
+StashCommandGetOptsTestCase >> testMixed14 [
   | parser options processedOption processNonOption |
   options := Dictionary new
     add: 'argA' -> nil;
     add: 'argB' -> nil;
     add: 'argC' -> 'foo';
     yourself.
-  parser := TDCommandGetOpts
+  parser := StashCommandGetOpts
     parseCommand: (ReadStream on: 'testopt -a --argB --argC=foo arg1 arg2').
   self assert: parser command = 'testopt'.
   processNonOption := processedOption := false.
@@ -584,14 +584,14 @@ TDCommandGetOptsTestCase >> testMixed14 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> testMixed15 [
+StashCommandGetOptsTestCase >> testMixed15 [
   | parser options processedOption processNonOption |
   options := Dictionary new
     add: 'argA' -> nil;
     add: 'argB' -> nil;
     add: 'argC' -> 'foo -d xxx';
     yourself.
-  parser := TDCommandGetOpts
+  parser := StashCommandGetOpts
     parseCommand:
       (ReadStream
         on: 'testopt -a --argB --argC=`foo -d xxx` arg1 `arg2 and -e friends`').
@@ -611,14 +611,14 @@ TDCommandGetOptsTestCase >> testMixed15 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> testMixed16 [
+StashCommandGetOptsTestCase >> testMixed16 [
   | parser options processedOption processNonOption |
   options := Dictionary new
     add: 'argA' -> nil;
     add: 'argB' -> nil;
     add: 'argC' -> 'foo -d xxx';
     yourself.
-  parser := TDCommandGetOpts
+  parser := StashCommandGetOpts
     parseCommand:
       (ReadStream on: 'testopt -a --argB -c `foo -d xxx` arg1 `arg2 and -e friends`').
   self assert: parser command = 'testopt'.
@@ -637,14 +637,14 @@ TDCommandGetOptsTestCase >> testMixed16 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> testMixed17 [
+StashCommandGetOptsTestCase >> testMixed17 [
   | parser options processedOption processNonOption |
   options := Dictionary new
     add: 'argA' -> nil;
     add: 'argB' -> nil;
     add: 'argC' -> 'foo -d xxx';
     yourself.
-  parser := TDCommandGetOpts
+  parser := StashCommandGetOpts
     parseCommand:
       (ReadStream on: 'testopt -a --argB -c`foo -d xxx` arg1 `arg2 and -e friends`').
   self assert: parser command = 'testopt'.
@@ -663,9 +663,9 @@ TDCommandGetOptsTestCase >> testMixed17 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> testMixed18 [
+StashCommandGetOptsTestCase >> testMixed18 [
   | parser errorSignalled exception |
-  parser := TDCommandGetOpts
+  parser := StashCommandGetOpts
     parseCommand:
       (ReadStream on: 'fileout -d/tmp/fileout --category Index-Tests indexTests.gs').
   errorSignalled := false.
@@ -689,9 +689,9 @@ TDCommandGetOptsTestCase >> testMixed18 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> testMixed19 [
+StashCommandGetOptsTestCase >> testMixed19 [
   | parser errorSignalled exception |
-  parser := TDCommandGetOpts
+  parser := StashCommandGetOpts
     parseCommand:
       (ReadStream
         on:
@@ -717,13 +717,13 @@ TDCommandGetOptsTestCase >> testMixed19 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> testMixed20 [
+StashCommandGetOptsTestCase >> testMixed20 [
   | parser options processedOption processNonOption parsedOptions |
   options := Dictionary new
     add: 'directory' -> '/tmp/fileout';
     add: 'category' -> nil;
     yourself.
-  parser := TDCommandGetOpts
+  parser := StashCommandGetOpts
     parseCommand:
       (ReadStream
         on:
@@ -750,13 +750,13 @@ TDCommandGetOptsTestCase >> testMixed20 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> testMixed21 [
+StashCommandGetOptsTestCase >> testMixed21 [
   | parser options processedOption processNonOption parsedOptions |
   options := Dictionary new
     add: 'directory' -> '/tmp/fileout';
     add: 'category' -> nil;
     yourself.
-  parser := TDCommandGetOpts
+  parser := StashCommandGetOpts
     parseCommand:
       (ReadStream
         on:
@@ -783,13 +783,13 @@ TDCommandGetOptsTestCase >> testMixed21 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> testMixed22 [
+StashCommandGetOptsTestCase >> testMixed22 [
   | parser options processedOption processNonOption parsedOptions |
   options := Dictionary new
     add: 'directory' -> '/tmp/fileout';
     add: 'category' -> nil;
     yourself.
-  parser := TDCommandGetOpts
+  parser := StashCommandGetOpts
     parseCommand:
       (ReadStream on: 'fileout -d/tmp/fileout --category Index-Tests indexTests.gs').
   self assert: parser command = 'fileout'.
@@ -814,9 +814,9 @@ TDCommandGetOptsTestCase >> testMixed22 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> testMixed23 [
+StashCommandGetOptsTestCase >> testMixed23 [
   | parser errorSignalled exception |
-  parser := TDCommandGetOpts
+  parser := StashCommandGetOpts
     parseCommand:
       (ReadStream
         on:
@@ -842,14 +842,14 @@ TDCommandGetOptsTestCase >> testMixed23 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> testMixed24 [
+StashCommandGetOptsTestCase >> testMixed24 [
   | parser options processedOption processNonOption parsedOptions |
   options := Dictionary new
     add: 'directory' -> '/tmp/fileout';
     add: 'class' -> nil;
     add: 'package' -> nil;
     yourself.
-  parser := TDCommandGetOpts
+  parser := StashCommandGetOpts
     parseCommand:
       (ReadStream on: 'fileout -d/tmp/fileout -cp Index-Tests indexTests.gs').
   self assert: parser command = 'fileout'.
@@ -874,14 +874,14 @@ TDCommandGetOptsTestCase >> testMixed24 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandGetOptsTestCase >> testMixed25 [
+StashCommandGetOptsTestCase >> testMixed25 [
   | parser options processedOption processNonOption parsedOptions |
   options := Dictionary new
     add: 'directory' -> '/tmp/fileout';
     add: 'class' -> nil;
     add: 'package' -> nil;
     yourself.
-  parser := TDCommandGetOpts
+  parser := StashCommandGetOpts
     parseCommand:
       (ReadStream
         on: 'fileout -d/tmp/fileout --class --package Index-Tests indexTests.gs').

@@ -1,5 +1,5 @@
 Class {
-	#name : 'TDCommandGetOpts',
+	#name : 'StashCommandGetOpts',
 	#superclass : 'Object',
 	#instVars : [
 		'stream',
@@ -11,14 +11,14 @@ Class {
 }
 
 { #category : 'parsing' }
-TDCommandGetOpts class >> getOptsFor: aStream spec: optionSpec do: optionBlock nonOptionsDo: nonOptionBlock [
+StashCommandGetOpts class >> getOptsFor: aStream spec: optionSpec do: optionBlock nonOptionsDo: nonOptionBlock [
   ^ self new
     stream: aStream;
     getOpts: optionSpec do: optionBlock nonOptionsDo: nonOptionBlock
 ]
 
 { #category : 'parsing' }
-TDCommandGetOpts class >> getOptsLongFor: aStream longOptionSpec: longOptionSpec shortOptionAliases: shortOptionAliases do: optionBlock nonOptionsDo: nonOptionBlock [
+StashCommandGetOpts class >> getOptsLongFor: aStream longOptionSpec: longOptionSpec shortOptionAliases: shortOptionAliases do: optionBlock nonOptionsDo: nonOptionBlock [
   ^ self new
     stream: aStream;
     getOptsLong: longOptionSpec
@@ -28,19 +28,19 @@ TDCommandGetOpts class >> getOptsLongFor: aStream longOptionSpec: longOptionSpec
 ]
 
 { #category : 'parsing' }
-TDCommandGetOpts class >> parseCommand: aStream [
+StashCommandGetOpts class >> parseCommand: aStream [
   ^ self new
     parseCommand: aStream;
     yourself
 ]
 
 { #category : 'accessing' }
-TDCommandGetOpts >> command [
+StashCommandGetOpts >> command [
   ^ command
 ]
 
 { #category : 'parsing' }
-TDCommandGetOpts >> getOpts: optionSpec do: optionBlock nonOptionsDo: nonOptionBlock [
+StashCommandGetOpts >> getOpts: optionSpec do: optionBlock nonOptionsDo: nonOptionBlock [
   | optionSpecs |
   optionSpecs := self parseOptionSpec: optionSpec.
   self skipWhiteSpace.
@@ -53,7 +53,7 @@ TDCommandGetOpts >> getOpts: optionSpec do: optionBlock nonOptionsDo: nonOptionB
 ]
 
 { #category : 'parsing' }
-TDCommandGetOpts >> getOptsLong: optionSpecs do: optionBlock nonOptionsDo: nonOptionBlock [
+StashCommandGetOpts >> getOptsLong: optionSpecs do: optionBlock nonOptionsDo: nonOptionBlock [
   "optionSpecs is expected to be a dictionary whose keys are the option names and whose values are: #none, #required, or #optional; to indicate whether or not option arguments are expected"
 
   self
@@ -64,7 +64,7 @@ TDCommandGetOpts >> getOptsLong: optionSpecs do: optionBlock nonOptionsDo: nonOp
 ]
 
 { #category : 'parsing' }
-TDCommandGetOpts >> getOptsLong: optionSpecs short: shortOptionAliases do: optionBlock nonOptionsDo: nonOptionBlock [
+StashCommandGetOpts >> getOptsLong: optionSpecs short: shortOptionAliases do: optionBlock nonOptionsDo: nonOptionBlock [
   "optionSpecs is expected to be a dictionary whose keys are the option names and whose values are: #none, #required, or #optional; to indicate whether or not option arguments are expected"
 
   "shortOptionAliases is expected to be a dictionary whose keys are option characters and whose values are option names (i.e., keys into the optionSpecs dicationary)"
@@ -78,7 +78,7 @@ TDCommandGetOpts >> getOptsLong: optionSpecs short: shortOptionAliases do: optio
 ]
 
 { #category : 'parsing' }
-TDCommandGetOpts >> getOptsMixedLongShort: mixedOptionSpecs do: optionBlock nonOptionsDo: nonOptionBlock [
+StashCommandGetOpts >> getOptsMixedLongShort: mixedOptionSpecs do: optionBlock nonOptionsDo: nonOptionBlock [
   "mixedOptionSpecs is an array of option specs, for example:
 
     {#('directory' $d #'required').
@@ -110,7 +110,7 @@ TDCommandGetOpts >> getOptsMixedLongShort: mixedOptionSpecs do: optionBlock nonO
 ]
 
 { #category : 'private' }
-TDCommandGetOpts >> parseArgToken: tokenBlock [
+StashCommandGetOpts >> parseArgToken: tokenBlock [
   | peek tokenStream escaped atEndBlock |
   tokenStream := WriteStream on: String new.
   atEndBlock := [ 
@@ -143,7 +143,7 @@ TDCommandGetOpts >> parseArgToken: tokenBlock [
 ]
 
 { #category : 'private' }
-TDCommandGetOpts >> parseCommand [
+StashCommandGetOpts >> parseCommand [
   | char cmdStream |
   stream atEnd
     ifTrue: [ ^ '' ].
@@ -163,13 +163,13 @@ TDCommandGetOpts >> parseCommand [
 ]
 
 { #category : 'parsing' }
-TDCommandGetOpts >> parseCommand: aStream [
+StashCommandGetOpts >> parseCommand: aStream [
   stream := aStream.
   command := self parseCommand
 ]
 
 { #category : 'private' }
-TDCommandGetOpts >> parseLongOptionArg: required for: opt [
+StashCommandGetOpts >> parseLongOptionArg: required for: opt [
   | emptyTokenBlock peek |
   emptyTokenBlock := [ 
   required
@@ -192,7 +192,7 @@ TDCommandGetOpts >> parseLongOptionArg: required for: opt [
 ]
 
 { #category : 'private' }
-TDCommandGetOpts >> parseLongOptionName [
+StashCommandGetOpts >> parseLongOptionName [
   | peek endBlock optionNameStream |
   optionNameStream := WriteStream on: String new.
   endBlock := [ optionNameStream contents ].
@@ -210,7 +210,7 @@ TDCommandGetOpts >> parseLongOptionName [
 ]
 
 { #category : 'private' }
-TDCommandGetOpts >> parseLongOptions: optionSpecs shortOptions: shortOptionAliases do: optionBlock nonOptionsDo: nonOptionBlock [
+StashCommandGetOpts >> parseLongOptions: optionSpecs shortOptions: shortOptionAliases do: optionBlock nonOptionsDo: nonOptionBlock [
   | peek opt spec |
   self skipWhiteSpace.
   peek := stream peek.
@@ -321,7 +321,7 @@ TDCommandGetOpts >> parseLongOptions: optionSpecs shortOptions: shortOptionAlias
 ]
 
 { #category : 'private' }
-TDCommandGetOpts >> parseNonOptionArgs: nonOptionArgsBlock [
+StashCommandGetOpts >> parseNonOptionArgs: nonOptionArgsBlock [
   [ stream atEnd ]
     whileFalse: [ 
       self
@@ -331,7 +331,7 @@ TDCommandGetOpts >> parseNonOptionArgs: nonOptionArgsBlock [
 ]
 
 { #category : 'private' }
-TDCommandGetOpts >> parseOptionArg: required for: opt [
+StashCommandGetOpts >> parseOptionArg: required for: opt [
   | emptyTokenBlock peek |
   emptyTokenBlock := [ 
   required
@@ -359,7 +359,7 @@ TDCommandGetOpts >> parseOptionArg: required for: opt [
 ]
 
 { #category : 'private' }
-TDCommandGetOpts >> parseOptions: optionSpecs expectDash: expectDash do: optionBlock nonOptionsDo: nonOptionBlock [
+StashCommandGetOpts >> parseOptions: optionSpecs expectDash: expectDash do: optionBlock nonOptionsDo: nonOptionBlock [
   | peek opt spec |
   expectDash
     ifTrue: [ 
@@ -422,7 +422,7 @@ TDCommandGetOpts >> parseOptions: optionSpecs expectDash: expectDash do: optionB
 ]
 
 { #category : 'private' }
-TDCommandGetOpts >> parseOptionSpec: optionSpec [
+StashCommandGetOpts >> parseOptionSpec: optionSpec [
 	"The optionSpec argument is a string that specifies the option characters that are valid for this program. An option character in this string can be followed by a colon (:) to indicate that it takes a required argument. If an option character is followed by two colons (::), its argument is optional; this is a GNU extension."
 
   | optionSpecs optStream |
@@ -450,7 +450,7 @@ TDCommandGetOpts >> parseOptionSpec: optionSpec [
 ]
 
 { #category : 'private' }
-TDCommandGetOpts >> resolveAliasFor: optionCharacter optionSpecs: optionSpecs shortOptions: shortOptionAliases do: aBlock [
+StashCommandGetOpts >> resolveAliasFor: optionCharacter optionSpecs: optionSpecs shortOptions: shortOptionAliases do: aBlock [
   | alias spec |
   alias := shortOptionAliases
     at: optionCharacter
@@ -462,7 +462,7 @@ TDCommandGetOpts >> resolveAliasFor: optionCharacter optionSpecs: optionSpecs sh
 ]
 
 { #category : 'private' }
-TDCommandGetOpts >> skipWhiteSpace [
+StashCommandGetOpts >> skipWhiteSpace [
   | peekChar |
   stream atEnd
     ifTrue: [ ^ self ].
@@ -477,6 +477,6 @@ TDCommandGetOpts >> skipWhiteSpace [
 ]
 
 { #category : 'private' }
-TDCommandGetOpts >> stream: aStream [
+StashCommandGetOpts >> stream: aStream [
   stream := aStream
 ]

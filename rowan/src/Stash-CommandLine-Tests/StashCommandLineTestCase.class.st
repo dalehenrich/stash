@@ -1,20 +1,20 @@
 Class {
-	#name : 'TDCommandLineTestCase',
+	#name : 'StashCommandLineTestCase',
 	#superclass : 'TestCase',
 	#category : 'Stash-CommandLine-Tests'
 }
 
 { #category : 'as yet unclassified' }
-TDCommandLineTestCase >> assert: commandLine parsesInto: expectedCommands [
+StashCommandLineTestCase >> assert: commandLine parsesInto: expectedCommands [
   ^ self assert: commandLine shouldParse: true into: expectedCommands
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandLineTestCase >> assert: commandLine shouldParse: shouldParse into: expectedCommands [
+StashCommandLineTestCase >> assert: commandLine shouldParse: shouldParse into: expectedCommands [
   | parsed count |
   parsed := false.
   count := 1.
-  TDCommandLine
+  StashCommandLine
     fromStream: commandLine readStream
     forEachCommand: [ :command | 
       | tokens expectedTokens expectedCommand |
@@ -31,18 +31,18 @@ TDCommandLineTestCase >> assert: commandLine shouldParse: shouldParse into: expe
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandLineTestCase >> test01 [
+StashCommandLineTestCase >> test01 [
   self assert: '' shouldParse: false into: #().
   self
     assert: 'cd'
     parsesInto:
-      {(TDCommandLine new
+      {(StashCommandLine new
         tokens: {'cd'};
         yourself)}.
   self
     assert: 'cd ..'
     parsesInto:
-      {(TDCommandLine new
+      {(StashCommandLine new
         tokens:
             {'cd'.
               '..'};
@@ -50,7 +50,7 @@ TDCommandLineTestCase >> test01 [
   self
     assert: 'cd /home/bin/xxx'
     parsesInto:
-      {(TDCommandLine new
+      {(StashCommandLine new
         tokens:
             {'cd'.
               '/home/bin/xxx'};
@@ -58,63 +58,63 @@ TDCommandLineTestCase >> test01 [
   self
     assert: 'cd /home/bin/xxx; ls'
     parsesInto:
-      {(TDCommandLine new
+      {(StashCommandLine new
         tokens:
             {'cd'.
               '/home/bin/xxx'};
         yourself).
-      (TDCommandLine new
+      (StashCommandLine new
         tokens: {'ls'};
         yourself)}.
   self
     assert: 'mm copy Topez-Core filetree:///opt/git/tode/repository; edit'
     parsesInto:
-      {(TDCommandLine new
+      {(StashCommandLine new
         tokens:
             {'mm'.
               'copy'.
               'Topez-Core'.
               'filetree:///opt/git/tode/repository'};
         yourself).
-      (TDCommandLine new
+      (StashCommandLine new
         tokens: {'edit'};
         yourself)}
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandLineTestCase >> test02 [
+StashCommandLineTestCase >> test02 [
   self
     assert: 'c > xxx'
     parsesInto:
-      {(TDCommandLine new
+      {(StashCommandLine new
         tokens: #('c');
         redirectTarget: 'xxx';
         yourself)}
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandLineTestCase >> test03 [
+StashCommandLineTestCase >> test03 [
   self
     assert: 'mm copy Topez-Core filetree:///opt/git/tode/repository; edit'
     parsesInto:
-      {(TDCommandLine new
+      {(StashCommandLine new
         tokens:
             {'mm'.
               'copy'.
               'Topez-Core'.
               'filetree:///opt/git/tode/repository'};
         yourself).
-      (TDCommandLine new
+      (StashCommandLine new
         tokens: {'edit'};
         yourself)}
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandLineTestCase >> test04 [
+StashCommandLineTestCase >> test04 [
   self
     assert: 'mm copy Topez-Core filetree:///opt/git/tode/repository > xxx'
     parsesInto:
-      {(TDCommandLine new
+      {(StashCommandLine new
         tokens:
             #('mm' 'copy' 'Topez-Core' 'filetree:///opt/git/tode/repository');
         redirectTarget: 'xxx';
@@ -122,82 +122,82 @@ TDCommandLineTestCase >> test04 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandLineTestCase >> test05 [
+StashCommandLineTestCase >> test05 [
   self
     assert: 'browse amethod Object>>at:put: > xxx'
     parsesInto:
-      {(TDCommandLine new
+      {(StashCommandLine new
         tokens: #('browse' 'amethod' 'Object>>at:put:');
         redirectTarget: 'xxx';
         yourself)}
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandLineTestCase >> test06 [
+StashCommandLineTestCase >> test06 [
   self
     assert: 'browse amethod Object class>>new > xxx'
     parsesInto:
-      {(TDCommandLine new
+      {(StashCommandLine new
         tokens: #('browse' 'amethod' 'Object' 'class>>new');
         redirectTarget: 'xxx';
         yourself)}
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandLineTestCase >> test07 [
+StashCommandLineTestCase >> test07 [
   self
     assert: 'browse amethod @1 > xxx'
     parsesInto:
-      {(TDCommandLine new
+      {(StashCommandLine new
         tokens: #('browse' 'amethod' '@1');
         redirectTarget: 'xxx';
         yourself)}
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandLineTestCase >> test08 [
+StashCommandLineTestCase >> test08 [
   self
     assert: 'browse method #> > xxx'
-    parsesInto: {(TDCommandLine new tokens: #('browse' 'method') yourself)}
+    parsesInto: {(StashCommandLine new tokens: #('browse' 'method') yourself)}
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandLineTestCase >> test09 [
+StashCommandLineTestCase >> test09 [
   self
     assert: 'query `this is a test'' " < ; # \ string\`'
     parsesInto:
-      {(TDCommandLine new
+      {(StashCommandLine new
         tokens: #('query' 'this is a test'' " < ; # \ string\');
         yourself)}
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandLineTestCase >> test10 [
+StashCommandLineTestCase >> test10 [
   self
     assert: 'testopt -c foo arg1 > result'
     parsesInto:
-      {(TDCommandLine new
+      {(StashCommandLine new
         tokens: #('testopt' '-c' 'foo' 'arg1');
         redirectTarget: 'result';
         yourself)}
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandLineTestCase >> test11 [
+StashCommandLineTestCase >> test11 [
   self
     assert: 'command subcommand -c foo arg1 > result'
     parsesInto:
-      {(TDCommandLine new
+      {(StashCommandLine new
         tokens: #('command' 'subcommand' '-c' 'foo' 'arg1');
         redirectTarget: 'result';
         yourself)}
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandLineTestCase >> test12 [
+StashCommandLineTestCase >> test12 [
   | commandLine |
   commandLine := 'command -c foo arg1 > result'.
-  TDCommandLine
+  StashCommandLine
     line: commandLine
     forEachCommand: [ :command | 
       | options args |
@@ -215,10 +215,10 @@ TDCommandLineTestCase >> test12 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandLineTestCase >> test13 [
+StashCommandLineTestCase >> test13 [
   | commandLine |
   commandLine := 'command subcommand -c foo arg1 > result'.
-  TDCommandLine
+  StashCommandLine
     line: commandLine
     forEachCommand: [ :command | 
       | options args |
@@ -238,10 +238,10 @@ TDCommandLineTestCase >> test13 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandLineTestCase >> test14 [
+StashCommandLineTestCase >> test14 [
   | commandLine |
   commandLine := 'command  -c foo arg1 > result'.
-  TDCommandLine
+  StashCommandLine
     line: commandLine
     forEachCommand: [ :command | 
       | options args |
@@ -259,10 +259,10 @@ TDCommandLineTestCase >> test14 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandLineTestCase >> test15 [
+StashCommandLineTestCase >> test15 [
   | commandLine |
   commandLine := 'command subcommand -c foo arg1 > result'.
-  TDCommandLine
+  StashCommandLine
     line: commandLine
     forEachCommand: [ :command | 
       | options args |
@@ -281,10 +281,10 @@ TDCommandLineTestCase >> test15 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandLineTestCase >> test16 [
+StashCommandLineTestCase >> test16 [
   | commandLine |
   commandLine := 'command  -c foo arg1 > result'.
-  TDCommandLine
+  StashCommandLine
     line: commandLine
     forEachCommand: [ :command | 
       | options args |
@@ -302,10 +302,10 @@ TDCommandLineTestCase >> test16 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandLineTestCase >> test17 [
+StashCommandLineTestCase >> test17 [
   | commandLine |
   commandLine := 'command subcommand -c foo arg1 > result'.
-  TDCommandLine
+  StashCommandLine
     line: commandLine
     forEachCommand: [ :command | 
       | options args |
@@ -325,10 +325,10 @@ TDCommandLineTestCase >> test17 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandLineTestCase >> test18 [
+StashCommandLineTestCase >> test18 [
   | commandLine |
   commandLine := './command'.
-  TDCommandLine
+  StashCommandLine
     line: commandLine
     forEachCommand: [ :command | 
       | opts args |
@@ -345,10 +345,10 @@ TDCommandLineTestCase >> test18 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandLineTestCase >> test19 [
+StashCommandLineTestCase >> test19 [
   | commandLine |
   commandLine := './command '.
-  TDCommandLine
+  StashCommandLine
     line: commandLine
     forEachCommand: [ :command | 
       | opts args |
@@ -365,10 +365,10 @@ TDCommandLineTestCase >> test19 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandLineTestCase >> test20 [
+StashCommandLineTestCase >> test20 [
   | commandLine |
   commandLine := 'command --a subcommand --b=optionBArg arg1'.
-  TDCommandLine
+  StashCommandLine
     line: commandLine
     forEachCommand: [ :command | 
       | options args subCommandLine subCommandArgPtrIndex |
@@ -385,7 +385,7 @@ TDCommandLineTestCase >> test20 [
       subCommandLine := command commandLine
         copyFrom: (command argPtrs at: subCommandArgPtrIndex)
         to: command commandLine size.
-      TDCommandLine
+      StashCommandLine
         line: subCommandLine
         forEachCommand: [ :subCommand | 
           | subOptions subArgs |
@@ -402,13 +402,13 @@ TDCommandLineTestCase >> test20 [
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandLineTestCase >> test21 [
+StashCommandLineTestCase >> test21 [
 	| commandLine sawCommands |
 	commandLine := 'command -c foo arg1 > result
   skipMe subcommand -c foo arg1 > result
 command subcommand -c foo arg1 > result'.
 	sawCommands := false.
-	TDCommandLine
+	StashCommandLine
 		fromStream: commandLine readStream
 		selectLine: [ :cmdLine | cmdLine beginsWith: 'command' ]
 		forEachCommand: [ :command | 
@@ -418,17 +418,17 @@ command subcommand -c foo arg1 > result'.
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandLineTestCase >> testBackSlashNewLineEscape [
+StashCommandLineTestCase >> testBackSlashNewLineEscape [
   self
     assert:
       'ls
 cd \
    /home'
     parsesInto:
-      {(TDCommandLine new
+      {(StashCommandLine new
         tokens: #('ls');
         yourself).
-      (TDCommandLine new
+      (StashCommandLine new
         tokens: #('cd' '/home');
         yourself)}.
   self
@@ -438,29 +438,29 @@ cd \
 --port=1750 --log=all \
               --logTo=transcript'
     parsesInto:
-      {(TDCommandLine new
+      {(StashCommandLine new
         tokens:
             #('./gemServer' '--register=seaside'  '--type=zinc'  '--port=1750' '--log=all'  '--logTo=transcript');
         yourself)}
 ]
 
 { #category : 'as yet unclassified' }
-TDCommandLineTestCase >> testHashComment [
+StashCommandLineTestCase >> testHashComment [
   self
     assert: 'cd /home/bin/xxx; ls'
     parsesInto:
-      {(TDCommandLine new
+      {(StashCommandLine new
         tokens:
             {'cd'.
               '/home/bin/xxx'};
         yourself).
-      (TDCommandLine new
+      (StashCommandLine new
         tokens: {'ls'};
         yourself)}.
   self
     assert: 'cd /home/bin/xxx#; ls'
     parsesInto:
-      {(TDCommandLine new
+      {(StashCommandLine new
         tokens:
             {'cd'.
               '/home/bin/xxx'};
@@ -468,14 +468,14 @@ TDCommandLineTestCase >> testHashComment [
   self
     assert: 'c > xxx'
     parsesInto:
-      {(TDCommandLine new
+      {(StashCommandLine new
         tokens: #('c');
         redirectTarget: 'xxx';
         yourself)}.
   self
     assert: 'c #> xxx'
     parsesInto:
-      {(TDCommandLine new
+      {(StashCommandLine new
         tokens: #('c');
         yourself)}
 ]
