@@ -15,20 +15,20 @@ topazArgs=""
 stashArgs=""
 doneTopaz="false"
 for argument in $* ; do
-#	echo "===>$argument"
+	echo "===>$argument"
 	if [ "$argument" = "--" ] ; then
 		doneTopaz="true"
 	else
 		if [ "${doneTopaz}" = "true" ] ; then
-			stashArgs="$stashArgs $argument"
+			stashArgs+=" $argument"
 		else
-			topazArgs="$topazArgs $argument"
+			topazArgs+=" $argument"
 		fi
 	fi
 done
 
-#	echo "topaz args: $topazArgs"
-#	echo "stash args: $stashArgs"
+	echo "topaz args: $topazArgs"
+	echo "stash args: $stashArgs"
 
 file=`mktemp`
 
