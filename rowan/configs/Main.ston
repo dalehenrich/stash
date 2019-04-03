@@ -13,7 +13,9 @@ RwProjectLoadConfiguration {
 		] : {
 			'core' : {
 				#packageNames : [
-					'Stash-Core'
+					'Stash-Core',
+					'Stash-CommandLine',
+					'Stash-CommandLine-Tests'
 				]
 			},
 			'tools' : {
