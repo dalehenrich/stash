@@ -58,13 +58,18 @@ StashScript >> executeScript [
 { #category : 'accessing' }
 StashScript >> stashArgs [
 
-	^ stashArgs
+	^ stashArgs ifNil: [ '' ]
 ]
 
 { #category : 'accessing' }
 StashScript >> stashArgString: aString [
 
-	stashArgs := aString
+	| index |
+	index := aString indexOfSubCollection:  '--' startingAt: 1.
+	stashArgs := index = 0
+		ifTrue: [ '' ]
+		ifFalse: [ 
+			(aString copyFrom: index + 2 to: aString size) copyReplaceChar: $" with: $`]
 ]
 
 { #category : 'accessing' }

@@ -8,20 +8,22 @@
 #		command-line interpreter
 #
 
+echo "0: $@"
 stashFile=`realpath $1`
 pwd=`pwd`
 shift
+# StashScript class will do it's own parsing of the command line args (in Smalltalk)
+#		just stripping out topaz arguments
+stashArgs="$*" 
 topazArgs=""
-stashArgs=""
 doneTopaz="false"
-for argument in $* ; do
+echo "1: $@"
+for argument in $@ ; do
 	echo "===>$argument"
 	if [ "$argument" = "--" ] ; then
 		doneTopaz="true"
 	else
-		if [ "${doneTopaz}" = "true" ] ; then
-			stashArgs+=" $argument"
-		else
+		if [ "${doneTopaz}" != "true" ] ; then
 			topazArgs+=" $argument"
 		fi
 	fi
