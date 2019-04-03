@@ -33,10 +33,14 @@ done
 #	echo "stash args: $stashArgs"
 
 file=`mktemp`
+logFile=`mktemp`
+
+echo "log file: $logFile"
 
 cat - > $file << EOF
 
-! display pauseonerror
+	output push $logFile only
+	display pauseonerror
 
 	login
 
@@ -54,15 +58,17 @@ cat - > $file << EOF
 	stash executeScript
 %
 
+	output pop
+	obj2 **
 	exit
 
 EOF
 
 #
-#	for debugging, open topaz for interactive execution and input $file
-#		(comment out redirected startTopaz)
+#	for debugging, open topaz for interactive execution and input $file,
+#		comment out redirected startTopaz and the exit in topaz script
 #
-# echo $file
+#	echo $file
 #	$GS_HOME/bin/startTopaz $topazArgs
 
-$GS_HOME/bin/startTopaz $topazArgs < $file
+ $GS_HOME/bin/startTopaz $topazArgs < $file

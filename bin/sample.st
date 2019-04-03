@@ -21,7 +21,7 @@ ExampleScript >> executeCommand: command [
           args := operands ].
      opts
           at: 'help'
-          ifPresent: [ self usage ]
+          ifPresent: [ ^ self usage ]
           ifAbsent: [
                opts at: 'print' ifPresent: [:optionalArg |
                     Transcript cr; show: optionalArg asString ].
@@ -30,9 +30,13 @@ ExampleScript >> executeCommand: command [
 ]
 
 { #category : 'usage' }
-ExampleScript >> usage: script [
-     self manPageClass
-          viewManPage:
+ExampleScript >> usage [
+	| dashes |
+	dashes := '----------------------------------------------------
+'.
+  ^ dashes,
+		(self manPageClass
+          fromString:
 'NAME
      exampleScript - example
 SYNOPSIS
@@ -42,14 +46,13 @@ EXAMPLES
      ./exampleScript --help
      ./exampleScript -h
 
-     ./exampleScript --print="\`hi there\`"
-     ./exampleScript -p "\`hi there\`"
+     ./exampleScript --print=\`hi there\`
+     ./exampleScript -p \`hi there\`
 
      ./exampleScript --print=hi
      ./exampleScript -p hi
 
      ./exampleScript --print
      ./exampleScript -p
-'
-          script: script
+') printString, dashes
 ]

@@ -56,6 +56,12 @@ StashScript >> executeScript [
 ]
 
 { #category : 'accessing' }
+StashScript >> manPageClass [
+
+	^ StashManPage
+]
+
+{ #category : 'accessing' }
 StashScript >> stashArgs [
 
 	^ stashArgs ifNil: [ '' ]

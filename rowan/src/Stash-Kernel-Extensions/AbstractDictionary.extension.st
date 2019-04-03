@@ -1,20 +1,29 @@
 Extension { #name : 'AbstractDictionary' }
 
 { #category : '*stash-kernel-extensions' }
-AbstractDictionary >> at: key ifPresent: aBlock [
-  "Lookup the given key in the receiver. If it is present, answer the value of evaluating the given block with the value associated with the key. Otherwise, answer nil."
+AbstractDictionary >> at: key ifAbsent: absentBlock ifPresent: oneOrZeroArgBlock [ 
+	"Lookup the given key in the receiver. If it is present, answer the value of evaluating the oneOrZeroArgBlock
+		with the value associated with the key, otherwise answer the value of absentBlock."
 
-  | v |
-  v := self at: key ifAbsent: [ ^ nil ].
-  ^ aBlock value: v
-
+	self at: key ifPresent: [ :v | ^ oneOrZeroArgBlock cull: v ].
+	^ absentBlock value
 ]
 
 { #category : '*stash-kernel-extensions' }
-AbstractDictionary >> at: key ifPresent: oneArgBlock ifAbsent: absentBlock [
-  "Lookup the given key in the receiver. If it is present, answer the value of evaluating the oneArgBlock with the value associated with the key, otherwise answer the value of absentBlock."
+AbstractDictionary >> at: key ifPresent: aBlock [
+	"Lookup the given key in the receiver. If it is present, answer the value of evaluating the given
+		block with the value associated with the key. Otherwise, answer nil."
 
-  self at: key ifPresent: [ :v | ^ oneArgBlock value: v ].
-  ^ absentBlock value
+	| v |
+	v := self at: key ifAbsent: [ ^ nil ].
+	^ aBlock cull: v
+]
 
+{ #category : '*stash-kernel-extensions' }
+AbstractDictionary >> at: key ifPresent: oneOrZeroArgBlock ifAbsent: absentBlock [
+	"Lookup the given key in the receiver. If it is present, answer the value of evaluating the oneOrZeroArgBlock
+		with the value associated with the key, otherwise answer the value of absentBlock."
+
+	self at: key ifPresent: [ :v | ^ oneOrZeroArgBlock cull: v ].
+	^ absentBlock value
 ]
