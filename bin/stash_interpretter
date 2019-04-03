@@ -3,9 +3,9 @@
 #	command line interpretter for stash script
 #	
 #	arguments up to the first -- are interpreted as arguments to 
-#		$GS_HOME/bin/startTopaz.
-#	arguments after the first -- are passed to the smalltalk
 #		command-line interpreter
+#	arguments after the first -- are passed to the smalltalk
+#		$GS_HOME/bin/startTopaz.
 #
 
 #	echo "0: $@"
@@ -15,22 +15,22 @@ shift
 # StashScript class will do it's own parsing of the command line args (in Smalltalk)
 #		just stripping out topaz arguments
 stashArgs="$*" 
-topazArgs=""
-doneTopaz="false"
+topazArgs="$GEMSTONE_SCRIPT_ARGS"
+startTopaz="false"
 #	echo "1: $@"
 for argument in $@ ; do
 #	echo "===>$argument"
 	if [ "$argument" = "--" ] ; then
-		doneTopaz="true"
+		startTopaz="true"
 	else
-		if [ "${doneTopaz}" != "true" ] ; then
+		if [ "${startTopaz}" = "true" ] ; then
 			topazArgs+=" $argument"
 		fi
 	fi
 done
 
-#	echo "topaz args: $topazArgs"
-#	echo "stash args: $stashArgs"
+	echo "topaz args: $topazArgs"
+	echo "stash args: $stashArgs"
 
 file=`mktemp`
 logFile=`mktemp`
@@ -63,6 +63,12 @@ cat - > $file << EOF
 	exit
 
 EOF
+
+if [ "${topazArgs}x" = "x" ] ; then
+	echo "missing startTopaz command line args (stoneName -lq)"
+	echo "	export GEMSTONE_SCRIPT_ARGS=\"<stone-name> -lq\""
+	exit 1
+fi
 
 #
 #	for debugging, open topaz for interactive execution and input $file,

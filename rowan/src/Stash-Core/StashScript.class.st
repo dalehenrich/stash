@@ -1,3 +1,19 @@
+"
+To debug a script in the image.
+
+1. Load the script class into your image... use the path to your script file:
+	[Rowan classTools stashClassLoadTool loadTonelClassFile: '/home/dhenrich/rogue/_homes/rogue/_home/server/stones/stash_3215/git/stash/bin/template.st'] 
+		on: Error do: [:ex | self halt]
+
+2. Then exicute the following to duplicate the code that is run to execute your script ... use the correct class and path:
+	| stash |
+	stash := (System myUserProfile symbolList objectNamed: 'TEMPLATE') 
+		stashFilePath: '/home/dhenrich/rogue/_homes/rogue/_home/server/stones/stash_3215/git/stash/bin/template.st' 
+		topazArgs: 'stash_3215 -lq' 
+		stashArgs: '--help' 
+		workingDir: '/home/dhenrich/rogue/_homes/rogue/_home/server/stones/stash_3215/git/stash'.
+	stash setupAndExecuteScript
+"
 Class {
 	#name : 'StashScript',
 	#superclass : 'Object',
@@ -82,14 +98,13 @@ StashScript >> scriptOptions [
 StashScript >> setupAndExecuteScript [
 
 	command := StashCommandLine 
-		commandLine: self class name asString, self stashArgs 
+		commandLine: self class name asString, ' ', self stashArgs 
 		redirectTarget: nil.
      command
 		getOptsMixedLongShort: self scriptOptions
 		optionsAndArguments: [ :options :operands |
 			opts := options.
 			args := operands ].
-
 	^ self executeScript
 ]
 
@@ -103,10 +118,10 @@ StashScript >> stashArgs [
 StashScript >> stashArgString: aString [
 
 	| index |
-	index := aString indexOfSubCollection:  '--' startingAt: 1.
+	index := aString indexOfSubCollection:  ' -- ' startingAt: 1.
 	stashArgs := index = 0
-		ifTrue: [ '' ]
-		ifFalse: [ aString copyFrom: index + 2 to: aString size ]
+		ifTrue: [ aString]
+		ifFalse: [ aString copyFrom: 1 to: index - 1 ]
 ]
 
 { #category : 'accessing' }

@@ -39,7 +39,7 @@ ExampleScript >> usage [
 'NAME
      exampleScript - example
 SYNOPSIS
-     exampleScript [-h|--help] [-p [<arg>] | --print[=<arg>]]
+     exampleScript [-h|--help] [-p [<arg>] | --print[=<arg>]] [ -- <topaz-specific-options> ]
 DESCRIPTION
 EXAMPLES
      ./exampleScript --help

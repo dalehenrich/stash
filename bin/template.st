@@ -39,7 +39,7 @@ ExampleScript >> usage [
 'NAME
      TEMPLATE - example
 SYNOPSIS
-     TEMPLATE [-h|--help] [--print=<arg>]
+     TEMPLATE [-h|--help] [--print=<arg>] [ -- <topaz-specific-options> ]
 DESCRIPTION
 EXAMPLES
 	TEMPLATE --help
