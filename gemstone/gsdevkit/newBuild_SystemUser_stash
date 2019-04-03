@@ -1,0 +1,36 @@
+set -e
+. defStone.env
+export vers="3.2.15"
+
+rm -rf *.log *.out
+
+newExtent -s product/bin/extent0.dbf $GEMSTONE_NAME
+
+$ROWAN_PROJECTS_HOME/Rowan/platforms/gemstone/topaz/3.2.15/installRowan $GEMSTONE_NAME
+
+startTopaz $GEMSTONE_NAME -l << EOF
+
+	set u SystemUser p swordfish
+	login
+
+	run
+	| url |
+	UserGlobals 
+		at: #MetacelloPlatform put: nil;
+		at: #TodeCommandError put: nil;
+		yourself.
+	url := 'file:$ROWAN_PROJECTS_HOME/stash/rowan/specs/stash.ston'.
+	false 
+		ifTrue: [ 
+			Rowan projectTools load loadProjectFromSpecUrl: url ]
+		ifFalse: [
+			Rowan projectTools clone
+				cloneSpecUrl: url
+				gitRootPath: '$ROWAN_PROJECTS_HOME'
+				useSsh: true.
+			Rowan projectTools load loadProjectNamed: 'stash'. ].
+%
+	commit
+	exit
+EOF
+
