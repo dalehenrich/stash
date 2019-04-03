@@ -1,4 +1,4 @@
-#!/home/dhenrich/rogue/_homes/rogue/_home/shared/repos/stash/bin/stash_interpretter
+#!/usr/bin/smalltalk
 "
 Example executable script
 "

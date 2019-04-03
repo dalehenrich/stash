@@ -6,9 +6,8 @@ Class {
 
 { #category : 'as yet unclassified' }
 TDCommandGetOptsTestCase >> assert: aString includesSubstring: subString [
-	"Pharo1.4/Pharo2.0 compat"
 
-	self assert: (MetacelloPlatform current string: aString includesSubstring: subString)
+	self assert: (aString _findString: aString startingAt: 1 ignoreCase: false) ~~ 0
 ]
 
 { #category : 'as yet unclassified' }

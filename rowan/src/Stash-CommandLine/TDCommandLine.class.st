@@ -416,7 +416,7 @@ TDCommandLine >> redirectTarget: aString [
 { #category : 'accessing' }
 TDCommandLine >> subCommand [
   self rawTokens size < 2
-    ifTrue: [ TodeCommandError signal: 'expected a subcommand' ].
+    ifTrue: [ self error: 'expected a subcommand' ].
   ^ self rawTokens at: 2
 ]
 

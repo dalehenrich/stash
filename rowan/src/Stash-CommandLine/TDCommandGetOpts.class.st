@@ -39,11 +39,6 @@ TDCommandGetOpts >> command [
   ^ command
 ]
 
-{ #category : 'private' }
-TDCommandGetOpts >> error: aString [
-  TodeCommandError signal: aString
-]
-
 { #category : 'parsing' }
 TDCommandGetOpts >> getOpts: optionSpec do: optionBlock nonOptionsDo: nonOptionBlock [
   | optionSpecs |

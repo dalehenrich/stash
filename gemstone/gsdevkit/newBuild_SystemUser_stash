@@ -15,10 +15,6 @@ startTopaz $GEMSTONE_NAME -l << EOF
 
 	run
 	| url |
-	UserGlobals 
-		at: #MetacelloPlatform put: nil;
-		at: #TodeCommandError put: nil;
-		yourself.
 	url := 'file:$ROWAN_PROJECTS_HOME/stash/rowan/specs/stash.ston'.
 	false 
 		ifTrue: [ 

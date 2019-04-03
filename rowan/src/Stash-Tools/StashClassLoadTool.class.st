@@ -1,3 +1,16 @@
+"
+""Load a single tonel class file""
+Rowan classTools stashClassLoadTool loadTonelClassFile: '$GS_HOME/shared/repos/stash/bin/sample.st'.
+
+""Load several class directories from filetree repo in once load""
+Rowan classTools stashClassLoadTool loadFiletreeClassDirectories:
+	{
+		'$GS_HOME/shared/repos/stash/tode/TDCommandGetOpts.class'.
+		'$GS_HOME/shared/repos/stash/tode/TDCommandGetOptsTestCase.class'.
+		'$GS_HOME/shared/repos/stash/tode/TDCommandLine.class'.
+		'$GS_HOME/shared/repos/stash/tode/TDCommandLineTestCase.class'.
+	}
+"
 Class {
 	#name : 'StashClassLoadTool',
 	#superclass : 'RwClassTool',

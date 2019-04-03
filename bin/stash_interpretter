@@ -8,7 +8,7 @@
 #		command-line interpreter
 #
 
-stashFile="$1"
+stashFile=`realpath $1`
 pwd=`pwd`
 shift
 topazArgs=""
@@ -26,7 +26,11 @@ for argument in "$*" ; do
 	fi
 done
 
-$GS_HOME/bin/startTopaz $topazArgs << EOF
+file=`mktemp`
+
+cat - > $file << EOF
+
+! display pauseonerror
 
 	login
 
@@ -43,6 +47,11 @@ $GS_HOME/bin/startTopaz $topazArgs << EOF
 		workingDir: '$pwd'.
 	stash executeScript
 %
+
 	exit
 
 EOF
+
+# echo $file
+
+$GS_HOME/bin/startTopaz $topazArgs < $file
