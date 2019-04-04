@@ -143,10 +143,28 @@ StashClassTool >> loadFiletreeClassDirectories: directoryPathArray [
 ]
 
 { #category : 'loading' }
+StashClassTool >> loadFiletreeClassDirectories: directoryPathArray projectName: projectName packageName: packageName [
+
+	| projectDefinition |
+	projectDefinition := RwRepositoryComponentProjectFiletreeReaderVisitor readClassDirectories: directoryPathArray projectName: projectName packageName: packageName.
+	Rowan projectTools load loadProjectDefinition: projectDefinition.
+	^ projectDefinition
+]
+
+{ #category : 'loading' }
 StashClassTool >> loadFiletreeClassDirectory: directoryPath [
 
 	| projectDefinition |
 	projectDefinition := RwRepositoryComponentProjectFiletreeReaderVisitor readClassDirectory: directoryPath.
+	Rowan projectTools load loadProjectDefinition: projectDefinition.
+	^ projectDefinition
+]
+
+{ #category : 'loading' }
+StashClassTool >> loadFiletreeClassDirectory: directoryPath  projectName: projectName packageName: packageName [
+
+	| projectDefinition |
+	projectDefinition := RwRepositoryComponentProjectFiletreeReaderVisitor readClassDirectory: directoryPath projectName: projectName packageName: packageName.
 	Rowan projectTools load loadProjectDefinition: projectDefinition.
 	^ projectDefinition
 ]
