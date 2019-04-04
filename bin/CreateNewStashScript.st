@@ -49,7 +49,7 @@ CreateNewStashScript >> usage [
 'NAME
 	CreateNewStashScript.st - create a new script template
 SYNOPSIS
-	CreateNewStashScript.st [-h|--help] [--dir=<directory-path>]--name=<script-name> /
+	CreateNewStashScript.st [-h|--help] [--dir=<directory-path>]--name=<script-name> \
 		[ -- <startTopaz-specific-options> ]
 DESCRIPTION
 
