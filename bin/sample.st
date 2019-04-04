@@ -3,13 +3,13 @@
 Example executable script
 "
 Class {
-     #name : 'ExampleScript',
+     #name : 'Sample',
      #superclass : 'StashScript',
-     #category : 'Examples'
+     #category : 'Stash-Scripts'
 }
 
 { #category : 'script execution' }
-ExampleScript >> scriptOptions [
+Sample >> scriptOptions [
 	^ {
 			#('help' $h #'none').
 			#('print' $p #'optional').
@@ -17,7 +17,7 @@ ExampleScript >> scriptOptions [
 ]
 
 { #category : 'script execution' }
-ExampleScript >> executeScript [
+Sample >> executeScript [
 
 	opts
 		at: 'help'
@@ -38,7 +38,7 @@ ExampleScript >> executeScript [
 ]
 
 { #category : 'usage' }
-ExampleScript >> usage [
+Sample >> usage [
 	| dashes |
 	dashes := '----------------------------------------------------
 '.

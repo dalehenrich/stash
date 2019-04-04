@@ -5,7 +5,7 @@ Example executable script
 Class {
      #name : 'TEMPLATE',
      #superclass : 'StashScript',
-     #category : 'Scripts'
+     #category : 'Stash-Scripts'
 }
 
 { #category : 'script execution' }

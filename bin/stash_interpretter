@@ -19,9 +19,10 @@ topazArgs="$GEMSTONE_SCRIPT_ARGS"
 startTopaz="false"
 #	echo "1: $@"
 for argument in $@ ; do
-#	echo "===>$argument"
+	echo "===>$argument"
 	if [ "$argument" = "--" ] ; then
 		startTopaz="true"
+		topazArgs=""
 	else
 		if [ "${startTopaz}" = "true" ] ; then
 			topazArgs+=" $argument"
@@ -47,7 +48,7 @@ cat - > $file << EOF
 	print
 	| projectDefinition scriptClassDefinition stashFile stash |
 	stashFile := '$stashFile'.
-	projectDefinition := Rowan classTools stashClassLoadTool 
+	projectDefinition := Rowan classTools stashClassTool 
 		loadTonelClassFile: stashFile.
 	scriptClassDefinition := (projectDefinition packages values any) classDefinitions values any.
 	stash := (System myUserProfile symbolList objectNamed: scriptClassDefinition name) 
