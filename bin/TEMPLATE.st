@@ -37,14 +37,18 @@ ExampleScript >> usage [
 		(self manPageClass
 			fromString:
 'NAME
-     TEMPLATE - example
+	TEMPLATE - example script, than can be used as a template to create your own script
 SYNOPSIS
-     TEMPLATE [-h|--help] [--print=<arg>] [ -- <topaz-specific-options> ]
+	TEMPLATE.st [-h|--help] [ -- <startTopaz-specific-options> ]
 DESCRIPTION
-EXAMPLES
-	TEMPLATE --help
-	TEMPLATE -h
 
-	TEMPLATE --print=\`hi there\`
+	This TEMPLATE is set up with help (--help).
+
+	Use the env var GEMSTONE_SCRIPT_ARGS to define default <stone-name> and other
+	topaz arguments (<startTopaz-specific-options>) to be used when running scripts.
+
+EXAMPLES
+	TEMPLATE.st --help
+	TEMPLATE.st -h
 ') printString, dashes
 ]

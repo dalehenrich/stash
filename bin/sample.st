@@ -18,13 +18,22 @@ ExampleScript >> scriptOptions [
 
 { #category : 'script execution' }
 ExampleScript >> executeScript [
+
 	opts
 		at: 'help'
     ifAbsent: [
+			| stream |
+			stream := WriteStreamPortable on: String new.
+			args size > 0
+				ifTrue: [
+					stream nextPutAll: '|args| '.
+					args do: [:arg | stream nextPutAll: arg; space ] ]
+				ifFalse: [ stream nextPutAll: 'no args ' ].
 			opts at: 'print' 
 				ifPresent: [:optionalArg |
-					^ optionalArg asString ].
-			^ 'noop' ]
+					stream nextPutAll: ' |print| ', optionalArg asString ]
+				ifAbsent: [ stream nextPutAll: ' || no --print ' ].
+			^ stream contents ]
     ifPresent: [ ^ self usage ]
 ]
 
@@ -37,21 +46,30 @@ ExampleScript >> usage [
 		(self manPageClass
           fromString:
 'NAME
-     exampleScript - example
+	sample - example script
 SYNOPSIS
-     exampleScript [-h|--help] [-p [<arg>] | --print[=<arg>]] [ -- <topaz-specific-options> ]
+	sample [-h|--help] [-p [<arg>] | --print[=<arg>]] [ <positional-args> ]\
+		[ -- <topaz-specific-options> ]
 DESCRIPTION
+
+	This example script shows how to define command options and positional arguments.
+
+	Use the env var GEMSTONE_SCRIPT_ARGS to define default <stone-name> and other
+	topaz arguments (<startTopaz-specific-options>) to be used when running scripts.
+
 EXAMPLES
-     ./exampleScript --help
-     ./exampleScript -h
+	sample.st --help
+	sample.st -h
 
-     ./exampleScript --print=\`hi there\`
-     ./exampleScript -p \`hi there\`
+	sample.st --print=\`hi there\`
+	sample.st -p \`hi there\` arg1
 
-     ./exampleScript --print=hi
-     ./exampleScript -p hi
+	sample.st --print=hi arg1 arg2
+	sample.st -p hi
 
-     ./exampleScript --print
-     ./exampleScript -p
+	sample.st --print
+	sample.st -p
+
+	sample.st arg1 arg2 arg3
 ') printString, dashes
 ]
