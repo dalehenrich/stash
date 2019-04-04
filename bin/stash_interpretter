@@ -60,7 +60,7 @@ cat - > $file << EOF
 %
 
 	output pop
-	obj2 **
+	obj **
 	exit
 
 EOF

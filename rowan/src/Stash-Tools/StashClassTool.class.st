@@ -31,6 +31,12 @@ StashClassTool >> _executeScriptSource [
 ]
 
 { #category : 'stash script creation' }
+StashClassTool >> _scriptExtension [
+
+	^ '.st'
+]
+
+{ #category : 'stash script creation' }
 StashClassTool >> _scriptOptionsSource [
 
 	^ 'scriptOptions
@@ -80,16 +86,50 @@ EXAMPLES
 ]
 
 { #category : 'stash script creation' }
+StashClassTool >> _usageSource: scriptName [
+
+	^ 'usage
+	"Man page for script"
+	| dashes |
+	dashes := ''----------------------------------------------------
+''.
+	^ dashes,
+		(self manPageClass
+			fromString:
+''NAME
+	', scriptName, ' - example script, that can be used as a template to create your own script
+SYNOPSIS
+	', scriptName, ' [-h|--help] [ -- <startTopaz-specific-options> ]
+DESCRIPTION
+
+	This ', scriptName, ' is set up with help (--help).
+
+	Use the env var GEMSTONE_SCRIPT_ARGS to define default <stone-name> and other
+	topaz arguments (<startTopaz-specific-options>) to be used when running scripts.
+
+	For complete details about <startTopaz-specific-options> see `startTopaz -h`. Typically,
+	you will specify the name of the stone and along with the `-lq` flags.
+
+EXAMPLES
+	', scriptName, ' --help
+	', scriptName, ' -h
+
+	', scriptName, ' -h -- myStone -lq
+'') printString, dashes'
+]
+
+{ #category : 'stash script creation' }
 StashClassTool >> createScriptClassNamed: scriptName inDirectory: directoryPath [
 
-	| classDefinition |
+	| classDefinition scriptFileName |
+	scriptFileName := scriptName , self _scriptExtension.
 	classDefinition := (RwClassDefinition newForClassNamed: scriptName super: 'StashScript' category: 'Stash-Scripts')
 		comment: 'a Stash Script';
-		addInstanceMethod:self _scriptOptionsSource protocol: 'script execution';
-		addInstanceMethod:self _executeScriptSource protocol: 'script execution';
-		addInstanceMethod:self _usageSource protocol: 'usage';
+		addInstanceMethod: self _scriptOptionsSource protocol: 'script execution';
+		addInstanceMethod: self _executeScriptSource protocol: 'script execution';
+		addInstanceMethod: (self _usageSource: scriptFileName) protocol: 'usage';
 		yourself.
-	self writeTonelClassDefinition: classDefinition toDirectory: directoryPath as: scriptName, '.st'.
+	self writeTonelClassDefinition: classDefinition toDirectory: directoryPath as: scriptFileName.
 	^ classDefinition
 ]
 

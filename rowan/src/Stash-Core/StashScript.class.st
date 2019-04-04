@@ -148,7 +148,7 @@ StashScript >> topazArgString: aString [
 	topazArgs := aString
 ]
 
-{ #category : 'accessing' }
+{ #category : 'script utilities' }
 StashScript >> workingDirectory [
 
 	^ workingDirectory
