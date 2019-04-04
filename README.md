@@ -21,6 +21,16 @@ ln -s $GS_HOME/shared/repos/stash/gemstone/gsdevkit/newBuild_SystemUser_stash .
 cd /usr/bin
 sudo ln -s $GS_HOME/shared/repos/stash/bin/stash_interpretter smalltalk
 ```
+### Installation into an existing Rowan stone
+```
+| url |
+url := 'file:$ROWAN_PROJECTS_HOME/stash/rowan/specs/stash.ston'.
+Rowan projectTools clone
+	cloneSpecUrl: url
+	gitRootPath: '$ROWAN_PROJECTS_HOME'
+	useSsh: true.
+Rowan projectTools load loadProjectNamed: 'stash'.
+```
 ### Creating a GemStone Smalltalk script
 The following shell script creates a template script file:
 ```
