@@ -9,15 +9,15 @@ cd $GS_HOME/shared/repos/
 git clone git@github.com:GemTalk/Rowan.git
 git clone git@github.com:dalehenrich/stash.git
 
-# create the stash stone ... scripts will be run in the context of this stone
+#	create the stash stone ... scripts will be run in the context of this stone
 createStone -g stash_3215 3.2.15
 
-# link to script for building/rebuilding the stash stone
+#	link to script for building/rebuilding the stash stone
 cd $GS_HOME/server/stones/stash_3215
 ln -s $GS_HOME/shared/repos/stash/gemstone/gsdevkit/newBuild_SystemUser_stash .
 ./newBuild_SystemUser_stash
 
-# create /usr/bin/smalltalk which is the gemstone shell interpretter for Smalltalk
+#	create /usr/bin/smalltalk which is the gemstone shell interpretter for Smalltalk
 cd /usr/bin
 sudo ln -s $GS_HOME/shared/repos/stash/bin/stash_interpretter smalltalk
 ```
