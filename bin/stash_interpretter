@@ -10,8 +10,16 @@
 
 #	echo "0: $@"
 stashFile=`realpath $1`
-pwd=`pwd`
 shift
+
+debug="false"
+if [ "$1" = "-D" ] ; then
+	# hack .. for now
+	debug="true"
+	shift
+fi
+
+pwd=`pwd`
 # StashScript class will do it's own parsing of the command line args (in Smalltalk)
 #		just stripping out topaz arguments
 stashArgs="$*" 
@@ -41,8 +49,11 @@ echo "log file: $logFile"
 cat - > $file << EOF
 
 	output push $logFile only
-	display pauseonerror
+#	display pauseonerror
+	iferr 1 stk
+#	iferr 2 stack
 
+	set u SystemUser p swordfish
 	login
 
 	print
@@ -60,8 +71,8 @@ cat - > $file << EOF
 %
 
 	output pop
-	obj **
-	exit
+	obj1 **
+#	exit
 
 EOF
 
@@ -71,11 +82,16 @@ if [ "${topazArgs}x" = "x" ] ; then
 	exit 1
 fi
 
-#
-#	for debugging, open topaz for interactive execution and input $file,
-#		comment out redirected startTopaz and the exit in topaz script
-#
-#	echo $file
-#	$GS_HOME/bin/startTopaz $topazArgs
-
- $GS_HOME/bin/startTopaz $topazArgs < $file
+if [ "$debug" = "true" ] ; then
+		echo $file
+		$GS_HOME/bin/startTopaz $topazArgs
+	else
+		$GS_HOME/bin/startTopaz $topazArgs << EOF
+		input $file
+EOF
+	status="$?"
+	if [ "$status" != 0 ] ; then
+		cat $logFile
+		exit $status
+	fi
+fi
