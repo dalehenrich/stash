@@ -12,13 +12,13 @@ Rowan classTools stashClassLoadTool loadFiletreeClassDirectories:
 	}
 "
 Class {
-	#name : 'StashClassLoadTool',
+	#name : 'StashClassTool',
 	#superclass : 'RwClassTool',
 	#category : 'Stash-Tools'
 }
 
 { #category : 'loading' }
-StashClassLoadTool >> loadFiletreeClassDirectories: directoryPathArray [
+StashClassTool >> loadFiletreeClassDirectories: directoryPathArray [
 
 	| projectDefinition |
 	projectDefinition := RwRepositoryComponentProjectFiletreeReaderVisitor readClassDirectories: directoryPathArray.
@@ -27,7 +27,7 @@ StashClassLoadTool >> loadFiletreeClassDirectories: directoryPathArray [
 ]
 
 { #category : 'loading' }
-StashClassLoadTool >> loadFiletreeClassDirectory: directoryPath [
+StashClassTool >> loadFiletreeClassDirectory: directoryPath [
 
 	| projectDefinition |
 	projectDefinition := RwRepositoryComponentProjectFiletreeReaderVisitor readClassDirectory: directoryPath.
@@ -36,7 +36,7 @@ StashClassLoadTool >> loadFiletreeClassDirectory: directoryPath [
 ]
 
 { #category : 'loading' }
-StashClassLoadTool >> loadTonelClassFile: filePath [
+StashClassTool >> loadTonelClassFile: filePath [
 
 	| projectDefinition |
 	projectDefinition := RwRepositoryComponentProjectTonelReaderVisitor readClassFile: filePath.
@@ -45,7 +45,7 @@ StashClassLoadTool >> loadTonelClassFile: filePath [
 ]
 
 { #category : 'loading' }
-StashClassLoadTool >> loadTonelClassFiles: filePathArray [
+StashClassTool >> loadTonelClassFiles: filePathArray [
 
 	| projectDefinition |
 	projectDefinition := RwRepositoryComponentProjectTonelReaderVisitor readClassFiles: filePathArray.

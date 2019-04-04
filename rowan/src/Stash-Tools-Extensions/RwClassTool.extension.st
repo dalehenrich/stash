@@ -1,7 +1,7 @@
 Extension { #name : 'RwClassTool' }
 
 { #category : '*stash-tools-extensions' }
-RwClassTool class >> stashClassLoadTool [
+RwClassTool class >> stashClassTool [
 
-	^StashClassLoadTool new
+	^StashClassTool new
 ]

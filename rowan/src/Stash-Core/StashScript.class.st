@@ -2,13 +2,13 @@
 To debug a script in the image.
 
 1. Load the script class into your image... use the path to your script file:
-	[Rowan classTools stashClassLoadTool loadTonelClassFile: '/home/dhenrich/rogue/_homes/rogue/_home/server/stones/stash_3215/git/stash/bin/template.st'] 
+	[Rowan classTools stashClassTool loadTonelClassFile: '/home/dhenrich/rogue/_homes/rogue/_home/server/stones/stash_3215/git/stash/bin/template.st'] 
 		on: Error do: [:ex | self halt]
 
 2. Then exicute the following to duplicate the code that is run to execute your script ... use the correct class and path:
 	| stash |
 	stash := (System myUserProfile symbolList objectNamed: 'TEMPLATE') 
-		stashFilePath: '/home/dhenrich/rogue/_homes/rogue/_home/server/stones/stash_3215/git/stash/bin/template.st' 
+		stashFilePath: '/home/dhenrich/rogue/_homes/rogue/_home/server/stones/stash_3215/git/stash/bin/TEMPLATE.st' 
 		topazArgs: 'stash_3215 -lq' 
 		stashArgs: '--help' 
 		workingDir: '/home/dhenrich/rogue/_homes/rogue/_home/server/stones/stash_3215/git/stash'.
