@@ -161,7 +161,7 @@ StashClassTool >> loadFiletreeClassDirectory: directoryPath [
 ]
 
 { #category : 'loading' }
-StashClassTool >> loadFiletreeClassDirectory: directoryPath  projectName: projectName packageName: packageName [
+StashClassTool >> loadFiletreeClassDirectory: directoryPath projectName: projectName packageName: packageName [
 
 	| projectDefinition |
 	projectDefinition := RwRepositoryComponentProjectFiletreeReaderVisitor readClassDirectory: directoryPath projectName: projectName packageName: packageName.
@@ -179,10 +179,28 @@ StashClassTool >> loadTonelClassFile: filePath [
 ]
 
 { #category : 'loading' }
+StashClassTool >> loadTonelClassFile: filePath projectName: projectName packageName: packageName [
+
+	| projectDefinition |
+	projectDefinition := RwRepositoryComponentProjectTonelReaderVisitor readClassFile: filePath projectName: projectName packageName: packageName.
+	Rowan projectTools load loadProjectDefinition: projectDefinition.
+	^ projectDefinition
+]
+
+{ #category : 'loading' }
 StashClassTool >> loadTonelClassFiles: filePathArray [
 
 	| projectDefinition |
 	projectDefinition := RwRepositoryComponentProjectTonelReaderVisitor readClassFiles: filePathArray.
+	Rowan projectTools load loadProjectDefinition: projectDefinition.
+	^ projectDefinition
+]
+
+{ #category : 'loading' }
+StashClassTool >> loadTonelClassFiles: filePathArray projectName: projectName packageName: packageName [
+
+	| projectDefinition |
+	projectDefinition := RwRepositoryComponentProjectTonelReaderVisitor readClassFiles: filePathArray projectName: projectName packageName: packageName.
 	Rowan projectTools load loadProjectDefinition: projectDefinition.
 	^ projectDefinition
 ]
