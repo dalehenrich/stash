@@ -44,7 +44,7 @@ rowan >> edit [
 		loadTonelClassFile: self stashFile projectName: 'EDIT' packageName: 'EDIT-PKG'.
 	self class
 		scriptDir: self dirname;
-		scriptName: self stashFile.
+		scriptName: self basename.
 	System commit
 ]
 
