@@ -19,6 +19,7 @@ rowan >> executeScript [
 				opts at: 'load' ifPresent: [:arg | self load: arg ].
 				opts at: 'unload' ifPresent: [:arg | self unload: arg ].
 				opts at: 'list' ifPresent: [:arg | self list ].
+				opts at: 'save' ifPresent: [:arg | self save ].
 				 ]
 			ifPresent: [ self usage ]
 ]
@@ -33,6 +34,7 @@ rowan >> scriptOptions [
 			#('unload' nil #required).
 			#('list' nil #none).
 			#('edit' nil #none).
+			#('save' nil #none).
 	}
 ]
 
