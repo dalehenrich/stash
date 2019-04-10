@@ -2,7 +2,7 @@
 smalltalk shell - new life for an old idea (http://seaside.gemtalksystems.com/ss/stash.html)
 
 ### Installation with GsDevKit_home
-**stash** is dependent upon **Rowan** and currently **Rowan** runs on GemStone 3.2.15.
+**stash** is dependent upon **Rowan** and currently **Rowan** runs on GemStone 3.2.15 and soon to be released GemStone 3.5.0.
 ```
 #	clone Rowan and stash
 cd $GS_HOME/shared/repos/
