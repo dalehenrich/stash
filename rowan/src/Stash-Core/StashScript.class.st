@@ -26,6 +26,10 @@ Class {
 		'args',
 		'command'
 	],
+	#classInstVars : [
+		'scriptDir',
+		'scriptName'
+	],
 	#category : 'Stash-Core'
 }
 
@@ -33,6 +37,18 @@ Class {
 StashScript class >> initialize [
 
 	Globals addAssociation: (UserGlobals associationAt: self theNonMetaClass name asSymbol)
+]
+
+{ #category : 'accessing' }
+StashScript class >> scriptDir: aStringOrFileReference [
+
+	scriptDir := aStringOrFileReference
+]
+
+{ #category : 'accessing' }
+StashScript class >> scriptName: aStringOrFileReference [
+
+	scriptName := aStringOrFileReference
 ]
 
 { #category : 'instance creation' }
@@ -74,6 +90,13 @@ StashScript >> dirname [
 StashScript >> executeScript [
 
 	self subclassResponsibility: #executeScript
+]
+
+{ #category : 'script utilities' }
+StashScript >> globalNamed: aString [
+	"return nil if no global found"
+
+	^ Rowan globalNamed: aString
 ]
 
 { #category : 'script utilities' }
