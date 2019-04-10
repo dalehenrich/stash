@@ -57,17 +57,11 @@ cat - > $file << EOF
 	login
 
 	print
-	| projectDefinition scriptClassDefinition stashFile stash |
-	stashFile := '$stashFile'.
-	projectDefinition := Rowan classTools stashClassTool 
-		loadTonelClassFile: stashFile.
-	scriptClassDefinition := (projectDefinition packages values any) classDefinitions values any.
-	stash := (System myUserProfile symbolList objectNamed: scriptClassDefinition name) 
-		stashFilePath: stashFile 
-		topazArgs: '$topazArgs' 
-		stashArgs: '$stashArgs' 
-		workingDir: '$pwd'.
-	stash setupAndExecuteScript
+	^ StashScript
+			loadAndExecuteScriptClassFile:: '$stashFile'
+			stashArgs: '$stashArgs'
+			topazArgs: '$topazArgs'
+			workingDir: '$pwd'
 %
 
 	output pop

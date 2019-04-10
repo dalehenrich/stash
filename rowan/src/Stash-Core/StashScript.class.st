@@ -39,6 +39,20 @@ StashScript class >> initialize [
 	Globals addAssociation: (UserGlobals associationAt: self theNonMetaClass name asSymbol)
 ]
 
+{ #category : 'script launching' }
+StashScript class >> loadAndExecuteScriptClassFile: script_file stashArgs: stash_args topazArgs: topaz_args workingDir: working_dir [
+	| projectDefinition scriptClassDefinition stash |
+	projectDefinition := Rowan classTools stashClassTool 
+		loadTonelClassFile: script_file.
+	scriptClassDefinition := (projectDefinition packages values any) classDefinitions values any.
+	stash := (System myUserProfile symbolList objectNamed: scriptClassDefinition name) 
+		stashFilePath: script_file 
+		topazArgs: topaz_args 
+		stashArgs: stash_args
+		workingDir: working_dir.
+	^ stash setupAndExecuteScript
+]
+
 { #category : 'script implementation' }
 StashScript class >> saveScript [
 	self writeToDirectory: scriptDir as: scriptName
