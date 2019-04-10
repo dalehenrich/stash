@@ -49,7 +49,7 @@ echo "log file: $logFile"
 cat - > $file << EOF
 
 	output push $logFile only
-	set INPUTPAUSEONERROR
+	set INPUTPAUSEONERROR on
 	iferr 1 stk
 #	iferr 2 stack
 
