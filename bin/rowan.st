@@ -8,16 +8,6 @@ Class {
 	#category : 'Stash-Scripts'
 }
 
-{ #category : 'script implementation' }
-rowan >> edit [
-	Rowan classTools stashClassTool 
-		loadTonelClassFile: self stashFile projectName: 'EDIT' packageName: 'EDIT-PKG'.
-	self class
-		scriptDir: self dirname;
-		scriptName: self basename.
-	System commit
-]
-
 { #category : 'script execution' }
 rowan >> executeScript [
 	"Called to initiate execution of the script"

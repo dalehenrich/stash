@@ -102,6 +102,22 @@ StashScript >> dirname [
 	^ self stashFile parent
 ]
 
+{ #category : 'script implementation' }
+StashScript >> edit [
+	"add to script if you want to be able to edit your script using smalltalk tools"
+
+	"use `<script-class> saveScript` in image to save any script changes you have made"
+
+	Rowan classTools stashClassTool 
+		loadTonelClassFile: self stashFile 
+			projectName: 'EDIT-', self class name asString
+			packageName: 'EDIT-', self class name asString, '-PKG'.
+	self class
+		scriptDir: self dirname;
+		scriptName: self basename.
+	System commit
+]
+
 { #category : 'script execution' }
 StashScript >> executeScript [
 
