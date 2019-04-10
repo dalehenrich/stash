@@ -71,7 +71,7 @@ StashScript >> args [
 { #category : 'script utilities' }
 StashScript >> basename [
 
-	^ self scriptFile basename
+	^ self stashFile basename
 ]
 
 { #category : 'script utilities' }
@@ -83,7 +83,7 @@ StashScript >> command [
 { #category : 'script utilities' }
 StashScript >> dirname [
 
-	^ self scriptFile parent
+	^ self stashFile parent
 ]
 
 { #category : 'script execution' }
