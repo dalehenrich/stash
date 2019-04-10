@@ -40,13 +40,11 @@ rowan >> scriptOptions [
 
 { #category : 'script implementation' }
 rowan >> edit [
-	| classDef |
-	classDef := Rowan classTools stashClassTool 
+	Rowan classTools stashClassTool 
 		loadTonelClassFile: self stashFile projectName: 'EDIT' packageName: 'EDIT-PKG'.
-	System commit.
-	(self globalNamed: classDef name) class
+	self class
 		scriptDir: self dirname;
-		scriptName: self scriptFile
+		scriptName: self stashFile.
 	System commit
 ]
 
