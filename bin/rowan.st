@@ -45,6 +45,7 @@ rowan >> edit [
 	System commit
 ]
 
+{ #category : 'script implementation' }
 rowan class >> writeToDirectory: directoryPath as: filename [
 	"Run script with --save option to invoke this method"
 	| classDefinition |
@@ -55,6 +56,7 @@ rowan class >> writeToDirectory: directoryPath as: filename [
 		as: filename.
 ]
 
+{ #category : 'script implementation' }
 rowan >> save [
 	self class  writeToDirectory: self dirname as: self basename
 ]
