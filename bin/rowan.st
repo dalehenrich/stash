@@ -9,22 +9,6 @@ Class {
 }
 
 { #category : 'script implementation' }
-rowan class >> writeToDirectory [
-	self writeToDirectory: scriptDir as: scriptName
-]
-
-{ #category : 'script implementation' }
-rowan class >> writeToDirectory: directoryPath as: filename [
-	"Run script with --save option to invoke this method"
-	| classDefinition |
-	classDefinition := (Rowan image loadedClassNamed: self name) asDefinition.
-	Rowan classTools stashClassTool
-		writeTonelClassDefinition: classDefinition 
-		toDirectory: directoryPath
-		as: filename.
-]
-
-{ #category : 'script implementation' }
 rowan >> edit [
 	Rowan classTools stashClassTool 
 		loadTonelClassFile: self stashFile projectName: 'EDIT' packageName: 'EDIT-PKG'.
@@ -45,7 +29,6 @@ rowan >> executeScript [
 				opts at: 'load' ifPresent: [:arg | self load: arg ].
 				opts at: 'unload' ifPresent: [:arg | self unload: arg ].
 				opts at: 'list' ifPresent: [:arg | self list ].
-				opts at: 'save' ifPresent: [:arg | self save ].
 				 ]
 			ifPresent: [ self usage ]
 ]
@@ -66,11 +49,6 @@ rowan >> list [
 rowan >> load: projectName [
 ]
 
-{ #category : 'script implementation' }
-rowan >> save [
-	self class  writeToDirectory: self dirname as: self basename
-]
-
 { #category : 'script execution' }
 rowan >> scriptOptions [
 	"specify the command line options"
@@ -81,7 +59,6 @@ rowan >> scriptOptions [
 			#('unload' nil #required).
 			#('list' nil #none).
 			#('edit' nil #none).
-			#('save' nil #none).
 	}
 ]
 

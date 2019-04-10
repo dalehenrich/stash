@@ -39,6 +39,11 @@ StashScript class >> initialize [
 	Globals addAssociation: (UserGlobals associationAt: self theNonMetaClass name asSymbol)
 ]
 
+{ #category : 'script implementation' }
+StashScript class >> saveScript [
+	self writeToDirectory: scriptDir as: scriptName
+]
+
 { #category : 'accessing' }
 StashScript class >> scriptDir: aStringOrFileReference [
 
@@ -60,6 +65,17 @@ StashScript class >> stashFilePath: stashFilePath topazArgs: topazArgs stashArgs
 		stashArgString: stashArgs; 
 		workingDirectoryPath: workingDir;
 		yourself
+]
+
+{ #category : 'script implementation' }
+StashScript class >> writeToDirectory: directoryPath as: filename [
+	"Run script with --save option to invoke this method"
+	| classDefinition |
+	classDefinition := (Rowan image loadedClassNamed: self name) asDefinition.
+	Rowan classTools stashClassTool
+		writeTonelClassDefinition: classDefinition 
+		toDirectory: directoryPath
+		as: filename.
 ]
 
 { #category : 'script utilities' }
