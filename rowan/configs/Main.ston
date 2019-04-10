@@ -5,7 +5,8 @@ RwProjectLoadConfiguration {
 	#version : '0.1.0',
 	#definedGroupNames : {
 		'core' : [ ],
-		'tools' : [ 'core' ]
+		'tools' : [ 'core' ],
+		'tests' : [ 'tools' ]
 	},
 	#conditionalPackages : {
 		[
@@ -19,10 +20,16 @@ RwProjectLoadConfiguration {
 					'Stash-Kernel-Extensions'
 				]
 			},
+
 			'tools' : {
 				#packageNames : [
 					'Stash-Tools',
 					'Stash-Tools-Extensions'
+				]
+			},
+			'tests' : {
+				#packageNames : [
+					'Stash-Tests'
 				]
 			}
 		}
