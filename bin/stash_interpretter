@@ -49,7 +49,7 @@ echo "log file: $logFile"
 cat - > $file << EOF
 
 	output push $logFile only
-#	display pauseonerror
+	set INPUTPAUSEONERROR
 	iferr 1 stk
 #	iferr 2 stack
 
@@ -72,7 +72,7 @@ cat - > $file << EOF
 
 	output pop
 	obj1 **
-#	exit
+	EXITIFNOERROR
 
 EOF
 
@@ -83,7 +83,7 @@ if [ "${topazArgs}x" = "x" ] ; then
 fi
 
 if [ "$debug" = "true" ] ; then
-		echo $file
+		echo "INPUT $file"
 		$GS_HOME/bin/startTopaz $topazArgs
 	else
 		$GS_HOME/bin/startTopaz $topazArgs << EOF
