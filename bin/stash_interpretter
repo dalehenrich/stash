@@ -58,7 +58,7 @@ cat - > $file << EOF
 
 	print
 	^ StashScript
-			loadAndExecuteScriptClassFile:: '$stashFile'
+			loadAndExecuteScriptClassFile: '$stashFile'
 			stashArgs: '$stashArgs'
 			topazArgs: '$topazArgs'
 			workingDir: '$pwd'
