@@ -8,6 +8,32 @@ Class {
 	#category : 'Stash-Scripts'
 }
 
+{ #category : 'script implementation' }
+rowan class >> writeToDirectory [
+	self writeToDirectory: scriptDir as: scriptName
+]
+
+{ #category : 'script implementation' }
+rowan class >> writeToDirectory: directoryPath as: filename [
+	"Run script with --save option to invoke this method"
+	| classDefinition |
+	classDefinition := (Rowan image loadedClassNamed: self name) asDefinition.
+	Rowan classTools stashClassTool
+		writeTonelClassDefinition: classDefinition 
+		toDirectory: directoryPath
+		as: filename.
+]
+
+{ #category : 'script implementation' }
+rowan >> edit [
+	Rowan classTools stashClassTool 
+		loadTonelClassFile: self stashFile projectName: 'EDIT' packageName: 'EDIT-PKG'.
+	self class
+		scriptDir: self dirname;
+		scriptName: self basename.
+	System commit
+]
+
 { #category : 'script execution' }
 rowan >> executeScript [
 	"Called to initiate execution of the script"
@@ -22,6 +48,27 @@ rowan >> executeScript [
 				opts at: 'save' ifPresent: [:arg | self save ].
 				 ]
 			ifPresent: [ self usage ]
+]
+
+{ #category : 'script implementation' }
+rowan >> install: projectSpecUrl [
+	| url |
+	url := projectSpecUrl asRwUrl.
+	url scheme = 'https'
+		ifTrue: [].
+]
+
+{ #category : 'script implementation' }
+rowan >> list [
+]
+
+{ #category : 'script implementation' }
+rowan >> load: projectName [
+]
+
+{ #category : 'script implementation' }
+rowan >> save [
+	self class  writeToDirectory: self dirname as: self basename
 ]
 
 { #category : 'script execution' }
@@ -39,53 +86,7 @@ rowan >> scriptOptions [
 ]
 
 { #category : 'script implementation' }
-rowan >> edit [
-	Rowan classTools stashClassTool 
-		loadTonelClassFile: self stashFile projectName: 'EDIT' packageName: 'EDIT-PKG'.
-	self class
-		scriptDir: self dirname;
-		scriptName: self basename.
-	System commit
-]
-
-{ #category : 'script implementation' }
-rowan class >> writeToDirectory[
-	self writeToDirectory: scriptDir as: scriptName
-]
-
-{ #category : 'script implementation' }
-rowan class >> writeToDirectory: directoryPath as: filename [
-	"Run script with --save option to invoke this method"
-	| classDefinition |
-	classDefinition := (Rowan image loadedClassNamed: self name) asDefinition.
-	Rowan classTools stashClassTool
-		writeTonelClassDefinition: classDefinition 
-		toDirectory: directoryPath
-		as: filename.
-]
-
-{ #category : 'script implementation' }
-rowan >> save [
-	self class  writeToDirectory: self dirname as: self basename
-]
-
-{ #category : 'script implementation' }
-rowan >> install: projectSpecUrl [
-	| url |
-	url := projectSpecUrl asRwUrl.
-	url scheme = 'https'
-		ifTrue: [].
-]
-
-{ #category : 'script implementation' }
-rowan >> load: projectName [
-]
-
-{ #category : 'script implementation' }
 rowan >> unload: projecName [
-]
-{ #category : 'script implementation' }
-rowan >> list [
 ]
 
 { #category : 'usage' }
