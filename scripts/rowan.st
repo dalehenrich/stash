@@ -1,4 +1,4 @@
-#!/usr/bin/gsdevkit/smalltalk_350
+#!/usr/bin/smalltalk
 "
 a command line interface to Rowan. See `rowan.st -h` for more information.
 "
@@ -7,6 +7,13 @@ Class {
 	#superclass : 'StashScript',
 	#category : 'Stash-Scripts'
 }
+
+{ #category : 'script implementation' }
+rowan >> commit: aProjectName message: commitMessage [
+	"commit the project"
+
+	commitMessage ifNil: [ self error: 'missing required option: --messge' ]
+]
 
 { #category : 'script execution' }
 rowan >> executeScript [
@@ -18,6 +25,8 @@ rowan >> executeScript [
 				opts at: 'install' ifPresent: [:arg | self install: arg ].
 				opts at: 'load' ifPresent: [:arg | self load: arg ].
 				opts at: 'unload' ifPresent: [:arg | self unload: arg ].
+				opts at: 'write' ifPresent: [:arg | self write: arg ].
+				opts at: 'commit' ifPresent: [:arg | self commit: arg message: (args at: 1) ].
 				opts at: 'list' ifPresent: [:arg | self list ].
 				 ]
 			ifPresent: [ self usage ]
@@ -116,6 +125,8 @@ rowan >> scriptOptions [
 			#('load' nil #required).
 			#('unload' nil #required).
 			#('list' nil #none).
+			#('write' nil #required).
+			#('commit' nil #required).
 			#('edit' nil #none).
 	}
 ]
@@ -147,6 +158,8 @@ SYNOPSIS
 	rowan.st [--install=<spec-url>] 
 	rowan.st [--load=<project-name>] 
 	rowan.st [--unload=<project-name>] 
+	rowan.st [--write=<project-name>] 
+	rowan.st [--commit=<project-name> <commit-message> ] 
 	rowan.st [--list] 
 	rowan.st [--edit]
 	rowan.st ... [ -- <topaz-specific-options> ]
@@ -186,4 +199,9 @@ EXAMPLES
 	rowan.st --list
 	rowan.st --edit
 ') printString, dashes
+]
+
+{ #category : 'script implementation' }
+rowan >> write: aProjectName [
+	"write the project"
 ]
