@@ -1,0 +1,9 @@
+#!/usr/bin/gemstone/topaz
+
+set solologin on
+login
+
+run
+UserGlobals at: #testing put: 3+4.
+3+4.
+%
