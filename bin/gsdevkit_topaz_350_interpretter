@@ -2,6 +2,7 @@
 #
 #	command line interpretter for topaz script
 #	
+#	using 3.5.0 and beyond topaz commands
 #
 
 topazFile=`realpath $1`
@@ -26,11 +27,11 @@ echo "log file: $logFile"
 
 cat - > $file << EOF
 	output push $logFile only
-	display PAUSEONERROR
+	set INPUTPAUSEONERROR on
 	input $topazFile
 	output pop
 	obj1 **
-	EXIT
+	EXITIFNOERROR
 EOF
 
 if [ "$debug" = "true" ] ; then
