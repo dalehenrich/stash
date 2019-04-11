@@ -1,4 +1,4 @@
-#!/usr/bin/gsdevkit/smalltalk
+#!/usr/bin/gsdevkit/smalltalk_350
 "
 Example executable script
 "

@@ -22,6 +22,7 @@ cd /usr/bin
 sudo mkdir gsdevkit
 cd gsdevkit
 sudo ln -s $GS_HOME/shared/repos/stash/bin/gsdevkit_smalltalk_interpretter smalltalk
+sudo ln -s $GS_HOME/shared/repos/stash/bin/gsdevkit_smalltalk_350_interpretter smalltalk_350
 sudo ln -s $GS_HOME/shared/repos/stash/bin/gsdevkit_topaz_interpretter topaz
 sudo ln -s $GS_HOME/shared/repos/stash/bin/gsdevkit_topaz_350_interpretter topaz_350
 ```

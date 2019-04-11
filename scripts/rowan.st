@@ -1,4 +1,4 @@
-#!/usr/bin/gsdevkit/smalltalk
+#!/usr/bin/gsdevkit/smalltalk_350
 "
 a command line interface to Rowan. See `rowan.st -h` for more information.
 "
