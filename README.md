@@ -17,9 +17,13 @@ cd $GS_HOME/server/stones/stash_3215
 ln -s $GS_HOME/shared/repos/stash/gemstone/gsdevkit/newBuild_SystemUser_stash .
 ./newBuild_SystemUser_stash
 
-#	create /usr/bin/smalltalk which is the gemstone shell interpretter for Smalltalk
+#	create /usr/bin/gsdevkit and link in the smalltalk and two topaz shell interpretters
 cd /usr/bin
+sudo mkdir gsdevkit
+cd gsdevkit
 sudo ln -s $GS_HOME/shared/repos/stash/bin/gsdevkit_smalltalk_interpretter smalltalk
+sudo ln -s $GS_HOME/shared/repos/stash/bin/gsdevkit_topaz_interpretter topaz
+sudo ln -s $GS_HOME/shared/repos/stash/bin/gsdevkit_topaz_350_interpretter topaz_350
 ```
 ### Installation into an existing Rowan stone
 ```

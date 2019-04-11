@@ -1,15 +1,15 @@
-#!/usr/bin/smalltalk
+#!/usr/bin/gsdevkit/smalltalk
 "
 a Stash Script
 "
 Class {
-	#name : 'CreateNewStashScript',
+	#name : 'createNewStashScript',
 	#superclass : 'StashScript',
 	#category : 'Stash-Scripts'
 }
 
 { #category : 'script execution' }
-CreateNewStashScript >> executeScript [
+createNewStashScript >> executeScript [
 	"Called to initiate execution of the script"
 	^ opts
 			at: 'help'
@@ -28,7 +28,7 @@ CreateNewStashScript >> executeScript [
 ]
 
 { #category : 'script execution' }
-CreateNewStashScript >> scriptOptions [
+createNewStashScript >> scriptOptions [
 	"specify the command line options"
 	^ {
 			#('help' $h #none).
@@ -38,7 +38,7 @@ CreateNewStashScript >> scriptOptions [
 ]
 
 { #category : 'usage' }
-CreateNewStashScript >> usage [
+createNewStashScript >> usage [
 	"Man page for script"
 	| dashes |
 	dashes := '----------------------------------------------------
@@ -47,9 +47,9 @@ CreateNewStashScript >> usage [
 		(self manPageClass
 			fromString:
 'NAME
-	CreateNewStashScript.st - create a new script template
+	createNewStashScript.st - create a new script template
 SYNOPSIS
-	CreateNewStashScript.st [-h|--help] [--dir=<directory-path>]--name=<script-name> \
+	createNewStashScript.st [-h|--help] [--dir=<directory-path>]--name=<script-name> \
 		[ -- <startTopaz-specific-options> ]
 DESCRIPTION
 
@@ -67,12 +67,12 @@ DESCRIPTION
 	you will specify the name of the stone and along with the `-lq` flags.
 
 EXAMPLES
-	CreateNewStashScript.st --help
-	CreateNewStashScript.st -h
+	createNewStashScript.st --help
+	createNewStashScript.st -h
 
-	CreateNewStashScript.st -h -- myStone -lq
+	createNewStashScript.st -h -- myStone -lq
 
-	CreateNewStashScript.st --name=MyScript
-	CreateNewStashScript.st --name=MyScript --dir=/home/me/bin
+	createNewStashScript.st --name=MyScript
+	createNewStashScript.st --name=MyScript --dir=/home/me/bin
 ') printString, dashes
 ]
