@@ -62,6 +62,9 @@ cat - > $file << EOF
 			stashArgs: '$stashArgs'
 			topazArgs: '$topazArgs'
 			workingDir: '$pwd'
+			projectName: '__EXECUTE_STASH_SCRIPT_PROJECT__'
+			packageName: '__EXECUTE_STASH_SCRIPT_PACKAGE__'
+			symDictName: '_EXECUTE_STASH_SCRIPT_SymbolDict__'
 %
 
 	output pop

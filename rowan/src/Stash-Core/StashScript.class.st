@@ -24,7 +24,9 @@ Class {
 		'workingDirectory',
 		'opts',
 		'args',
-		'command'
+		'command',
+		'projectName',
+		'packageName'
 	],
 	#classInstVars : [
 		'scriptDir',
@@ -33,6 +35,30 @@ Class {
 	#category : 'Stash-Core'
 }
 
+{ #category : 'private' }
+StashScript class >> _createScriptExecutionSymbolDictionaryNamed: dictName [
+
+	"create and add a symbol dictionary to the current sessions transient symbol list
+		throw and error if there is already a symbol dictionary of the same name in
+		the symbol list. "
+
+	| symbolName session transientSymbolList symbolDict |
+	symbolName := dictName asSymbol.
+	session := GsCurrentSession currentSession.
+	transientSymbolList := session symbolList.
+	symbolDict := transientSymbolList
+		detect: [ :each | (each at: symbolName ifAbsent: [ nil ]) == each ]
+		ifNone: [ 
+			| newDict|
+			newDict := SymbolDictionary new
+				name: symbolName;
+				objectSecurityPolicy: transientSymbolList objectSecurityPolicy;
+				yourself.
+			transientSymbolList insertObject: newDict at: 1.
+			^ newDict ].
+	self error: 'a symbol dictionary named ', dictName printString, ' is already present in the transient symbol list'
+]
+
 { #category : 'initialization' }
 StashScript class >> initialize [
 
@@ -40,16 +66,24 @@ StashScript class >> initialize [
 ]
 
 { #category : 'script launching' }
-StashScript class >> loadAndExecuteScriptClassFile: script_file stashArgs: stash_args topazArgs: topaz_args workingDir: working_dir [
+StashScript class >> loadAndExecuteScriptClassFile: script_file stashArgs: stash_args topazArgs: topaz_args workingDir: working_dir projectName: projectName packageName: packageName symDictName: symbolDictName [
+
 	| projectDefinition scriptClassDefinition stash |
-	projectDefinition := Rowan classTools stashClassTool 
-		loadTonelClassFile: script_file.
+	self _createScriptExecutionSymbolDictionaryNamed: symbolDictName.
+	projectDefinition := Rowan classTools stashClassTool
+		loadTonelClassFile: script_file
+		projectName: projectName
+		packageName: packageName
+		symDictName: symbolDictName.
 	scriptClassDefinition := (projectDefinition packages values any) classDefinitions values any.
-	stash := (System myUserProfile symbolList objectNamed: scriptClassDefinition name) 
+	stash := ((GsCurrentSession currentSession symbolList objectNamed: scriptClassDefinition name) 
 		stashFilePath: script_file 
 		topazArgs: topaz_args 
 		stashArgs: stash_args
-		workingDir: working_dir.
+		workingDir: working_dir)
+			projectName: projectName;
+			packageName: packageName;
+			yourself.
 	^ stash setupAndExecuteScript
 ]
 
@@ -93,6 +127,14 @@ StashScript class >> writeToDirectory: directoryPath as: filename [
 ]
 
 { #category : 'script utilities' }
+StashScript >> _downloadErrorFileNameFor: outputFileName [
+	| pid |
+	pid := (System gemVersionReport at: 'processId') printString.
+	^ '/tmp/curl-' , pid , '-' , (outputFileName select: [ :c | c isAlphaNumeric ])
+		, '.err'
+]
+
+{ #category : 'script utilities' }
 StashScript >> args [
 
 	^args
@@ -111,9 +153,34 @@ StashScript >> command [
 ]
 
 { #category : 'script utilities' }
+StashScript >> deleteScriptProject [
+	"should be used before doing a commit from within the script, to avoid persisting script project artifacts"
+
+	Rowan image loadedProjectNamed: self projectName ifAbsent: [ ^ self ].
+	Rowan projectTools delete deleteProjectNamed: self projectName.
+]
+
+{ #category : 'script utilities' }
 StashScript >> dirname [
 
 	^ self stashFile parent
+]
+
+{ #category : 'script utilities' }
+StashScript >> downloadHttpsFile: httpsUrl to: outputFileName username: username pass: pass [
+	"download from <httpsUrl> into <outputFileName>"
+
+	| errorFileName theArgs |
+	"Make a unique name for the error log and ensure that we can write the files"
+	errorFileName := self _downloadErrorFileNameFor: outputFileName.
+	outputFileName asFileReference ensureCreateFile.
+	errorFileName asFileReference ensureCreateFile.
+	theArgs := username ifNotNil: [ ' -u ' , username , ':' , pass ] ifNil: [ '' ].
+	System
+		performOnServer:
+			'/usr/bin/curl' , theArgs , ' -L ' , httpsUrl , ' > ' , outputFileName , ' 2> '
+				, errorFileName.
+	^ errorFileName
 ]
 
 { #category : 'script implementation' }
@@ -122,14 +189,18 @@ StashScript >> edit [
 
 	"use `<script-class> saveScript` in image to save any script changes you have made"
 
+	| projName |
+	projName := 'EDIT-', self class name asString.
 	Rowan classTools stashClassTool 
 		loadTonelClassFile: self stashFile 
-			projectName: 'EDIT-', self class name asString
+			projectName: projName
 			packageName: 'EDIT-', self class name asString, '-PKG'.
 	self class
 		scriptDir: self dirname;
 		scriptName: self basename.
-	System commit
+	self deleteScriptProject.
+	System commit.
+	^ 'script can be found in the project ', projName printString
 ]
 
 { #category : 'script execution' }
@@ -155,6 +226,30 @@ StashScript >> manPageClass [
 StashScript >> opts [
 
 	^opts
+]
+
+{ #category : 'accessing' }
+StashScript >> packageName [
+
+	^ packageName
+]
+
+{ #category : 'accessing' }
+StashScript >> packageName: aString [
+
+	packageName := aString
+]
+
+{ #category : 'accessing' }
+StashScript >> projectName [
+
+	^ projectName
+]
+
+{ #category : 'accessing' }
+StashScript >> projectName: aString [
+
+	projectName := aString
 ]
 
 { #category : 'script execution' }

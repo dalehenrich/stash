@@ -25,10 +25,22 @@ rowan >> executeScript [
 
 { #category : 'script implementation' }
 rowan >> install: projectSpecUrl [
-	| url |
-	url := projectSpecUrl asRwUrl.
+	| url errFilename spec specUrl specFile |
+	specUrl := projectSpecUrl.
+	url := specUrl asRwUrl.
 	url scheme = 'https'
-		ifTrue: [].
+		ifTrue: [
+			| filename |
+			filename :=  '/tmp/', self class name asString, '.ston'.
+			errFilename := self downloadHttpsFile: specUrl to: filename username: nil pass: nil.
+			specUrl := 'file:', filename.
+			url := specUrl asRwUrl ].
+	specFile := url pathString.
+	[specFile  asFileReference readStreamDo: [:fStream | spec := STON fromString: fStream contents ] ]
+		on: Error
+		do: [:ex |
+			self error: 'ERROR :: ', ex description, ' :: reading project spec from ', specUrl printString, ' ::error could have been cause by:: ', errFilename asFileReference contents ].
+	Rowan projectTools load loadProjectFromSpecUrl: specUrl
 ]
 
 { #category : 'script implementation' }
@@ -36,7 +48,7 @@ rowan >> list [
 ]
 
 { #category : 'script implementation' }
-rowan >> load: projectName [
+rowan >> load: aProjectName [
 ]
 
 { #category : 'script execution' }
@@ -53,7 +65,7 @@ rowan >> scriptOptions [
 ]
 
 { #category : 'script implementation' }
-rowan >> unload: projecName [
+rowan >> unload: aProjecName [
 ]
 
 { #category : 'usage' }
@@ -73,8 +85,8 @@ SYNOPSIS
 	rowan.st [--load=<project-name>] 
 	rowan.st [--unload=<project-name>] 
 	rowan.st [--list] 
-	rowan.st [--edit] 
-		 
+	rowan.st [--edit]
+	rowan.st ... [ -- <topaz-specific-options> ]
 DESCRIPTION
 
 	--install=<spec-url>
@@ -86,22 +98,26 @@ DESCRIPTION
 	--unload=<project-name>
 		unload the given <project-name>.
 
-  --list
+	--list
 		list the projects that are loaded in the current image.
 
 	--edit
-		load the script into the stone running the script, so that it can be eveloped
+		load the script into the stone running the script, so that it can be written
 		using Smalltalk development tools.
 
-	Use the env var GEMSTONE_SCRIPT_ARGS to define default <stone-name> and other
-	topaz arguments (<startTopaz-specific-options>) to be used when running scripts.
+	<topaz-specific-options>
+		Specify any topaz-specific options following a ` -- ` on the command line. 
+
+		You can use tse the env var GEMSTONE_SCRIPT_ARGS to define default <stone-name>
+		and other topaz arguments (<startTopaz-specific-options>) to be used when running 
+		scripts.
 
 EXAMPLES
 	rowan.st --help
 	rowan.st -h
-	rowan.st -h -- myStone -lq
+	rowan.st -h -- myStone_350 -lq
 
-	rowan.st --install=https://github.com/GsDevKit/GsDevKit_upgrade/blob/master/rowan/specs/GsDevKit_upgrade.ston
+	rowan.st --install=https://raw.githubusercontent.com/GsDevKit/GsDevKit_upgrade/master/rowan/specs/GsDevKit_upgrade.ston
 	rowan.st --load=GsDevKit_upgrade
 	rowan.st --unload=GsDevKit_upgrade
 	rowan.st --list

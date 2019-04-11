@@ -181,8 +181,15 @@ StashClassTool >> loadTonelClassFile: filePath [
 { #category : 'loading' }
 StashClassTool >> loadTonelClassFile: filePath projectName: projectName packageName: packageName [
 
+	^ self loadTonelClassFile: filePath projectName: projectName packageName: packageName symDictName: 'UserGlobals'
+]
+
+{ #category : 'loading' }
+StashClassTool >> loadTonelClassFile: filePath projectName: projectName packageName: packageName symDictName: symbolDictName [
+
 	| projectDefinition |
 	projectDefinition := RwRepositoryComponentProjectTonelReaderVisitor readClassFile: filePath projectName: projectName packageName: packageName.
+	projectDefinition setSymbolDictName: symbolDictName forPackageNamed: packageName.
 	Rowan projectTools load loadProjectDefinition: projectDefinition.
 	^ projectDefinition
 ]
