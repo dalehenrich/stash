@@ -25,7 +25,7 @@ rowan >> executeScript [
 
 { #category : 'script implementation' }
 rowan >> install: projectSpecUrl [
-	| url errFilename spec specUrl specFile result |
+	| url errFilename spec specUrl specFile |
 	specUrl := projectSpecUrl.
 	url := specUrl asRwUrl.
 	url scheme = 'https'
@@ -36,26 +36,75 @@ rowan >> install: projectSpecUrl [
 			specUrl := 'file:', filename.
 			url := specUrl asRwUrl ].
 	specFile := url pathString.
-	[specFile  asFileReference readStreamDo: [:fStream | spec := STON fromString: fStream contents ] ]
+	[specFile  asFileReference readStreamDo: [:fStream | 
+		"verify that the .ston file exists and can be read..."
+		spec := STON fromString: fStream contents ] ]
 		on: Error
 		do: [:ex |
 			self error: 'ERROR :: ', ex description, ' :: reading project spec from ', specUrl printString, ' ::error could have been cause by:: ', errFilename asFileReference contents ].
+	"clone the project to disk"
 	Rowan projectTools clone
 		cloneSpecUrl: specUrl
 		gitRootPath: '$ROWAN_PROJECTS_HOME'
 		useSsh: true.
-	result := Rowan projectTools load loadProjectNamed: spec specName.
-	self deleteScriptProject.
-	System commit.
-	^ result
+	"load the project"
+	^ self load: spec specName
 ]
 
 { #category : 'script implementation' }
 rowan >> list [
+
+	| stream fields col1Max col2Max col3Max col4Max space |
+	stream := WriteStream on: String new.
+	fields := (((Rowan projectNames 
+		select: [:aProjectName | aProjectName ~= '__EXECUTE_STASH_SCRIPT_PROJECT__']) 
+			collect: [:aProjectName | RwProject newNamed: aProjectName ]) 
+				sort: [:a :b | a name <= b name])
+					collect: [:project |
+						| field branch path |
+						[ branch :=  project currentBranchName ] on: Error do: [:ex | branch :=  'ERROR getting repository branch' ].
+						path := (project repositoryRootPath ifNil: ['no repositoryRootPath']).
+						field := Array new: 4.
+						field
+							at: 1 put: { project name . project name size . 0 };
+							at: 2 put: { project loadedCommitId . project loadedCommitId size . 0};
+							at: 3 put: { branch . branch size . 0};
+							at: 4 put: { path . path size . 0};
+							yourself ].
+	col1Max := col2Max := col3Max := col4Max := 0.
+	fields do: [:field |
+		col1Max := (((field at: 1) at: 2) + 1) max: col1Max.
+		col2Max := (((field at: 2) at: 2) + 1) max: col2Max.
+		col3Max := (((field at: 3) at: 2) + 1) max: col3Max.
+		col4Max := (((field at: 4) at: 2) + 1) max: col4Max ].
+	fields do: [:field |
+		(field at: 1) at: 3 put: (col1Max - ((field at: 1) at: 2)).
+		(field at: 2) at: 3 put: (col2Max - ((field at: 2) at: 2)).
+		(field at: 3) at: 3 put: (col3Max - ((field at: 3) at: 2)).
+		(field at: 4) at: 3 put: (col4Max - ((field at: 4) at: 2)) ].
+	space := Character space.
+	fields do: [:field |
+			stream nextPutAll: ((field at: 1) at: 1).
+			(((field at: 1) at: 3) + 1) timesRepeat: [stream nextPut: space].
+			stream nextPutAll: ((field at: 2) at: 1).
+			(((field at: 2) at: 3) + 1) timesRepeat: [stream nextPut: space].
+			stream nextPutAll: ((field at: 3) at: 1).
+			(((field at: 3) at: 3) + 1) timesRepeat: [stream nextPut: space].
+			stream nextPutAll: ((field at: 4) at: 1).
+			(((field at: 4) at: 3) + 1) timesRepeat: [stream nextPut: space].
+			stream lf ].
+	^ stream contents
 ]
 
 { #category : 'script implementation' }
 rowan >> load: aProjectName [
+	"load the project"
+
+	| result |
+	result := Rowan projectTools load loadProjectNamed: aProjectName.
+	self deleteScriptProject.
+	System commit.
+	^ result
 ]
 
 { #category : 'script execution' }
@@ -72,7 +121,14 @@ rowan >> scriptOptions [
 ]
 
 { #category : 'script implementation' }
-rowan >> unload: aProjecName [
+rowan >> unload: aProjectName [
+	"unload the project"
+
+	| result |
+	result := Rowan projectTools delete deleteProjectNamed: aProjectName.
+	self deleteScriptProject.
+	System commit.
+	^ result
 ]
 
 { #category : 'usage' }
