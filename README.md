@@ -19,7 +19,7 @@ ln -s $GS_HOME/shared/repos/stash/gemstone/gsdevkit/newBuild_SystemUser_stash .
 
 #	create /usr/bin/smalltalk which is the gemstone shell interpretter for Smalltalk
 cd /usr/bin
-sudo ln -s $GS_HOME/shared/repos/stash/bin/stash_interpretter smalltalk
+sudo ln -s $GS_HOME/shared/repos/stash/bin/gsdevkit_smalltalk_interpretter smalltalk
 ```
 ### Installation into an existing Rowan stone
 ```

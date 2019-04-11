@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-#	command line interpretter for stash script
+#	command line interpretter for smalltalk script
 #	
 #	arguments up to the first -- are interpreted as arguments to 
 #		command-line interpreter

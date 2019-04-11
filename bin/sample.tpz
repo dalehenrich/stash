@@ -1,0 +1,8 @@
+#!/usr/bin/gemstone/topaz
+
+login
+
+run
+3+4
+%
+
