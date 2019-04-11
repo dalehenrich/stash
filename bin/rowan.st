@@ -25,7 +25,7 @@ rowan >> executeScript [
 
 { #category : 'script implementation' }
 rowan >> install: projectSpecUrl [
-	| url errFilename spec specUrl specFile |
+	| url errFilename spec specUrl specFile result |
 	specUrl := projectSpecUrl.
 	url := specUrl asRwUrl.
 	url scheme = 'https'
@@ -40,7 +40,14 @@ rowan >> install: projectSpecUrl [
 		on: Error
 		do: [:ex |
 			self error: 'ERROR :: ', ex description, ' :: reading project spec from ', specUrl printString, ' ::error could have been cause by:: ', errFilename asFileReference contents ].
-	Rowan projectTools load loadProjectFromSpecUrl: specUrl
+	Rowan projectTools clone
+		cloneSpecUrl: specUrl
+		gitRootPath: '$ROWAN_PROJECTS_HOME'
+		useSsh: true.
+	result := Rowan projectTools load loadProjectNamed: spec specName.
+	self deleteScriptProject.
+	System commit.
+	^ result
 ]
 
 { #category : 'script implementation' }
