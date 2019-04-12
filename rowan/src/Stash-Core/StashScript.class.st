@@ -152,6 +152,17 @@ StashScript >> command [
 	^ command
 ]
 
+{ #category : 'solo support' }
+StashScript >> commit [
+	"Commits are not allowed when running with a solo session, so skip the commit if running against a solo extent"
+
+	(GsSession respondsTo: #isSolo)
+		ifTrue: [ 
+			(GsSession perform: #isSolo)
+			ifTrue: [ ^ true ] ].
+	^ System commit
+]
+
 { #category : 'script utilities' }
 StashScript >> deleteScriptProject [
 	"should be used before doing a commit from within the script, to avoid persisting script project artifacts"

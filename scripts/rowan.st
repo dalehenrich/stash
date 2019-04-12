@@ -1,4 +1,4 @@
-#!/usr/bin/smalltalk
+#!/usr/bin/gsdevkit/smalltalk
 "
 a command line interface to Rowan. See `rowan.st -h` for more information.
 "
@@ -10,9 +10,15 @@ Class {
 
 { #category : 'script implementation' }
 rowan >> commit: aProjectName message: commitMessage [
-	"commit the project"
+	"commit the project to a git repository"
 
-	commitMessage ifNil: [ self error: 'missing required option: --messge' ]
+	commitMessage ifNil: [ self error: 'missing required option: --messge' ].
+	Rowan projectTools write writeProjectNamed: aProjectName.
+	Rowan projectTools commit
+		commitProjectNamed: aProjectName
+		message: commitMessage.
+	self deleteScriptProject.
+	self commit.
 ]
 
 { #category : 'script execution' }
@@ -27,8 +33,8 @@ rowan >> executeScript [
 				opts at: 'unload' ifPresent: [:arg | self unload: arg ].
 				opts at: 'write' ifPresent: [:arg | self write: arg ].
 				opts at: 'commit' ifPresent: [:arg | self commit: arg message: (args at: 1) ].
-				opts at: 'list' ifPresent: [:arg | self list ].
-				 ]
+				opts at: 'list' ifPresent: [:arg | ^ self list ].
+				^ true ]
 			ifPresent: [ self usage ]
 ]
 
@@ -112,7 +118,7 @@ rowan >> load: aProjectName [
 	| result |
 	result := Rowan projectTools load loadProjectNamed: aProjectName.
 	self deleteScriptProject.
-	System commit.
+	self commit.
 	^ result
 ]
 
@@ -138,7 +144,7 @@ rowan >> unload: aProjectName [
 	| result |
 	result := Rowan projectTools delete deleteProjectNamed: aProjectName.
 	self deleteScriptProject.
-	System commit.
+	self commit.
 	^ result
 ]
 
@@ -203,5 +209,9 @@ EXAMPLES
 
 { #category : 'script implementation' }
 rowan >> write: aProjectName [
-	"write the project"
+	"write the project to disk"
+
+	Rowan projectTools write writeProjectNamed: aProjectName.
+	self deleteScriptProject.
+	self commit.
 ]
