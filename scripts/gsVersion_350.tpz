@@ -3,8 +3,9 @@
 login
 
 run
-| dict |
-dict := STON fromString: GsFile stdin.
+| ston dict |
+ston := GsFile stdin contents.
+dict := STON fromString: ston.
 GsFile stdout nextPutAll: (STON toStringPretty: (dict at: 'gsVersion')); lf.
 %
 
