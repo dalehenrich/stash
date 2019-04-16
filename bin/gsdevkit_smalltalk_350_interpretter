@@ -20,9 +20,11 @@ if [ "$1" = "-D" ] ; then
 fi
 
 solo=""
+topazArgs="$GEMSTONE_SCRIPT_ARGS"
 if [ "$1" = "-S" ] ; then
 	# hack .. for now
 	solo="set solologin on"
+	topazArgs="$GEMSTONE_SOLO_SCRIPT_ARGS"
 	shift
 fi
 
@@ -30,7 +32,6 @@ pwd=`pwd`
 # StashScript class will do it's own parsing of the command line args (in Smalltalk)
 #		just stripping out topaz arguments
 stashArgs="$*" 
-topazArgs="$GEMSTONE_SCRIPT_ARGS"
 startTopaz="false"
 #	echo "1: $@"
 for argument in $@ ; do

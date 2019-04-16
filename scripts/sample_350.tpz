@@ -3,6 +3,6 @@
 login
 
 run
-System stoneName
+System stoneVersionReport values asArray
 %
 

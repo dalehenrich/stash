@@ -1,0 +1,36 @@
+#!/usr/bin/gsdevkit/topaz
+
+	iferr 1 exit 1
+	output pop
+
+# install Rowan
+#
+	input $ROWAN_PROJECTS_HOME/Rowan/platforms/gemstone/topaz/3.5.0/install_1.tpz
+	input $ROWAN_PROJECTS_HOME/Rowan/platforms/gemstone/topaz/3.5.0/install_2.tpz
+	input $ROWAN_PROJECTS_HOME/Rowan/platforms/gemstone/topaz/3.5.0/install_3.tpz
+	input $ROWAN_PROJECTS_HOME/Rowan/platforms/gemstone/topaz/3.5.0/install_4.tpz
+
+# instll stash
+	iferr 1 exit 1
+
+	set u SystemUser p swordfish
+	login
+
+	run
+	| url |
+	url := 'file:$ROWAN_PROJECTS_HOME/stash/rowan/specs/stash.ston'.
+	true 
+		ifTrue: [ 
+			Rowan projectTools load loadProjectFromSpecUrl: url projectRootPath: '$ROWAN_PROJECTS_HOME/stash' ]
+		ifFalse: [
+			Rowan projectTools clone
+				cloneSpecUrl: url
+				gitRootPath: '$ROWAN_PROJECTS_HOME'
+				useSsh: true.
+			Rowan projectTools load loadProjectNamed: 'stash'. ].
+%
+
+	commit
+	errorCount
+	exit
+
