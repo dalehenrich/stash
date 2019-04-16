@@ -1,4 +1,4 @@
-#!/usr/bin/gsdevkit/topaz_350
+#!/usr/bin/gsdevkit/topaz_solo
 
 set solologin on
 login
@@ -6,5 +6,5 @@ login
 run
 | report |
 report := SystemRepository extentsReport.
-GsFile stdout nextPutAll: (STON toStringPretty: report); lf.
+GsFile stdout nextPutAll: report.
 %

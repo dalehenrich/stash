@@ -12,13 +12,6 @@
 stashFile=`realpath $1`
 shift
 
-debug="false"
-if [ "$1" = "-D" ] ; then
-	# hack .. for now
-	debug="true"
-	shift
-fi
-
 solo=""
 topazArgs="$GEMSTONE_SCRIPT_ARGS"
 if [ "$1" = "-S" ] ; then
@@ -46,40 +39,29 @@ for argument in $@ ; do
 	fi
 done
 
-	echo "topaz args: $topazArgs"
-	echo "stash args: $stashArgs"
+#	echo "topaz args: $topazArgs"
+#	echo "stash args: $stashArgs"
 
 file=`mktemp`
-logFile=`mktemp`
-
-echo "log file: $logFile"
-
 cat - > $file << EOF
-
-	output push $logFile only
 	set INPUTPAUSEONERROR on
 	iferr 1 stk
-#	iferr 2 stack
 
-	set u SystemUser p swordfish
 	$solo
 	login
 
-	print
-	^ StashScript
+	run
+	| result |
+	result := StashScript
 			loadAndExecuteScriptClassFile: '$stashFile'
 			stashArgs: '$stashArgs'
 			topazArgs: '$topazArgs'
 			workingDir: '$pwd'
 			projectName: '__EXECUTE_STASH_SCRIPT_PROJECT__'
 			packageName: '__EXECUTE_STASH_SCRIPT_PACKAGE__'
-			symDictName: '_EXECUTE_STASH_SCRIPT_SymbolDict__'
+			symDictName: '_EXECUTE_STASH_SCRIPT_SymbolDict__'.
+	GsFile stdout nextPutAll: result asString; lf
 %
-
-	output pop
-	obj1 **
-	EXITIFNOERROR
-
 EOF
 
 if [ "${topazArgs}x" = "x" ] ; then
@@ -88,16 +70,4 @@ if [ "${topazArgs}x" = "x" ] ; then
 	exit 1
 fi
 
-if [ "$debug" = "true" ] ; then
-		echo "INPUT $file"
-		$GS_HOME/bin/startTopaz $topazArgs
-	else
-		$GS_HOME/bin/startTopaz $topazArgs << EOF
-		input $file
-EOF
-	status="$?"
-	if [ "$status" != 0 ] ; then
-		cat $logFile
-		exit $status
-	fi
-fi
+$GS_HOME/bin/scriptTopaz $topazArgs -S $file

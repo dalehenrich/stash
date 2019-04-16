@@ -23,6 +23,7 @@ pushd  /usr/bin
 		sudo ln -s $scriptDir/gsdevkit_smalltalk_350_interpretter smalltalk_350
 		sudo ln -s $scriptDir/gsdevkit_topaz_interpretter topaz
 		sudo ln -s $scriptDir/gsdevkit_topaz_350_interpretter topaz_350
+		sudo ln -s $scriptDir/gsdevkit_topaz_solo_interpretter topaz_solo
 	fi
 popd
 

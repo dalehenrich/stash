@@ -37,7 +37,7 @@ if [ "$debug" = "true" ] ; then
 		echo "INPUT $file"
 		$GS_HOME/bin/startTopaz $topazArgs
 	else
-		$GS_HOME/bin/startTopaz $topazArgs << EOF
+		$GS_HOME/bin/scriptTopaz $topazArgs << EOF
 		input $file
 EOF
 	status="$?"
