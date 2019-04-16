@@ -44,7 +44,6 @@ done
 
 file=`mktemp`
 cat - > $file << EOF
-	set INPUTPAUSEONERROR on
 	iferr 1 stk
 
 	$solo

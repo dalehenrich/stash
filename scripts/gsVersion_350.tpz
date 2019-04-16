@@ -1,0 +1,10 @@
+#!/usr/bin/gsdevkit/topaz_350
+
+login
+
+run
+| dict |
+dict := STON fromString: GsFile stdin.
+GsFile stdout nextPutAll: (STON toStringPretty: (dict at: 'gsVersion')); lf.
+%
+
