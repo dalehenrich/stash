@@ -3,6 +3,9 @@
 login
 
 run
-System stoneVersionReport values asArray
+| report |
+report := System stoneVersionReport values asArray.
+GsFile stdout nextPutAll: (STON toStringPretty: report); lf.
+
 %
 

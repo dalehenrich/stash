@@ -1,0 +1,10 @@
+#!/usr/bin/gsdevkit/topaz_350
+
+iferr 1 stk
+
+login
+
+run
+GsFile stdout nextPutAll: (STON toStringPretty: 3 foo); lf.
+%
+

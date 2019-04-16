@@ -4,5 +4,7 @@ set solologin on
 login
 
 run
-SystemRepository extentsReport
+| report |
+report := SystemRepository extentsReport.
+GsFile stdout nextPutAll: (STON toStringPretty: report); lf.
 %
