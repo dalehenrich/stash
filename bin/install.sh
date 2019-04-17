@@ -34,11 +34,10 @@ else
 fi
 
 export GEMSTONE_SCRIPT_ARGS="$stoneName -lq"
-export GEMSTONE_SCRIPT_SOLO_EXTENT="$GS_HOME/server/stones/$stoneName/snapshots/solo_extent0.dbf"
+export GEMSTONE_SCRIPT_SOLO_EXTENT="$GS_HOME/server/stones/$stoneName/snapshots/extent0.solo.dbf"
 export GEMSTONE_SOLO_SCRIPT_ARGS="$stoneName -lq -C GEM_SOLO_EXTENT=\$GEMSTONE_SCRIPT_SOLO_EXTENT;"
 
 $scriptDir/../scripts/install.tpz
 
-stopStone $stoneName
-cp "$GS_HOME/server/stones/$stoneName/extents/extent0.dbf" "$GEMSTONE_SCRIPT_SOLO_EXTENT"
-
+# create the solo extent
+$scriptDir/../scripts/snapshot.st solo.dbf

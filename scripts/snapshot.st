@@ -91,5 +91,7 @@ EXAMPLES
 	snapshot.st --safely sample.dbf
 	snapshot.st --dir=$GS_HOME/gemstone/snapshots sample.dbf
 
+	snapshot.st solo.dbf
+
 ') printString, dashes
 ]
