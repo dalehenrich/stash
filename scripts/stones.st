@@ -15,6 +15,7 @@ GsDevKit_StonesScript >> scriptOptions [
 			#('all' $a #'none').
 			#('running' $r #'none').
 			#('installed' $i #'none').
+			#('netldi' $n #'none').
 	}
 ]
 
@@ -24,12 +25,17 @@ GsDevKit_StonesScript >> executeScript [
 	opts
 		at: 'help'
     ifAbsent: [
-			opts at: 'running' ifPresent: [:ignored | 
-				^ Rowan stashTools stones runningStonesReportOn: GsFile stdout ].
-			opts at: 'installed' ifPresent: [:ignored | 
-				^  Rowan stashTools stones installedStonesReportOn: GsFile stdout ]. 
-			Rowan stashTools stones installedStonesReportOn: GsFile stdout.
-			Rowan stashTools stones runningStonesReportOn: GsFile stdout ]
+			| running installed netldi |
+			running := installed := netldi := opts isEmpty.
+			opts at: 'running' ifPresent: [:ignored | running := true ].
+			opts at: 'installed' ifPresent: [:ignored | installed := true ]. 
+			opts at: 'netldi' ifPresent: [:ignored | netldi := true ]. 
+			running
+				ifTrue: [ Rowan stashTools stones installedStonesReportOn: GsFile stdout ].
+			installed
+				ifTrue: [ Rowan stashTools stones runningStonesReportOn: GsFile stdout ].
+			netldi
+				ifTrue: [ Rowan stashTools stones runningNetldiReportOn: GsFile stdout ] ] 
     ifPresent: [ ^ self usage ]
 ]
 
@@ -38,7 +44,7 @@ GsDevKit_StonesScript >> usage [
 	| dashes |
 	dashes := '----------------------------------------------------
 '.
-  ^ dashes,
+  GsFile stdout nextPutAll: dashes,
 		(self manPageClass
           fromString:
 'NAME
@@ -48,6 +54,7 @@ SYNOPSIS
 	stones.st [ -a | --all ]
 	stones.st [ -r | --running ]
 	stones.st [ -i | --installed ]
+	stones.st [ -i | --netldi ]
 
 DESCRIPTION
 
@@ -66,12 +73,19 @@ EXAMPLES
 	stones.st --help
 	stones.st -h
 
+	stones.st
+
 	stones.st --all
 	stones.st --running
 	stones.st --installed
+	stones.st --netldi
+
+	stones.st --installed --netldi
 
 	stones.st -a
 	stones.st -r
 	stones.st -i
+	stones.st -n
+
 ') printString, dashes
 ]

@@ -39,10 +39,13 @@ for argument in $@ ; do
 	fi
 done
 
-#	echo "topaz args: $topazArgs"
-#	echo "stash args: $stashArgs"
-
 file=`mktemp`
+
+	echo "stash args: $stashArgs"
+	echo "script file : $stashFile"
+	echo "topaz args: $topazArgs"
+	echo "topaz file : $file"
+
 cat - > $file << EOF
 	iferr 1 stk
 
