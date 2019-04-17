@@ -35,7 +35,7 @@ StashGemStoneTool >> snapshot: snapshotExtension to: snapshotDirPath suspendInMi
 			| extent extentName snapshotName snapshotFile performCopy |
 			extent := extentPath asFileReference.
 			snapshotName := extentName := extent basename.
-			(extentName asFileReference extension = '.dbf')
+			(extentName asFileReference extension = 'dbf')
 				ifTrue: [ 
 					snapshotName := (extentName copyFrom: 1 to: extentName size - 3)
 						, snapshotExtension ].
