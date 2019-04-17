@@ -14,7 +14,7 @@ GsDevKit_StonesScript >> scriptOptions [
 			#('help' $h #'none').
 			#('all' $a #'none').
 			#('running' $r #'none').
-			#('installed' $i #'none').
+			#('installed' $i #'optional').
 			#('netldi' $n #'none').
 	}
 ]
@@ -25,14 +25,17 @@ GsDevKit_StonesScript >> executeScript [
 	opts
 		at: 'help'
     ifAbsent: [
-			| running installed netldi |
+			| running installed netldi installedSortKey |
 			running := installed := netldi := opts isEmpty.
+			installedSortKey := #name.
 			opts at: 'running' ifPresent: [:ignored | running := true ].
-			opts at: 'installed' ifPresent: [:ignored | installed := true ]. 
+			opts at: 'installed' ifPresent: [:argOrNil | 
+				installed := true.
+				argOrNil ifNotNil: [ installedSortKey := argOrNil asSymbol ] ]. 
 			opts at: 'netldi' ifPresent: [:ignored | netldi := true ]. 
-			running
-				ifTrue: [ Rowan stashTools stones installedStonesReportOn: GsFile stdout ].
 			installed
+				ifTrue: [ Rowan stashTools stones installedStonesReportOn: GsFile stdout sortKey: installedSortKey ].
+			running
 				ifTrue: [ Rowan stashTools stones runningStonesReportOn: GsFile stdout ].
 			netldi
 				ifTrue: [ Rowan stashTools stones runningNetldiReportOn: GsFile stdout ] ] 
@@ -53,7 +56,7 @@ SYNOPSIS
 	stones.st [ -h | --help ]
 	stones.st [ -a | --all ]
 	stones.st [ -r | --running ]
-	stones.st [ -i | --installed ]
+	stones.st [ -i | --installed[=name|version] ]
 	stones.st [ -i | --netldi ]
 
 DESCRIPTION
@@ -66,8 +69,9 @@ DESCRIPTION
 	-r | --running
 		list running stones.
 
-	-i | --installed
-		list installed stones.
+	-i | --installed[=name|version]
+		list installed stones. The stone list may be sorted by `name` or `version`.
+		By default, the list is sorte by `version`.
 
 EXAMPLES
 	stones.st --help
@@ -77,14 +81,14 @@ EXAMPLES
 
 	stones.st --all
 	stones.st --running
-	stones.st --installed
+	stones.st --installed=name
 	stones.st --netldi
 
 	stones.st --installed --netldi
 
 	stones.st -a
 	stones.st -r
-	stones.st -i
+	stones.st -i version
 	stones.st -n
 
 ') printString, dashes

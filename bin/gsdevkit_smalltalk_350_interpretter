@@ -28,7 +28,7 @@ stashArgs="$*"
 startTopaz="false"
 #	echo "1: $@"
 for argument in $@ ; do
-	echo "===>$argument"
+#	echo "===>$argument"
 	if [ "$argument" = "--" ] ; then
 		startTopaz="true"
 		topazArgs=""
@@ -41,10 +41,10 @@ done
 
 file=`mktemp`
 
-	echo "stash args: $stashArgs"
-	echo "script file : $stashFile"
-	echo "topaz args: $topazArgs"
-	echo "topaz file : $file"
+#	echo "stash args: $stashArgs"
+#	echo "script file : $stashFile"
+#	echo "topaz args: $topazArgs"
+#	echo "topaz file : $file"
 
 cat - > $file << EOF
 	iferr 1 stk
