@@ -1,0 +1,12 @@
+#!/usr/bin/gsdevkit/topaz_350
+
+login
+
+run
+| output |
+output := true
+	ifTrue: [ GsHostProcess execute: '/home/dhenrich/rogue/_homes/rogue/_home/bin/stones' ]
+	ifFalse: [ GsHostProcess execute: '$GS_HOME/bin/stones' ].
+GsFile stdout nextPutAll: output; lf.
+%
+

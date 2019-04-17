@@ -1,0 +1,35 @@
+#!/usr/bin/gsdevkit/topaz_350
+#
+# example use of GsHostProcess
+#
+login
+
+run
+	| commandString arr out err result |
+	commandString := '$GS_HOME/bin/stones' asFileReference absolutePath pathString.
+
+  arr := GsHostProcess _execute: commandString input: nil.
+  out := arr at: 1.
+  err := arr at: 2.
+
+	result := String new.
+  err size > 0 
+		ifTrue: [
+			result 
+				addAll: 'STDERR: <'; 
+				lf;
+				addAll: err asString; 
+				lf;
+				addAll: '> ';
+				lf ].
+  result 
+		addAll: 'STDOUT: <';
+		lf;
+		addAll: out asString; 
+		addAll: '> '; 
+		lf.
+	GsFile stdout nextPutAll: result.
+%
+
+
+
