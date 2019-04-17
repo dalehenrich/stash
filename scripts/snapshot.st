@@ -36,6 +36,7 @@ GemStoneSnapshotScript >> executeScript [
 			args size < 1
 				ifTrue: [ self error: 'Required argument <snapshot-extension> missing.' ].
 			snapshotExtension := args at: 1.
+GsFile stdin nextPutAll: 'EXT: ', snapshotExtension; lf.
 			snapshotPath := '$GS_HOME/server/stones/' , self stoneName , '/snapshots'.
 			suspendInMinutes := 15.
 			safely := false.

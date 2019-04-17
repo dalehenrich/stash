@@ -50,18 +50,19 @@ StashGemStoneTool >> snapshot: snapshotExtension to: snapshotDirPath suspendInMi
 				ifTrue: [ 
 					GsFile stdout nextPutAll:
 							'---Starting snapshot to ' , (extentPath , ' ' , snapshotFile pathString) printString
-								, '(' , DateAndTime now asString , ')'.
+								, '(' , DateAndTime now asString , ')';
+						lf.
 					extent copyTo: snapshotFile.
 					snapshots add: snapshotFile.
 					GsFile stdout
-						cr;
-						tab;
 						nextPutAll:
-								'---Finishing snapshot ' , DateAndTime now asString , ' -- ' , snapshotFile pathString ]
+								'---Finishing snapshot ' , DateAndTime now asString , ' -- ' , snapshotFile pathString;
+						lf]
 				ifFalse: [ 
 					GsFile stdout nextPutAll:
 							'The snapshot file exists, --safely present, copy skipped for: '
-								, snapshotFile printString ] ].
+								, snapshotFile printString;
+						lf ] ].
 	self checkpointsSuspended
 		ifFalse: [ 
 			snapshots do: [ :snapshotFile| snapshotFile delete ].
