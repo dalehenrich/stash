@@ -39,12 +39,16 @@ for argument in $@ ; do
 	fi
 done
 
+topazArgArray=(${topazArgs})
+stoneName=${topazArgArray[0]}
 file=`mktemp`
 
+echo "stone name: : $stoneName"
 #	echo "stash args: $stashArgs"
 #	echo "script file : $stashFile"
 #	echo "topaz args: $topazArgs"
 #	echo "topaz file : $file"
+
 
 cat - > $file << EOF
 	iferr 1 stk
@@ -58,6 +62,7 @@ cat - > $file << EOF
 			stashArgs: '$stashArgs'
 			topazArgs: '$topazArgs'
 			workingDir: '$pwd'
+			stoneName: '$stoneName'
 			projectName: '__EXECUTE_STASH_SCRIPT_PROJECT__'
 			packageName: '__EXECUTE_STASH_SCRIPT_PACKAGE__'
 			symDictName: '_EXECUTE_STASH_SCRIPT_SymbolDict__'

@@ -3,13 +3,13 @@
 Make a snapshot of the extent files for the current stone
 "
 Class {
-     #name : 'GemStone_Snapshot',
+     #name : 'GemStoneSnapshotScript',
      #superclass : 'StashScript',
      #category : 'Stash-Scripts'
 }
 
 { #category : 'script execution' }
-GemStone_Snapshot >> scriptOptions [
+GemStoneSnapshotScript >> scriptOptions [
 	^ {
 			#('help' $h #'none').
 			#('safely' $a #'none').
@@ -19,18 +19,27 @@ GemStone_Snapshot >> scriptOptions [
 	}
 ]
 
+{ #category : '' }
+GemStoneSnapshotScript >> commit [
+
+	self deleteScriptProject.
+	super commit.
+]
+
 { #category : 'script execution' }
-GemStone_Snapshot >> executeScript [
+GemStoneSnapshotScript >> executeScript [
 
 	opts
 		at: 'help'
     ifAbsent: [
 			| snapshotExtension snapshotPath suspendInMinutes safely |
-			(snapshotExtension := args atOrNil: 1)
-				ifNil: [ self error: 'Required argument <snapshot-extension> missing.' ].
+			args size < 1
+				ifTrue: [ self error: 'Required argument <snapshot-extension> missing.' ].
+			snapshotExtension := args at: 1.
 			snapshotPath := '$GS_HOME/server/stones/' , self stoneName , '/snapshots'.
 			suspendInMinutes := 15.
 			safely := false.
+			opts at: 'commit' ifPresent: [:ignored | self commit ].
 			Rowan stashTools gemstone
 				snapshot: snapshotExtension 
 				to: snapshotPath 
@@ -41,7 +50,7 @@ GemStone_Snapshot >> executeScript [
 ]
 
 { #category : 'usage' }
-GemStone_Snapshot >> usage [
+GemStoneSnapshotScript >> usage [
 	| dashes |
 	dashes := '----------------------------------------------------
 '.
@@ -71,11 +80,14 @@ DESCRIPTION
   With the --safely option specified, the snapshot will (quietly) be skipped if
   the target snapshot already exists.
 
-  A commit is always performed immediately before the checkpoints are enabled.
+  With the --commit options specificied, a commit will be performed before the 
+	checkpoints are enabled. A commit is needed to ensure that checkpoint processing
+	is not delayed (I think).
 
 EXAMPLES
 	snapshot.st --help
 	snapshot.st sample.dbf
+	snapshot.st --commit sample.dbf
 	snapshot.st --safely sample.dbf
 	snapshot.st --dir=$GS_HOME/gemstone/snapshots sample.dbf
 

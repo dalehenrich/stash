@@ -26,7 +26,8 @@ Class {
 		'args',
 		'command',
 		'projectName',
-		'packageName'
+		'packageName',
+		'stoneName'
 	],
 	#classInstVars : [
 		'scriptDir',
@@ -66,7 +67,7 @@ StashScript class >> initialize [
 ]
 
 { #category : 'script launching' }
-StashScript class >> loadAndExecuteScriptClassFile: script_file stashArgs: stash_args topazArgs: topaz_args workingDir: working_dir projectName: projectName packageName: packageName symDictName: symbolDictName [
+StashScript class >> loadAndExecuteScriptClassFile: script_file stashArgs: stash_args topazArgs: topaz_args workingDir: working_dir stoneName: stoneName projectName: projectName packageName: packageName symDictName: symbolDictName [
 
 	| projectDefinition scriptClassDefinition stash |
 	self _createScriptExecutionSymbolDictionaryNamed: symbolDictName.
@@ -78,6 +79,7 @@ StashScript class >> loadAndExecuteScriptClassFile: script_file stashArgs: stash
 	scriptClassDefinition := (projectDefinition packages values any) classDefinitions values any.
 	stash := ((GsCurrentSession currentSession symbolList objectNamed: scriptClassDefinition name) 
 		stashFilePath: script_file 
+		stoneName: stoneName
 		topazArgs: topaz_args 
 		stashArgs: stash_args
 		workingDir: working_dir)
@@ -105,10 +107,11 @@ StashScript class >> scriptName: aStringOrFileReference [
 ]
 
 { #category : 'instance creation' }
-StashScript class >> stashFilePath: stashFilePath topazArgs: topazArgs stashArgs: stashArgs workingDir: workingDir [
+StashScript class >> stashFilePath: stashFilePath stoneName: stoneName topazArgs: topazArgs stashArgs: stashArgs workingDir: workingDir [
 
 	^ self new
 		stashFilePath: stashFilePath;
+		stoneName: stoneName;
 		topazArgString: topazArgs; 
 		stashArgString: stashArgs; 
 		workingDirectoryPath: workingDir;
@@ -309,6 +312,18 @@ StashScript >> stashFile [
 StashScript >> stashFilePath: aString [
 
 	stashFile := aString asFileReference
+]
+
+{ #category : 'accessing' }
+StashScript >> stoneName [
+
+	^ stoneName
+]
+
+{ #category : 'accessing' }
+StashScript >> stoneName: aString [
+
+	stoneName := aString
 ]
 
 { #category : 'accessing' }

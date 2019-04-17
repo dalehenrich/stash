@@ -14,3 +14,7 @@ StashGsDevKitTool >> gs_stonesHome [
 StashGsDevKitTool >> stoneInfoFilename [
 	^  'info.ston'
 ]
+
+{ #category : 'accessing' }
+StashGsDevKitTool >> stoneName [
+]

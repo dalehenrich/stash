@@ -5,17 +5,18 @@ Class {
 }
 
 { #category : 'snapshot' }
-StashGemStoneTool class >> _checkpointsSuspended [
+StashGemStoneTool >> checkpointsSuspended [
 	^ System checkpointStatus at: 1
 ]
 
 { #category : 'snapshot' }
-StashGemStoneTool class >> snapshot: snapshotExtension to: snapshotPath suspendInMinutes: suspendInMinutes safely: safely [
-	| snapshots snapshotFileRef |
-	snapshotFileRef := snapshotPath asFileReference.
+StashGemStoneTool >> snapshot: snapshotExtension to: snapshotDirPath suspendInMinutes: suspendInMinutes safely: safely [
+	"a commit should be performed before calling this method, to make sure that the snapshot contains any changed state 
+		in the current session that you want preserved"
+
+	| snapshots snapshotDirRef |
+	snapshotDirRef := snapshotDirPath asFileReference.
 	[ 
-	System commitTransaction
-		ifFalse: [ self error: 'Commit failed: snapshot not taken' ].
 	self checkpointsSuspended
 		ifTrue: [ self error: 'Checkpoints currently suspended. Please wait and try again.' ].
 	System startCheckpointSync
@@ -31,39 +32,39 @@ StashGemStoneTool class >> snapshot: snapshotExtension to: snapshotPath suspendI
 	snapshots := {}.
 	self snapshotExtentFilePaths
 		do: [ :extentPath | 
-			| extent extentName snapshotName snapshotFilePath performCopy |
+			| extent extentName snapshotName snapshotFile performCopy |
 			extent := extentPath asFileReference.
 			snapshotName := extentName := extent basename.
-			(extentName extension = '.dbf')
+			(extentName asFileReference extension = '.dbf')
 				ifTrue: [ 
 					snapshotName := (extentName copyFrom: 1 to: extentName size - 3)
 						, snapshotExtension ].
-			snapshotFilePath := snapshotFileRef / snapshotName.
+			snapshotFile:= snapshotDirRef / snapshotName.
 			performCopy := safely
 				ifTrue: [ 
 					"account for nil return value"
-					snapshotFilePath exists ]
+					snapshotFile exists ]
 				ifFalse: [ true ].
 			GsFile stdout lf.
 			performCopy
 				ifTrue: [ 
 					GsFile stdout nextPutAll:
-							'---Starting snapshot to ' , (extentPath , ' ' , snapshotFilePath) printString
+							'---Starting snapshot to ' , (extentPath , ' ' , snapshotFile pathString) printString
 								, '(' , DateAndTime now asString , ')'.
-					extentPath copyto: snapshotFilePath.
-					snapshots add: snapshotFilePath.
+					extent copyTo: snapshotFile.
+					snapshots add: snapshotFile.
 					GsFile stdout
 						cr;
 						tab;
-						show:
-								'---Finishing snapshot ' , DateAndTime now asString , ' -- ' , snapshotFilePath ]
+						nextPutAll:
+								'---Finishing snapshot ' , DateAndTime now asString , ' -- ' , snapshotFile pathString ]
 				ifFalse: [ 
 					GsFile stdout nextPutAll:
 							'The snapshot file exists, --safely present, copy skipped for: '
-								, snapshotFilePath printString ] ].
-	self _checkpointsSuspended
+								, snapshotFile printString ] ].
+	self checkpointsSuspended
 		ifFalse: [ 
-			snapshots do: [ :snapshotFilePath | snapshotFilePath delete ].
+			snapshots do: [ :snapshotFile| snapshotFile delete ].
 			self
 				error:
 					'Checkpoints were resumed before the extent copies were completed. Extent copies have been deleted.' ] ]
@@ -72,7 +73,7 @@ StashGemStoneTool class >> snapshot: snapshotExtension to: snapshotPath suspendI
 ]
 
 { #category : 'snapshot' }
-StashGemStoneTool class >> snapshotExtentFilePaths [
+StashGemStoneTool >> snapshotExtentFilePaths [
 	^ SystemRepository fileNames
 		collect: [ :each | 
 			(each indexOf: $! startingAt: 1) = 0
