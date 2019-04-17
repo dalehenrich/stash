@@ -25,11 +25,11 @@ GsDevKit_StonesScript >> executeScript [
 		at: 'help'
     ifAbsent: [
 			opts at: 'running' ifPresent: [:ignored | 
-				^ Rowan gsDevKitTools stones runningStonesReportOn: GsFile stdout ].
+				^ Rowan stashTools stones runningStonesReportOn: GsFile stdout ].
 			opts at: 'installed' ifPresent: [:ignored | 
-				^  Rowan gsDevKitTools stones installedStonesReportOn: GsFile stdout ]. 
-			Rowan gsDevKitTools stones installedStonesReportOn: GsFile stdout.
-			Rowan gsDevKitTools stones runningStonesReportOn: GsFile stdout ]
+				^  Rowan stashTools stones installedStonesReportOn: GsFile stdout ]. 
+			Rowan stashTools stones installedStonesReportOn: GsFile stdout.
+			Rowan stashTools stones runningStonesReportOn: GsFile stdout ]
     ifPresent: [ ^ self usage ]
 ]
 
