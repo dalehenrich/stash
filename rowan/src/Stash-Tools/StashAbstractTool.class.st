@@ -11,6 +11,12 @@ StashAbstractTool class >> classTool [
 ]
 
 { #category : 'commands' }
+StashAbstractTool class >> gemstone [
+
+	^ StashGemStoneTool new
+]
+
+{ #category : 'commands' }
 StashAbstractTool class >> stones [
 
 	^ StashGsDevKitStonesTool new
