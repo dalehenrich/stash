@@ -70,7 +70,7 @@ StashScript class >> loadAndExecuteScriptClassFile: script_file stashArgs: stash
 
 	| projectDefinition scriptClassDefinition stash |
 	self _createScriptExecutionSymbolDictionaryNamed: symbolDictName.
-	projectDefinition := Rowan classTools stashClassTool
+	projectDefinition := Rowan stashTools classTool 
 		loadTonelClassFile: script_file
 		projectName: projectName
 		packageName: packageName
@@ -120,7 +120,7 @@ StashScript class >> writeToDirectory: directoryPath as: filename [
 	"Run script with --save option to invoke this method"
 	| classDefinition |
 	classDefinition := (Rowan image loadedClassNamed: self name) asDefinition.
-	Rowan classTools stashClassTool
+	Rowan stashTools classTool 
 		writeTonelClassDefinition: classDefinition 
 		toDirectory: directoryPath
 		as: filename.
@@ -202,7 +202,7 @@ StashScript >> edit [
 
 	| projName |
 	projName := 'EDIT-', self class name asString.
-	Rowan classTools stashClassTool 
+	Rowan stashTools classTool 
 		loadTonelClassFile: self stashFile 
 			projectName: projName
 			packageName: 'EDIT-', self class name asString, '-PKG'.

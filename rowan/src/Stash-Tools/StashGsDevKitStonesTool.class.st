@@ -1,5 +1,5 @@
 Class {
 	#name : 'StashGsDevKitStonesTool',
-	#superclass : 'StashAbstractGsDevKitTool',
+	#superclass : 'StashGsDevKitTool',
 	#category : 'Stash-Tools'
 }

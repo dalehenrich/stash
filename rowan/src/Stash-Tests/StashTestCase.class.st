@@ -20,8 +20,8 @@ StashTestCase >> testScriptLoad [
 
 	repoRoot := rowanSpec repositoryRootPath asFileReference.
 
-	Rowan classTools stashClassTool 
-		loadTonelClassFiles: {repoRoot / 'bin' / 'sample.st' } 
+	Rowan stashTools classTool  
+		loadTonelClassFiles: {repoRoot / 'test' / 'scripts' / 'sample.st' } 
 			projectName: projectName 
 			packageName: packageName
 			symDictName: self _symbolDictionaryName1.
