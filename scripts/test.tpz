@@ -1,5 +1,5 @@
-#!/usr/bin/gsdevkit/topaz_raw
-#
+#!/usr/bin/gsdevkit/topaz_350
+##
 # just for tests
 #
 login
@@ -28,7 +28,7 @@ run
 		addAll: out asString; 
 		addAll: '> '; 
 		lf.
-	true
+	false
 		ifTrue: [ result ]
 		ifFalse: [ GsFile stdout nextPutAll: result ]
 %
