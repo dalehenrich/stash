@@ -1,0 +1,12 @@
+#!/usr/bin/gsdevkit/topaz_350
+##
+# just for tests
+#
+login
+# omit output
+run
+	false
+		ifTrue: [ GsFile stdout nextPutAll: 'hello world' ]
+		ifFalse: [ self halt ]
+%
+exit

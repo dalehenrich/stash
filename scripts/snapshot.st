@@ -32,7 +32,7 @@ GemStoneSnapshotScript >> executeScript [
 	opts
 		at: 'help'
     ifAbsent: [
-			| snapshotExtension snapshotPath suspendInMinutes safely |
+			| snapshotExtension snapshotPath suspendInMinutes safely snapShots |
 			args size < 1
 				ifTrue: [ self error: 'Required argument <snapshot-extension> missing.' ].
 			snapshotExtension := args at: 1.
@@ -40,12 +40,15 @@ GemStoneSnapshotScript >> executeScript [
 			suspendInMinutes := 15.
 			safely := false.
 			opts at: 'commit' ifPresent: [:ignored | self commit ].
-			Rowan stashTools gemstone
+			snapShots := Rowan stashTools gemstone
 				snapshot: snapshotExtension 
 				to: snapshotPath 
 				suspendInMinutes: suspendInMinutes 
-				safely: safely
-				] 
+				safely: safely.
+			snapShots do: [:snapShotFileRef |
+				| resultString |
+				resultString := GsHostProcess execute: '/bin/chmod -w ', snapShotFileRef pathString.
+				GsFile stdout nextPutAll: resultString ] ] 
     ifPresent: [ ^ self usage ]
 ]
 
