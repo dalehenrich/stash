@@ -1,0 +1,35 @@
+#!/usr/bin/gsdevkit/topaz_raw
+#
+# just for tests
+#
+login
+# omit output
+run
+	| commandString arr out err result |
+	commandString := '/bin/ls'.
+
+  arr := GsHostProcess _execute: commandString input: nil.
+  out := arr at: 1.
+  err := arr at: 2.
+
+	result := String new.
+  err size > 0 
+		ifTrue: [
+			result 
+				addAll: 'STDERR: <'; 
+				lf;
+				addAll: err asString; 
+				lf;
+				addAll: '> ';
+				lf ].
+  result 
+		addAll: 'STDOUT: <';
+		lf;
+		addAll: out asString; 
+		addAll: '> '; 
+		lf.
+	true
+		ifTrue: [ result ]
+		ifFalse: [ GsFile stdout nextPutAll: result ]
+%
+exit
