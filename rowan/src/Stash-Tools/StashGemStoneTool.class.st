@@ -18,7 +18,7 @@ StashGemStoneTool >> snapshot: snapshotExtension to: snapshotDirPath suspendInMi
 	snapshotDirRef := snapshotDirPath asFileReference.
 	[ 
 	self checkpointsSuspended
-		ifTrue: [ self error: 'Checkpoints currently suspended. Please wait and try again.' ].
+		ifTrue: [ self error: 'Checkpoints currently suspended. Please wait and try again. Use `System resumeCheckpoints` to resume checkpoints.' ].
 	System startCheckpointSync
 		ifFalse: [ 
 			self

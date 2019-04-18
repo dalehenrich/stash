@@ -1,4 +1,4 @@
-#!/usr/bin/gsdevkit/smalltalk
+#!/usr/bin/gsdevkit/smalltalk_350
 "
 a command line interface to Rowan. See `rowan.st -h` for more information.
 "
@@ -33,7 +33,7 @@ rowan >> executeScript [
 				opts at: 'unload' ifPresent: [:arg | self unload: arg ].
 				opts at: 'write' ifPresent: [:arg | self write: arg ].
 				opts at: 'commit' ifPresent: [:arg | self commit: arg message: (args at: 1) ].
-				opts at: 'list' ifPresent: [:arg | ^ self list ].
+				opts at: 'list' ifPresent: [:arg | self list ].
 				^ true ]
 			ifPresent: [ self usage ]
 ]
@@ -69,8 +69,9 @@ rowan >> install: projectSpecUrl [
 { #category : 'script implementation' }
 rowan >> list [
 
-	| stream fields col1Max col2Max col3Max col4Max space |
-	stream := WriteStream on: String new.
+	| stream fields col1Max col2Max col3Max col4Max space separator titleFields titleField1 
+		titleField2 titleField3 titleField4 fieldPrintBlock |
+	stream := GsFile stdin.
 	fields := (((Rowan projectNames 
 		select: [:aProjectName | aProjectName ~= '__EXECUTE_STASH_SCRIPT_PROJECT__']) 
 			collect: [:aProjectName | RwProject newNamed: aProjectName ]) 
@@ -86,29 +87,66 @@ rowan >> list [
 							at: 3 put: { branch . branch size . 0};
 							at: 4 put: { path . path size . 0};
 							yourself ].
-	col1Max := col2Max := col3Max := col4Max := 0.
+	titleField1 := 'Project'.
+	titleField2 := 'Commit'.
+	titleField3 := 'Branch'.
+	titleField4 := 'Repository'.
+	col1Max := titleField1 size.
+	col2Max := titleField2 size.
+	col3Max := titleField3 size.
+	col4Max := titleField4 size.
 	fields do: [:field |
-		col1Max := (((field at: 1) at: 2) + 1) max: col1Max.
-		col2Max := (((field at: 2) at: 2) + 1) max: col2Max.
-		col3Max := (((field at: 3) at: 2) + 1) max: col3Max.
-		col4Max := (((field at: 4) at: 2) + 1) max: col4Max ].
+		col1Max := ((field at: 1) at: 2) max: col1Max.
+		col2Max := ((field at: 2) at: 2) max: col2Max.
+		col3Max := ((field at: 3) at: 2) max: col3Max.
+		col4Max := ((field at: 4) at: 2) max: col4Max ].
 	fields do: [:field |
 		(field at: 1) at: 3 put: (col1Max - ((field at: 1) at: 2)).
 		(field at: 2) at: 3 put: (col2Max - ((field at: 2) at: 2)).
 		(field at: 3) at: 3 put: (col3Max - ((field at: 3) at: 2)).
 		(field at: 4) at: 3 put: (col4Max - ((field at: 4) at: 2)) ].
-	space := Character space.
-	fields do: [:field |
+	titleFields := { 
+		{titleField1 . nil. col1Max - titleField1 size }.
+		{titleField2 . nil. col2Max - titleField2 size }.
+		{titleField3 . nil. col3Max - titleField3 size }.
+		{titleField4 . nil. col4Max - titleField4 size }.
+	}.
+
+	fieldPrintBlock := [:field |
+			stream nextPutAll: '| '.
 			stream nextPutAll: ((field at: 1) at: 1).
 			(((field at: 1) at: 3) + 1) timesRepeat: [stream nextPut: space].
-			stream nextPutAll: ((field at: 2) at: 1).
+			stream nextPutAll: separator, ((field at: 2) at: 1).
 			(((field at: 2) at: 3) + 1) timesRepeat: [stream nextPut: space].
-			stream nextPutAll: ((field at: 3) at: 1).
+			stream nextPutAll: separator, ((field at: 3) at: 1).
 			(((field at: 3) at: 3) + 1) timesRepeat: [stream nextPut: space].
-			stream nextPutAll: ((field at: 4) at: 1).
+			stream nextPutAll: separator, ((field at: 4) at: 1).
 			(((field at: 4) at: 3) + 1) timesRepeat: [stream nextPut: space].
+			stream nextPutAll: separator.
 			stream lf ].
-	^ stream contents
+
+	space := Character space.
+	separator := ' | '.
+	2 + col1Max + col2Max + col3Max + col4Max + 3 + (4 * separator size) timesRepeat: [ stream nextPut: $- ].
+	stream lf.
+
+	fieldPrintBlock value: titleFields.
+
+	stream nextPutAll: '| '.
+	col1Max + 1 timesRepeat: [ stream nextPut: $- ].
+	stream nextPutAll: separator. 
+	col2Max + 1 timesRepeat: [ stream nextPut: $- ].
+	stream nextPutAll: separator. 
+	col3Max + 1 timesRepeat: [ stream nextPut: $- ].
+	stream nextPutAll: separator. 
+	col4Max + 1 timesRepeat: [ stream nextPut: $- ].
+	stream nextPutAll: separator.
+	stream lf.
+
+	fields do: fieldPrintBlock.
+
+	2 + col1Max + col2Max + col3Max + col4Max + 3 + (4 * separator size) timesRepeat: [ stream nextPut: $- ].
+	stream lf.
 ]
 
 { #category : 'script implementation' }

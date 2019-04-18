@@ -43,7 +43,7 @@ topazArgArray=(${topazArgs})
 stoneName=${topazArgArray[0]}
 file=`mktemp`
 
-echo "stone name: : $stoneName"
+#	echo "stone name: : $stoneName"
 #	echo "stash args: $stashArgs"
 #	echo "script file : $stashFile"
 #	echo "topaz args: $topazArgs"
