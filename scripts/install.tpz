@@ -1,4 +1,4 @@
-#!/usr/bin/gsdevkit/topaz
+#!/usr/bin/gsdevkit/topaz_350
 
 	iferr 1 exit 1
 	output pop
