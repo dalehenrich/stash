@@ -119,11 +119,11 @@ EXAMPLES
 ]
 
 { #category : 'stash script creation' }
-StashClassTool >> createScriptClassNamed: scriptName inDirectory: directoryPath [
+StashClassTool >> createScriptNamed: scriptName classNamed: className inDirectory: directoryPath [
 
 	| classDefinition scriptFileName |
 	scriptFileName := scriptName , self _scriptExtension.
-	classDefinition := (RwClassDefinition newForClassNamed: scriptName super: 'StashScript' category: 'Stash-Scripts')
+	classDefinition := (RwClassDefinition newForClassNamed: className super: 'StashScript' category: 'Stash-Scripts')
 		comment: 'a Stash Script';
 		addInstanceMethod: self _scriptOptionsSource protocol: 'script execution';
 		addInstanceMethod: self _executeScriptSource protocol: 'script execution';

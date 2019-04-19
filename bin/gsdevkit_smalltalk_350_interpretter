@@ -75,4 +75,4 @@ if [ "${topazArgs}x" = "x" ] ; then
 	exit 1
 fi
 
-$GS_HOME/bin/scriptTopaz $topazArgs -S $file
+$GS_HOME/bin/scriptTopaz $topazArgs -l -S $file

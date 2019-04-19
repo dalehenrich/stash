@@ -31,11 +31,22 @@ if [ -d "$GS_HOME/server/stones/$stoneName" ] ; then
 	startStone -b $stoneName
 else
 	createStone -G $stoneName $stoneVers
+	cat - >> $GS_HOME/server/stones/${stoneName}/custom_stone.env << EOF
+export ROWAN_PROJECTS_HOME=$GS_HOME/shared/repos
+EOF
+	stopNetldi $stoneName
+	startNetldi $stoneName
 fi
 
 export GEMSTONE_SCRIPT_ARGS="$stoneName -lq"
 export GEMSTONE_SCRIPT_SOLO_EXTENT="$GS_HOME/server/stones/$stoneName/snapshots/extent0.solo.dbf"
 export GEMSTONE_SOLO_SCRIPT_ARGS="$stoneName -lq -C GEM_SOLO_EXTENT=\$GEMSTONE_SCRIPT_SOLO_EXTENT;"
+
+if [ ! -d "$GS_HOME/shared/repos/Rowan" ] ; then
+	pushd $GS_HOME/shared/repos
+		git clone https://github.com/GemTalk/Rowan.git
+	popd
+fi
 
 $scriptDir/../scripts/install.tpz
 
