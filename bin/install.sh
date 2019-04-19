@@ -45,6 +45,8 @@ export GEMSTONE_SOLO_SCRIPT_ARGS="$stoneName -lq -C GEM_SOLO_EXTENT=\$GEMSTONE_S
 if [ ! -d "$GS_HOME/shared/repos/Rowan" ] ; then
 	pushd $GS_HOME/shared/repos
 		git clone https://github.com/GemTalk/Rowan.git
+		cd Rowan
+		git checkout candidateV2.0
 	popd
 fi
 
