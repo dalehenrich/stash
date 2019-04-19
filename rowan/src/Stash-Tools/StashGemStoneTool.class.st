@@ -52,6 +52,7 @@ StashGemStoneTool >> snapshot: snapshotExtension to: snapshotDirPath suspendInMi
 							'---Starting snapshot to ' , (extentPath , ' ' , snapshotFile pathString) printString
 								, '(' , DateAndTime now asString , ')';
 						lf.
+					snapshotFile exists ifTrue: [ snapshotFile delete ].
 					extent copyTo: snapshotFile.
 					snapshots add: snapshotFile.
 					GsFile stdout
