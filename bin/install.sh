@@ -3,7 +3,7 @@
 # invocation
 #		install.sh <stone-name> <stone-vers>
 
-set -ex
+set -e
 
 stoneName="$1"
 shift
