@@ -26,8 +26,7 @@ Class {
 		'args',
 		'command',
 		'projectName',
-		'packageName',
-		'stoneName'
+		'packageName'
 	],
 	#classInstVars : [
 		'scriptDir',
@@ -107,11 +106,10 @@ StashScript class >> scriptName: aStringOrFileReference [
 ]
 
 { #category : 'instance creation' }
-StashScript class >> stashFilePath: stashFilePath stoneName: stoneName topazArgs: topazArgs stashArgs: stashArgs workingDir: workingDir [
+StashScript class >> stashFilePath: stashFilePath topazArgs: topazArgs stashArgs: stashArgs workingDir: workingDir [
 
 	^ self new
 		stashFilePath: stashFilePath;
-		stoneName: stoneName;
 		topazArgString: topazArgs; 
 		stashArgString: stashArgs; 
 		workingDirectoryPath: workingDir;
@@ -312,18 +310,6 @@ StashScript >> stashFile [
 StashScript >> stashFilePath: aString [
 
 	stashFile := aString asFileReference
-]
-
-{ #category : 'accessing' }
-StashScript >> stoneName [
-
-	^ stoneName
-]
-
-{ #category : 'accessing' }
-StashScript >> stoneName: aString [
-
-	stoneName := aString
 ]
 
 { #category : 'accessing' }
