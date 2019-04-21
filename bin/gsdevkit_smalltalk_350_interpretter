@@ -12,15 +12,6 @@
 stashFile=`realpath $1`
 shift
 
-solo=""
-topazArgs="$GEMSTONE_SCRIPT_ARGS"
-if [ "$1" = "-S" ] ; then
-	# hack .. for now
-	solo="set solologin on"
-	topazArgs="$GEMSTONE_SOLO_SCRIPT_ARGS"
-	shift
-fi
-
 pwd=`pwd`
 # StashScript class will do it's own parsing of the command line args (in Smalltalk)
 #		just stripping out topaz arguments
@@ -39,11 +30,8 @@ for argument in $@ ; do
 	fi
 done
 
-topazArgArray=(${topazArgs})
-stoneName=${topazArgArray[0]}
 file=`mktemp`
 
-#	echo "stone name: : $stoneName"
 #	echo "stash args: $stashArgs"
 #	echo "script file : $stashFile"
 #	echo "topaz args: $topazArgs"
@@ -62,17 +50,26 @@ cat - > $file << EOF
 			stashArgs: '$stashArgs'
 			topazArgs: '$topazArgs'
 			workingDir: '$pwd'
-			stoneName: '$stoneName'
 			projectName: '__EXECUTE_STASH_SCRIPT_PROJECT__'
 			packageName: '__EXECUTE_STASH_SCRIPT_PACKAGE__'
 			symDictName: '_EXECUTE_STASH_SCRIPT_SymbolDict__'
 %
 EOF
 
-if [ "${topazArgs}x" = "x" ] ; then
-	echo "missing startTopaz command line args (stoneName -lq)"
-	echo "	export GEMSTONE_SCRIPT_ARGS=\"<stone-name> -lq\""
-	exit 1
+if [ "$GS_HOME"x = "x" ] ; then
+	# GEMSTONE installation
+	if [ "$GEMSTONE"x = "x" ] ; then
+		echo "\$GEMSTONE env variable not defined"
+		exit 1
+	fi
+	topazCommand=$GEMSTONE/bin/topaz
+else
+	# GsDevKit_home installattion
+	if [ "${topazArgs}"x = "x" ] ; then
+		echo "missing startTopaz command line args (stoneName -lq)"
+		exit 1
+	fi
+	topazCommand=$GS_HOME/bin/scriptTopaz
 fi
 
-$GS_HOME/bin/scriptTopaz $topazArgs -l -S $file
+$topazCommand $topazArgs -l -S $file

@@ -9,8 +9,21 @@ topazFile=`realpath $1`
 shift
 
 topazArgs="$*"
-if [ $# -eq 0 ] ; then
-	topazArgs="$GEMSTONE_SCRIPT_ARGS"
+
+if [ "$GS_HOME"x = "x" ] ; then
+	# GEMSTONE installation
+	if [ "$GEMSTONE"x = "x" ] ; then
+		echo "\$GEMSTONE env variable not defined"
+		exit 1
+	fi
+	topazCommand=$GEMSTONE/bin/topaz
+else
+	# GsDevKit_home installattion
+	if [ "${topazArgs}"x = "x" ] ; then
+		echo "missing startTopaz command line args (stoneName -lq)"
+		exit 1
+	fi
+	topazCommand=$GS_HOME/bin/scriptTopaz
 fi
 
-$GS_HOME/bin/scriptTopaz $topazArgs -l -S $topazFile
+$topazCommand $topazArgs -l -S $topazFile

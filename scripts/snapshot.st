@@ -12,10 +12,10 @@ Class {
 GemStoneSnapshotScript >> scriptOptions [
 	^ {
 			#('help' $h #'none').
-			#('safely' $a #'none').
-			#('commit' $r #'none').
-			#('suspend' $i #'required').
-			#('dir' $n #'required').
+			#('safely' $s #'none').
+			#('commit' $c #'none').
+			#('suspend' $m #'required').
+			#('dir' $d #'required').
 	}
 ]
 
@@ -36,7 +36,9 @@ GemStoneSnapshotScript >> executeScript [
 			args size < 1
 				ifTrue: [ self error: 'Required argument <snapshot-extension> missing.' ].
 			snapshotExtension := args at: 1.
-			snapshotPath := '$GS_HOME/server/stones/' , self stoneName , '/snapshots'.
+			opts at: 'dir'
+				ifPresent: [:arg | snapshotPath := arg ]
+				ifAbsent: [ self error: 'Required option --dir missing.' ].
 			suspendInMinutes := 15.
 			safely := false.
 			opts at: 'commit' ifPresent: [:ignored | self commit ].
@@ -64,8 +66,8 @@ GemStoneSnapshotScript >> usage [
 	snapshot - Make a snapshot of the extent files for the current stone.
 
 SYNOPSIS
-  snapshot [ --safely ] [ --suspend=<minutes> ] \
-		[ --dir=<snapshot-directory> ] <snapshot-extension>
+  snapshot [ --safely ] [ --suspend=<minutes> ] --dir=<snapshot-directory> \
+		<snapshot-extension>
 
 DESCRIPTION
   Make a snapshot copy of the extent files: 
@@ -74,8 +76,7 @@ DESCRIPTION
        minutes. If that may not be enough time, you can specify the number of 
        minutes to suspend the checkpoints with the --suspend option.
     2. Copy the extent files to the <snapshot-directory>. (replacing the `.dbf` 
-       file extension with the given <snapshot-file-extension>). The default 
-			 directory is the snapshot directory for the stone.
+       file extension with the given <snapshot-file-extension>).
     3. Resume checkpoints. Since checkpoints are explicitly resumed after the
        copies have been made, it does not hurt to be generous with the 
        --suspend option.
@@ -89,12 +90,12 @@ DESCRIPTION
 
 EXAMPLES
 	snapshot.st --help
-	snapshot.st sample.dbf
-	snapshot.st --commit sample.dbf
-	snapshot.st --safely sample.dbf
 	snapshot.st --dir=$GS_HOME/gemstone/snapshots sample.dbf
+	snapshot.st --dir=$GEMSTONE/data/snapshots --commit sample.dbf
+	snapshot.st --dir=$GS_HOME/gemstone/snapshots --safely sample.dbf
+	snapshot.st --dir=$GEMSTONE/data//snapshots sample.dbf
 
-	snapshot.st solo.dbf
+	snapshot.st --dir=$GS_HOME/server/stones/MyStone/snapshots solo.dbf
 
 ') printString, dashes
 ]

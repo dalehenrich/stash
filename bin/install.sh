@@ -19,10 +19,8 @@ pushd  /usr/bin
 	fi
 	cd gsdevkit
 	if [ ! -e smalltalk ] ; then
-		sudo ln -s $scriptDir/gsdevkit_smalltalk_interpretter smalltalk
-		sudo ln -s $scriptDir/gsdevkit_smalltalk_350_interpretter smalltalk_350
-		sudo ln -s $scriptDir/gsdevkit_topaz_interpretter topaz
-		sudo ln -s $scriptDir/gsdevkit_topaz_350_interpretter topaz_350
+		sudo ln -s $scriptDir/gsdevkit_smalltalk_350_interpretter smalltalk
+		sudo ln -s $scriptDir/gsdevkit_topaz_350_interpretter topaz
 		sudo ln -s $scriptDir/gsdevkit_topaz_solo_interpretter topaz_solo
 	fi
 popd
@@ -32,12 +30,13 @@ if [ -d "$GS_HOME/server/stones/$stoneName" ] ; then
 else
 	createStone -G $stoneName $stoneVers
 	cat - >> $GS_HOME/server/stones/${stoneName}/custom_stone.env << EOF
+	export ROWAN_PROJECTS_HOME=$GS_HOME/shared/repos
 EOF
 	stopNetldi $stoneName
 	startNetldi $stoneName
 fi
 
-#	export ROWAN_PROJECTS_HOME=$GS_HOME/shared/repos
+export ROWAN_PROJECTS_HOME=$GS_HOME/shared/repos
 
 if [ ! -d "$GS_HOME/shared/repos/Rowan" ] ; then
 	pushd $GS_HOME/shared/repos
@@ -50,4 +49,6 @@ fi
 $scriptDir/../scripts/install.tpz $stoneName -l
 
 # create the solo extent
-$scriptDir/../scripts/snapshot.st solo.dbf -- $stoneName -l
+snapshotDir="$Gs_HOME/server/stones/$stoneName/snapshots"
+$scriptDir/../scripts/snapshot.st --dir=$snapshotDir stash.dbf -- $stoneName -l
+
