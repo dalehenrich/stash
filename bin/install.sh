@@ -19,9 +19,9 @@ pushd  /usr/bin
 	fi
 	cd gemstone
 	if [ ! -e smalltalk ] ; then
-		sudo ln -s $scriptDir/gsdevkit_smalltalk_350_interpretter smalltalk
-		sudo ln -s $scriptDir/gsdevkit_topaz_350_interpretter topaz
-		sudo ln -s $scriptDir/gsdevkit_topaz_solo_interpretter topaz_solo
+		sudo ln -s $scriptDir/smalltalk_350_interpretter smalltalk
+		sudo ln -s $scriptDir/topaz_350_interpretter topaz
+		sudo ln -s $scriptDir/topaz_solo_interpretter topaz_solo
 	fi
 popd
 
