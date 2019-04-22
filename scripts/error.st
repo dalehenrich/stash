@@ -1,4 +1,4 @@
-#!/usr/bin/gsdevkit/smalltalk
+#!/usr/bin/gemstone/smalltalk
 "
 	Bring up topaz debugger when a script error is encountered
 "
@@ -39,7 +39,7 @@ Class {
 	error.st - bring up topaz debugger on error
 
 SYNOPSIS
-  error.st [ --boom ] -- <topaz-arguments>
+  error.st [ -h | --help ] [ --boom ] -- <topaz-arguments>
 
 DESCRIPTION
   --boom
@@ -48,26 +48,26 @@ DESCRIPTION
 	With no `--boom` option, the script exits somewhat quietly.
 
 	`-- <topaz-arguments>`
-	The command line arguments following the `--` will be passed to the topaz 
-	exectuable that runs the script. Typically you will use the `-lq` options to
-	run scripts.
+		The command line arguments following the `--` will be passed to the topaz 
+		exectuable that runs the script. Typically you will use the `-lq` options to
+		run scripts.
 
-	If you want to use a solo session then you need to define the 
-	`GEM_SOLO_EXTENT` configuration paramter in your gem.conf file or on the 
-	command line using the `-C` option: 
+		If you want to use a solo session then you need to define the 
+		`GEM_SOLO_EXTENT` configuration paramter in your gem.conf file or on the 
+		command line using the `-C` option: 
 	
-		`-lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"`
+			`-lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"`
 
-	GsDevKit_home
-	-------------
-	In the GsDevKit_home environment, the env var `$GS_HOME` must be dfined and
-	the name of the stone must be supplied on the command line as the first 
-	argument after the `--`.
+		GsDevKit_home
+		-------------
+		In the GsDevKit_home environment, the env var `$GS_HOME` must be dfined and
+		the name of the stone must be supplied on the command line as the first 
+		argument after the `--`.
 
-	GEMSTONE
-	--------
-	If you are not using GsDevKit_home, then the env var `$GEMSTONE` must be
-	defined, `$GEMSTONE/bin/topaz` must be in your `$PATH` env variable.
+		GEMSTONE
+		--------
+		If you are not using GsDevKit_home, then the env var `$GEMSTONE` must be
+		defined, `$GEMSTONE/bin/topaz` must be in your `$PATH` env variable.
 
 EXAMPLES
 	error.st --help -- MyStone -lq							# GsDevKit_home

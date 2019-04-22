@@ -49,40 +49,7 @@ StashClassTool >> _scriptOptionsSource [
 { #category : 'writing' }
 StashClassTool >> _shebang [
 
-	^ '#!/usr/bin/smalltalk'
-]
-
-{ #category : 'stash script creation' }
-StashClassTool >> _usageSource [
-
-	^ 'usage
-	"Man page for script"
-	| dashes |
-	dashes := ''----------------------------------------------------
-''.
-	^ dashes,
-		(self manPageClass
-			fromString:
-''NAME
-	TEMPLATE - example script, that can be used as a template to create your own script
-SYNOPSIS
-	TEMPLATE.st [-h|--help] [ -- <startTopaz-specific-options> ]
-DESCRIPTION
-
-	This TEMPLATE is set up with help (--help).
-
-	Use the env var GEMSTONE_SCRIPT_ARGS to define default <stone-name> and other
-	topaz arguments (<startTopaz-specific-options>) to be used when running scripts.
-
-	For complete details about <startTopaz-specific-options> see `startTopaz -h`. Typically,
-	you will specify the name of the stone and along with the `-lq` flags.
-
-EXAMPLES
-	TEMPLATE.st --help
-	TEMPLATE.st -h
-
-	TEMPLATE.st -h -- myStone -lq
-'') printString, dashes'
+	^ '#!/usr/bin/gemstone/smalltalk'
 ]
 
 { #category : 'stash script creation' }
@@ -93,7 +60,7 @@ StashClassTool >> _usageSource: scriptName [
 	| dashes |
 	dashes := ''----------------------------------------------------
 ''.
-	^ dashes,
+	^ GsFile stdout nextPutAll: dashes,
 		(self manPageClass
 			fromString:
 ''NAME
@@ -106,32 +73,33 @@ DESCRIPTION
 	This ', scriptName, ' is set up with help (--help).
 
 	`-- <topaz-arguments>`
-	The command line arguments following the `--` will be passed to the topaz 
-	exectuable that runs the script. Typically you will use the `-lq` options to
-	run scripts.
+		The command line arguments following the `--` will be passed to the topaz 
+		exectuable that runs the script. Typically you will use the `-lq` options to
+		run scripts.
 
-	If you want to use a solo session then you need to define the 
-	`GEM_SOLO_EXTENT` configuration paramter in your gem.conf file or on the 
-	command line using the `-C` option: 
-	
-		`-lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"`
+		If you want to use a solo session then you need to define the 
+		`GEM_SOLO_EXTENT` configuration paramter in your gem.conf file or on the 
+		command line using the `-C` option: 
+		
+			`-lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"`
 
-	GsDevKit_home
-	-------------
-	In the GsDevKit_home environment, the env var `$GS_HOME` must be dfined and
-	the name of the stone must be supplied on the command line as the first 
-	argument after the `--`.
+		GsDevKit_home
+		-------------
+		In the GsDevKit_home environment, the env var `$GS_HOME` must be dfined and
+		the name of the stone must be supplied on the command line as the first 
+		argument after the `--`.
 
-	GEMSTONE
-	--------
-	If you are not using GsDevKit_home, then the env var `$GEMSTONE` must be
-	defined, `$GEMSTONE/bin/topaz` must be in your `$PATH` env variable.
+		GEMSTONE
+		--------
+		If you are not using GsDevKit_home, then the env var `$GEMSTONE` must be
+		defined, `$GEMSTONE/bin/topaz` must be in your `$PATH` env variable.
 
 EXAMPLES
-	', scriptName, ' --help -- MyStone -lq								# GsDevKit_home
-	', scriptName, ' --help -- -lq									# GEMSTONE
+	', scriptName, ' --help -- MyStone -lq							# GsDevKit_home
+	', scriptName, ' --help -- -lq								# GEMSTONE
 	', scriptName, ' --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"	# SOLO
-	', scriptName, ' -h -- -lq
+	', scriptName, ' -h -- -lq								# GEMSTONE
+
 
 '') printString, dashes'
 ]

@@ -1,4 +1,4 @@
-#!/usr/bin/gsdevkit/smalltalk
+#!/usr/bin/gemstone/smalltalk
 "
 $GS_HOME/bin/stones implementation in GemStone Smalltalk
 "
@@ -53,11 +53,11 @@ GsDevKit_StonesScript >> usage [
 'NAME
 	stones - List information about the installed stones, running stones and running netldis.
 SYNOPSIS
-	stones.st [ -h | --help ]
-	stones.st [ -a | --all ]
-	stones.st [ -r | --running ]
-	stones.st [ -i | --installed[=name|version] ]
-	stones.st [ -i | --netldi ]
+	stones.st [ -h | --help ] -- <topaz-arguments>
+	stones.st [ -a | --all ] -- <topaz-arguments>
+	stones.st [ -r | --running ] -- <topaz-arguments>
+	stones.st [ -i | --installed[=name|version] ] -- <topaz-arguments>
+	stones.st [ -i | --netldi ] -- <topaz-arguments>
 
 DESCRIPTION
 
@@ -73,23 +73,47 @@ DESCRIPTION
 		list installed stones. The stone list may be sorted by `name` or `version`.
 		By default, the list is sorte by `version`.
 
+	`-- <topaz-arguments>`
+		The command line arguments following the `--` will be passed to the topaz 
+		exectuable that runs the script. Typically you will use the `-lq` options to
+		run scripts.
+
+		If you want to use a solo session then you need to define the 
+		`GEM_SOLO_EXTENT` configuration paramter in your gem.conf file or on the 
+		command line using the `-C` option: 
+	
+			`-lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"`
+
+		GsDevKit_home
+		-------------
+		In the GsDevKit_home environment, the env var `$GS_HOME` must be dfined and
+		the name of the stone must be supplied on the command line as the first 
+		argument after the `--`.
+
+		GEMSTONE
+		--------
+		If you are not using GsDevKit_home, then the env var `$GEMSTONE` must be
+		defined, `$GEMSTONE/bin/topaz` must be in your `$PATH` env variable.
+
 EXAMPLES
-	stones.st --help
-	stones.st -h
+	error.st --help -- MyStone -lq							# GsDevKit_home
+	error.st --help -- -lq								# GEMSTONE
+	error.st --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"	# SOLO
+	error.st -h -- -lq								# GEMSTONE
 
-	stones.st
+	stones.st -- MyStone -lq							# GsDevKit_home
 
-	stones.st --all
-	stones.st --running
-	stones.st --installed=name
-	stones.st --netldi
+	stones.st --all -- -lq								# GEMSTONE
+	stones.st --running -- MyStone -lq						# GsDevKit_home
+	stones.st --installed=name -- -lq						# GEMSTONE
+	stones.st --netldi -- MyStone -lq						# GsDevKit_home
 
-	stones.st --installed --netldi
+	stones.st --installed --netldi -- -lq						# GEMSTONE
 
-	stones.st -a
-	stones.st -r
-	stones.st -i version
-	stones.st -n
+	stones.st -a -- MyStone -lq							# GsDevKit_home
+	stones.st -r -- -lq								# GEMSTONE
+	stones.st -i version -- MyStone -lq						# GsDevKit_home
+	stones.st -n -- -lq								# GEMSTONE
 
 ') printString, dashes
 ]

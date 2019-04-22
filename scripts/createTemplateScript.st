@@ -1,4 +1,4 @@
-#!/usr/bin/gsdevkit/smalltalk
+#!/usr/bin/gemstone/smalltalk
 "
 a Stash Script
 "

@@ -14,10 +14,10 @@ scriptFile=`realpath $0`
 scriptDir=`dirname "$scriptFile"`
 
 pushd  /usr/bin
-	if [ ! -d gsdevkit ] ; then
-		sudo mkdir gsdevkit
+	if [ ! -d gemstone ] ; then
+		sudo mkdir gemstone
 	fi
-	cd gsdevkit
+	cd gemstone
 	if [ ! -e smalltalk ] ; then
 		sudo ln -s $scriptDir/gsdevkit_smalltalk_350_interpretter smalltalk
 		sudo ln -s $scriptDir/gsdevkit_topaz_350_interpretter topaz
