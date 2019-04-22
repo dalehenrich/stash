@@ -52,9 +52,9 @@ Class {
 'NAME
 	createTemplateScript.st - create a new script template
 SYNOPSIS
-	createTemplateScript.st [-h|--help]
+	createTemplateScript.st [-h|--help] -- <topaz-arguments>
 	createTemplateScript.st [--dir=<directory-path>] --script=<script-name> --class=<class-name> \
-		[ -- <startTopaz-specific-options> ]
+		-- <topaz-arguments>
 DESCRIPTION
 
 	This script creates a new stash script name <script-name>.st in the current
@@ -64,19 +64,41 @@ DESCRIPTION
 	The `--dir` option may be an absolute path or a path relative to the 
 	current directory.
 
-	Use the env var GEMSTONE_SCRIPT_ARGS to define default <stone-name> and other
-	topaz arguments (<startTopaz-specific-options>) to be used when running scripts.
+	The `--script` option defines the name of the script file (a `.st` extension
+	will be added the name.
 
-	For complete details about <startTopaz-specific-options> see `startTopaz -h`. Typically,
-	you will specify the name of the stone and along with the `-lq` flags.
+	The `--class` option defines the name of the class that will be used for the
+	script.
 
+	`-- <topaz-arguments>`
+	The command line arguments following the `--` will be passed to the topaz 
+	exectuable that runs the script. Typically you will use the `-lq` options to
+	run scripts.
+
+	If you want to use a solo session then you need to define the 
+	`GEM_SOLO_EXTENT` configuration paramter in your gem.conf file or on the 
+	command line using the `-C` option: 
+	
+		`-lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"`
+
+	GsDevKit_home
+	-------------
+	In the GsDevKit_home environment, the env var `$GS_HOME` must be dfined and
+	the name of the stone must be supplied on the command line as the first 
+	argument after the `--`.
+
+	GEMSTONE
+	--------
+	If you are not using GsDevKit_home, then the env var `$GEMSTONE` must be
+	defined, `$GEMSTONE/bin/topaz` must be in your `$PATH` env variable.
+	
 EXAMPLES
-	createTemplateScript.st --help
-	createTemplateScript.st -h
+	createTemplateScript.st --help -- MyStone -lq							# GsDevKit_home
+	createTemplateScript.st --help -- -lq								# GEMSTONE
+	createTemplateScript.st --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"	# SOLO
+	createTemplateScript.st -h -- -lq								# GEMSTONE
 
-	createTemplateScript.st -h -- myStone -lq
-
-	createTemplateScript.st --script=myScript --class=MyScript
-	createTemplateScript.st --script=myScript --class=MyScript --dir=/home/me/bin
+	createTemplateScript.st --script=myScript --class=MyScript -- -lq				# GEMSTONE
+	createTemplateScript.st --script=myScript --class=MyScript --dir=/home/me/bin -- MyStone -lq	# GsDevKit_home
 ') printString, dashes
 ]

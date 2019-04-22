@@ -192,21 +192,21 @@ rowan >> usage [
 	| dashes |
 	dashes := '----------------------------------------------------
 '.
-	^ dashes,
+	^ GsFile stdout nextPutAll: dashes,
 		(self manPageClass
 			fromString:
 'NAME
 	rowan.st - manage Rowan projects
 SYNOPSIS
-	rowan.st [-h | --help] 
-	rowan.st [--install=<spec-url>] 
-	rowan.st [--load=<project-name>] 
-	rowan.st [--unload=<project-name>] 
-	rowan.st [--write=<project-name>] 
-	rowan.st [--commit=<project-name> <commit-message> ] 
-	rowan.st [--list] 
-	rowan.st [--edit]
-	rowan.st ... [ -- <topaz-specific-options> ]
+	rowan.st [-h | --help] 					-- MyStone -lq	# GsDevKit_home
+	rowan.st [--install=<spec-url>] 			-- -lq		# GEMSTONE
+	rowan.st [--load=<project-name>] 			-- MyStone -lq	# GsDevKit_home
+	rowan.st [--unload=<project-name>] 			-- -lq		# GEMSTONE 
+	rowan.st [--write=<project-name>] 			-- MyStone -lq	# GsDevKit_home 
+	rowan.st [--commit=<project-name> <commit-message> ]	-- -lq		# GEMSTONE 
+	rowan.st [--list] 					-- MyStone -lq	# GsDevKit_home
+	rowan.st [--edit] 					-- -lq		# GEMSTONE
+
 DESCRIPTION
 
 	--install=<spec-url>
@@ -225,23 +225,40 @@ DESCRIPTION
 		load the script into the stone running the script, so that it can be written
 		using Smalltalk development tools.
 
-	<topaz-specific-options>
-		Specify any topaz-specific options following a ` -- ` on the command line. 
+	`-- <topaz-arguments>`
+		The command line arguments following the `--` will be passed to the topaz 
+		exectuable that runs the script. Typically you will use the `-lq` options to
+		run scripts.
 
-		You can use tse the env var GEMSTONE_SCRIPT_ARGS to define default <stone-name>
-		and other topaz arguments (<startTopaz-specific-options>) to be used when running 
-		scripts.
+		If you want to use a solo session then you need to define the 
+		`GEM_SOLO_EXTENT` configuration paramter in your gem.conf file or on the 
+		command line using the `-C` option: 
+	
+			`-lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"`
+
+		GsDevKit_home
+		-------------
+		In the GsDevKit_home environment, the env var `$GS_HOME` must be dfined and
+		the name of the stone must be supplied on the command line as the first 
+		argument after the `--`.
+
+		GEMSTONE
+		--------
+		If you are not using GsDevKit_home, then the env var `$GEMSTONE` must be
+		defined, `$GEMSTONE/bin/topaz` must be in your `$PATH` env variable.
 
 EXAMPLES
-	rowan.st --help
-	rowan.st -h
-	rowan.st -h -- myStone_350 -lq
+	rowan.st --help				-- MyStone -lq						# GsDevKit_home
+	rowan.st -h				-- -lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"	# SOLO
+	rowan.st -h 				-- MyStone -lq						# GsDevKit_home
 
-	rowan.st --install=https://raw.githubusercontent.com/GsDevKit/GsDevKit_upgrade/master/rowan/specs/GsDevKit_upgrade.ston
-	rowan.st --load=GsDevKit_upgrade
-	rowan.st --unload=GsDevKit_upgrade
-	rowan.st --list
-	rowan.st --edit
+	rowan.st --install=https://raw.githubusercontent.com/GsDevKit/GsDevKit_upgrade/master/rowan/specs/GsDevKit_upgrade.ston \
+						-- -lq							# GEMSTONE
+
+	rowan.st --load=GsDevKit_upgrade 	-- MyStone -lq						# GsDevKit_home
+	rowan.st --unload=GsDevKit_upgrade	-- -lq							# GEMSTONE
+	rowan.st --list 			-- MyStone -lq						# GsDevKit_home
+	rowan.st --edit				-- -lq							# GEMSTONE
 ') printString, dashes
 ]
 
