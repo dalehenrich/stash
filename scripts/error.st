@@ -70,13 +70,13 @@ DESCRIPTION
 		defined, `$GEMSTONE/bin/topaz` must be in your `$PATH` env variable.
 
 EXAMPLES
-	error.st --help -- MyStone -lq							# GsDevKit_home
-	error.st --help -- -lq								# GEMSTONE
-	error.st --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"	# SOLO
-	error.st -h -- -lq								# GEMSTONE
+	error.st --help -- MyStone -lq									# GsDevKit_home
+	error.st --help -- -lq										# GEMSTONE
+	error.st --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GS_HOME/server/snapshots/extent_solo.dbf"	# SOLO
+	error.st -h -- -lq										# GEMSTONE
 
-	error.st 	-- MyStone -lq							# GsDevKit_home
- 	error.st --boom	-- MyStone -lq							# GEMSTONE
+	error.st 	-- MyStone -lq									# GsDevKit_home
+ 	error.st --boom	-- MyStone -lq									# GEMSTONE
 
 ') printString, dashes
 ]

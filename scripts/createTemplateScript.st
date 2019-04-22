@@ -93,12 +93,12 @@ DESCRIPTION
 	defined, `$GEMSTONE/bin/topaz` must be in your `$PATH` env variable.
 	
 EXAMPLES
-	createTemplateScript.st --help -- MyStone -lq							# GsDevKit_home
-	createTemplateScript.st --help -- -lq								# GEMSTONE
-	createTemplateScript.st --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"	# SOLO
-	createTemplateScript.st -h -- -lq								# GEMSTONE
+	createTemplateScript.st --help -- MyStone -lq									# GsDevKit_home
+	createTemplateScript.st --help -- -lq										# GEMSTONE
+	createTemplateScript.st --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GS_HOME/server/snapshots/extent_solo.dbf"	# SOLO
+	createTemplateScript.st -h -- -lq										# GEMSTONE
 
-	createTemplateScript.st --script=myScript --class=MyScript -- -lq				# GEMSTONE
-	createTemplateScript.st --script=myScript --class=MyScript --dir=/home/me/bin -- MyStone -lq	# GsDevKit_home
+	createTemplateScript.st --script=myScript --class=MyScript -- -lq						# GEMSTONE
+	createTemplateScript.st --script=myScript --class=MyScript --dir=/home/me/bin -- MyStone -lq			# GsDevKit_home
 ') printString, dashes
 ]

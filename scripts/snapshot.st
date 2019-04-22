@@ -111,14 +111,14 @@ DESCRIPTION
 	defined, `$GEMSTONE/bin/topaz` must be in your `$PATH` env variable.
 
 EXAMPLES
-	snapshot.st --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"	# SOLO
+	snapshot.st --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GS_HOME/server/snapshots/extent_solo.dbf"	# SOLO
 
-	snapshot.st --dir=$GS_HOME/gemstone/snapshots sample.dbf -- -lq				# GEMSTONE
-	snapshot.st --dir=$GEMSTONE/data/snapshots --commit sample.dbf	-- MyStone -lq		# GsDevKit_home
-	snapshot.st --dir=$GS_HOME/gemstone/snapshots --safely sample.dbf-- -lq			# GEMSTONE
-	snapshot.st --dir=$GEMSTONE/data//snapshots sample.dbf	-- MyStone -lq			# GsDevKit_home
+	snapshot.st --dir=$GS_HOME/gemstone/snapshots sample.dbf -- -lq						# GEMSTONE
+	snapshot.st --dir=$GEMSTONE/data/snapshots --commit sample.dbf	-- MyStone -lq				# GsDevKit_home
+	snapshot.st --dir=$GS_HOME/gemstone/snapshots --safely sample.dbf-- -lq					# GEMSTONE
+	snapshot.st --dir=$GEMSTONE/data//snapshots sample.dbf	-- MyStone -lq					# GsDevKit_home
 
-	snapshot.st --dir=$GS_HOME/server/stones/MyStone/snapshots solo.dbf-- -lq		# GEMSTONE
+	snapshot.st --dir=$GS_HOME/server/stones/MyStone/snapshots solo.dbf-- -lq				# GEMSTONE
 
 ') printString, dashes
 ]
