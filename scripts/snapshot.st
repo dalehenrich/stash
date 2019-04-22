@@ -1,4 +1,4 @@
-#!/usr/bin/gsdevkit/smalltalk_350
+#!/usr/bin/gsdevkit/smalltalk
 "
 Make a snapshot of the extent files for the current stone
 "

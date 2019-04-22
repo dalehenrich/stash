@@ -1,4 +1,4 @@
-#!/usr/bin/gsdevkit/smalltalk_350
+#!/usr/bin/gsdevkit/smalltalk
 "
 a Stash Script
 "
@@ -14,7 +14,7 @@ Class {
 	^ opts
 			at: 'help'
 			ifAbsent: [ 
-				| scriptName scriptDir |
+				| scriptName scriptDir className |
 				scriptDir := self workingDirectory asFileReference.
 				opts at: 'dir'
 					ifPresent: [:dirPath | scriptDir := dirPath asFileReference ].
@@ -25,7 +25,7 @@ Class {
 				Rowan stashTools classTool
 					createScriptNamed: scriptName 
 						classNamed: className 
-						inDirectory: directoryPath ]
+						inDirectory: scriptDir ]
 			ifPresent: [ self usage ]
 ]
 

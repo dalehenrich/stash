@@ -1,8 +1,10 @@
-#!/usr/bin/gsdevkit/topaz_350
+#!/usr/bin/gsdevkit/topaz
 #
 # simple topaz script template
 #
 login
+
+#	status
 run
 	GsFile stdout nextPutAll: 'put your smalltalk code here'.
 %

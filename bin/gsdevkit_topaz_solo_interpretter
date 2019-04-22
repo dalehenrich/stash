@@ -13,4 +13,4 @@ if [ $# -eq 0 ] ; then
 	topazArgs="$GEMSTONE_SOLO_SCRIPT_ARGS"
 fi
 
-$GS_HOME/bin/scriptTopaz $topazArgs -l -S $topazFile
+$GS_HOME/bin/scriptTopaz $topazArgs -S $topazFile

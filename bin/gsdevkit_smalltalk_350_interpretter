@@ -72,4 +72,4 @@ else
 	topazCommand=$GS_HOME/bin/scriptTopaz
 fi
 
-$topazCommand $topazArgs -l -S $file
+$topazCommand $topazArgs -S $file

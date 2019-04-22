@@ -1,4 +1,4 @@
-#!/usr/bin/gsdevkit/smalltalk_350
+#!/usr/bin/gsdevkit/smalltalk
 "
 $GS_HOME/bin/stones implementation in GemStone Smalltalk
 "

@@ -26,4 +26,4 @@ else
 	topazCommand=$GS_HOME/bin/scriptTopaz
 fi
 
-$topazCommand $topazArgs -l -S $topazFile
+$topazCommand $topazArgs -S $topazFile

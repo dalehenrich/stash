@@ -3,7 +3,9 @@
 # just for tests
 #
 login
-# omit output
+
+# status
+
 run
 	| commandString arr out err result |
 	commandString := '/bin/ls'.

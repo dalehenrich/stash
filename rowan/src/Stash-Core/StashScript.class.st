@@ -66,7 +66,7 @@ StashScript class >> initialize [
 ]
 
 { #category : 'script launching' }
-StashScript class >> loadAndExecuteScriptClassFile: script_file stashArgs: stash_args topazArgs: topaz_args workingDir: working_dir stoneName: stoneName projectName: projectName packageName: packageName symDictName: symbolDictName [
+StashScript class >> loadAndExecuteScriptClassFile: script_file stashArgs: stash_args topazArgs: topaz_args workingDir: working_dir projectName: projectName packageName: packageName symDictName: symbolDictName [
 
 	| projectDefinition scriptClassDefinition stash |
 	self _createScriptExecutionSymbolDictionaryNamed: symbolDictName.
@@ -78,7 +78,6 @@ StashScript class >> loadAndExecuteScriptClassFile: script_file stashArgs: stash
 	scriptClassDefinition := (projectDefinition packages values any) classDefinitions values any.
 	stash := ((GsCurrentSession currentSession symbolList objectNamed: scriptClassDefinition name) 
 		stashFilePath: script_file 
-		stoneName: stoneName
 		topazArgs: topaz_args 
 		stashArgs: stash_args
 		workingDir: working_dir)

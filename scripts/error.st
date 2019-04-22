@@ -1,4 +1,4 @@
-#!/usr/bin/gsdevkit/smalltalk_350
+#!/usr/bin/gsdevkit/smalltalk
 "
 	Bring up topaz debugger when a script error is encountered
 "

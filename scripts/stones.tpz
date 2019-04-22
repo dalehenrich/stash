@@ -1,8 +1,9 @@
-#!/usr/bin/gsdevkit/topaz_350
+#!/usr/bin/gsdevkit/topaz
 #
 # example use of GsHostProcess
 #
 login
+status
 
 run
 	| commandString arr out err result |
@@ -30,6 +31,4 @@ run
 		lf.
 	GsFile stdout nextPutAll: result.
 %
-
-
-
+exit

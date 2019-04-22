@@ -1,9 +1,9 @@
-#!/usr/bin/gsdevkit/topaz_350
+#!/usr/bin/gsdevkit/topaz
 ##
 # just for tests
 #
 login
-# omit output
+
 run
 	false
 		ifTrue: [ GsFile stdout nextPutAll: 'hello world' ]
