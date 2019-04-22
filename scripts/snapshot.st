@@ -16,6 +16,7 @@ GemStoneSnapshotScript >> scriptOptions [
 			#('commit' $c #'none').
 			#('suspend' $m #'required').
 			#('dir' $d #'required').
+			#('resume' nil #'none').
 	}
 ]
 
@@ -33,6 +34,11 @@ GemStoneSnapshotScript >> executeScript [
 		at: 'help'
     ifAbsent: [
 			| snapshotExtension snapshotPath suspendInMinutes safely snapShots |
+			opts at: 'resume' ifPresent: [
+				"resume snapshots, if they have already been suspended and the timeout hasn't expired yet"
+				System resumeCheckpoints.
+				GsFile stdout nextPutAll: 'Checkpoints resumed.'; lf.
+				^ self ].
 			args size < 1
 				ifTrue: [ self error: 'Required argument <snapshot-extension> missing.' ].
 			snapshotExtension := args at: 1.
@@ -66,8 +72,9 @@ GemStoneSnapshotScript >> usage [
 	snapshot - Make a snapshot of the extent files for the current stone.
 
 SYNOPSIS
-  snapshot [ --safely ] [ --suspend=<minutes> ] --dir=<snapshot-directory> \
+  snapshot.st [ --safely ] [ --suspend=<minutes> ] --dir=<snapshot-directory> \
 		<snapshot-extension>  -- <topaz-arguments>
+	snapshot.st --resume  -- <topaz-arguments>
 
 DESCRIPTION
   Make a snapshot copy of the extent files: 
@@ -85,30 +92,33 @@ DESCRIPTION
   the target snapshot already exists.
 
   With the --commit options specificied, a commit will be performed before the 
-	checkpoints are enabled. A commit is needed to ensure that checkpoint processing
-	is not delayed (I think).
+  checkpoints are enabled. A commit is needed to ensure that checkpoint processing
+  is not delayed (I think).
+
+	`--resume`
+		Resume checkpoints if they are currently suspended.
 
 	`-- <topaz-arguments>`
-	The command line arguments following the `--` will be passed to the topaz 
-	exectuable that runs the script. Typically you will use the `-lq` options to
-	run scripts.
+		The command line arguments following the `--` will be passed to the topaz 
+		exectuable that runs the script. Typically you will use the `-lq` options to
+		run scripts.
 
-	If you want to use a solo session then you need to define the 
-	`GEM_SOLO_EXTENT` configuration paramter in your gem.conf file or on the 
-	command line using the `-C` option: 
+		If you want to use a solo session then you need to define the 
+		`GEM_SOLO_EXTENT` configuration paramter in your gem.conf file or on the 
+		command line using the `-C` option: 
 	
-		`-lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"`
+			`-lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"`
 
-	GsDevKit_home
-	-------------
-	In the GsDevKit_home environment, the env var `$GS_HOME` must be dfined and
-	the name of the stone must be supplied on the command line as the first 
-	argument after the `--`.
+		GsDevKit_home
+		-------------
+		In the GsDevKit_home environment, the env var `$GS_HOME` must be dfined and
+		the name of the stone must be supplied on the command line as the first 
+		argument after the `--`.
 
-	GEMSTONE
-	--------
-	If you are not using GsDevKit_home, then the env var `$GEMSTONE` must be
-	defined, `$GEMSTONE/bin/topaz` must be in your `$PATH` env variable.
+		GEMSTONE
+		--------
+		If you are not using GsDevKit_home, then the env var `$GEMSTONE` must be
+		defined, `$GEMSTONE/bin/topaz` must be in your `$PATH` env variable.
 
 EXAMPLES
 	snapshot.st --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GS_HOME/server/snapshots/extent_solo.dbf"	# SOLO
@@ -120,5 +130,6 @@ EXAMPLES
 
 	snapshot.st --dir=$GS_HOME/server/stones/MyStone/snapshots solo.dbf-- -lq				# GEMSTONE
 
+	snapshot.st --resume -- MyStone -lq									# GsDevKit_home
 ') printString, dashes
 ]
