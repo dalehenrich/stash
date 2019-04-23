@@ -39,6 +39,12 @@ StashCommandGetOpts >> command [
   ^ command
 ]
 
+{ #category : 'error handling' }
+StashCommandGetOpts >> error: aString [
+
+	^ StashCommandError signal: aString
+]
+
 { #category : 'parsing' }
 StashCommandGetOpts >> getOpts: optionSpec do: optionBlock nonOptionsDo: nonOptionBlock [
   | optionSpecs |

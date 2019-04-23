@@ -21,3 +21,9 @@ StashAbstractTool class >> stones [
 
 	^ StashGsDevKitStonesTool new
 ]
+
+{ #category : 'error handling' }
+StashAbstractTool >> error: aString [
+
+	^ StashCommandError signal: aString
+]

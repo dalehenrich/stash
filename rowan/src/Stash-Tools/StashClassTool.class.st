@@ -13,7 +13,7 @@ Rowan classTools stashClassLoadTool loadFiletreeClassDirectories:
 "
 Class {
 	#name : 'StashClassTool',
-	#superclass : 'RwClassTool',
+	#superclass : 'StashAbstractTool',
 	#category : 'Stash-Tools'
 }
 

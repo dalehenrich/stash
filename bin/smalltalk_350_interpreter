@@ -7,6 +7,15 @@
 #	arguments after the first -- are passed to the smalltalk
 #		$GS_HOME/bin/startTopaz.
 #
+# arguments after the first -- may include the following options that are used
+#		by the interpreter:
+#
+#	--solo							- execute topaz command `set solologin on` before 
+#		`login`
+#	--debugCommandError	- normally command errors are handled and the error 
+#		description is written to stdout. With this option set, the debugger will be
+#		brought up to allow developer to debug the command error.
+#
 
 #	echo "0: $@"
 stashFile=`realpath $1`
@@ -18,6 +27,7 @@ pwd=`pwd`
 stashArgs="$*" 
 startTopaz="false"
 solo=""
+debugCommandError="false"
 #	echo "1: $@"
 for argument in $@ ; do
 #	echo "===>$argument"
@@ -28,6 +38,8 @@ for argument in $@ ; do
 		if [ "${startTopaz}" = "true" ] ; then
 			if [ "$argument" = "--solo" ] ; then
 				solo="set solologin on"
+			elif [ "$argument" = "--debugCommandError" ] ; then
+				debugCommandError="true"
 			else
 				topazArgs+=" $argument"
 			fi
@@ -42,7 +54,6 @@ file=`mktemp`
 #	echo "topaz args: $topazArgs"
 #	echo "topaz file : $file"
 
-
 cat - > $file << EOF
 	iferr 1 stk
 
@@ -50,14 +61,20 @@ cat - > $file << EOF
 	login
 
 	run
-	StashScript
+	[
+		StashScript
 			loadAndExecuteScriptClassFile: '$stashFile'
 			stashArgs: '$stashArgs'
 			topazArgs: '$topazArgs'
 			workingDir: '$pwd'
 			projectName: '__EXECUTE_STASH_SCRIPT_PROJECT__'
 			packageName: '__EXECUTE_STASH_SCRIPT_PACKAGE__'
-			symDictName: '_EXECUTE_STASH_SCRIPT_SymbolDict__'
+			symDictName: '_EXECUTE_STASH_SCRIPT_SymbolDict__' ]
+		on: StashCommandError
+		do: [:ex |
+			$debugCommandError
+				ifTrue: [ ex pass ]
+				ifFalse: [ GsFile stdout nextPutAll: ex description; lf ] ]
 %
 EOF
 

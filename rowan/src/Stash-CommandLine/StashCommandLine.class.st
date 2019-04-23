@@ -166,6 +166,12 @@ StashCommandLine >> commandLine: aString [
   commandLine := aString trimBoth
 ]
 
+{ #category : 'error handling' }
+StashCommandLine >> error: aString [
+
+	^ StashCommandError signal: aString
+]
+
 { #category : 'private' }
 StashCommandLine >> getCommandLongOpts: optionSpec short: shortOptionAliases do: optionBlock argsDo: argBlock [
   | optionStream optionString |

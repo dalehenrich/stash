@@ -59,12 +59,6 @@ StashScript class >> _createScriptExecutionSymbolDictionaryNamed: dictName [
 	self error: 'a symbol dictionary named ', dictName printString, ' is already present in the transient symbol list'
 ]
 
-{ #category : 'initialization' }
-StashScript class >> initialize [
-
-	Globals addAssociation: (UserGlobals associationAt: self theNonMetaClass name asSymbol)
-]
-
 { #category : 'script launching' }
 StashScript class >> loadAndExecuteScriptClassFile: script_file stashArgs: stash_args topazArgs: topaz_args workingDir: working_dir projectName: projectName packageName: packageName symDictName: symbolDictName [
 
@@ -212,6 +206,12 @@ StashScript >> edit [
 	self deleteScriptProject.
 	System commit.
 	^ 'script can be found in the project ', projName printString
+]
+
+{ #category : 'error handling' }
+StashScript >> error: aString [
+
+	^ StashCommandError signal: aString
 ]
 
 { #category : 'script execution' }

@@ -40,7 +40,8 @@ RwProjectLoadConfiguration {
 				#packageNameToPlatformPropertiesMap : {
 					'Stash-Rowan-Tools-Extensions' : { 'symbolDictName' : 'RowanTools' },
 					'Stash-Rowan-Kernel-Extensions' : { 'symbolDictName' : 'RowanKernel' },
-					'Stash-Kernel-Extensions' : { 'symbolDictName' : 'Globals' }
+					'Stash-Kernel-Extensions' : { 'symbolDictName' : 'Globals' },
+					'Stash-Core' : { 'symbolDictName' : 'Globals' }
 				}
 			}
 		}
