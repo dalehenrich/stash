@@ -1,6 +1,6 @@
 #!/usr/bin/gemstone/topaz
 
-	iferr 1 exit 1
+iferr 1 exit 1
 
 	output push install.log
 
@@ -11,8 +11,8 @@
 	input $ROWAN_PROJECTS_HOME/Rowan/platforms/gemstone/topaz/3.5.0/install_3.tpz
 	input $ROWAN_PROJECTS_HOME/Rowan/platforms/gemstone/topaz/3.5.0/install_4.tpz
 
-# instll stash
-	iferr 1 exit 1
+# install stash
+	iferr clear
 
 	set u SystemUser p swordfish
 	login
