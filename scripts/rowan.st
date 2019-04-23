@@ -227,11 +227,11 @@ DESCRIPTION
 
 	`-- <topaz-arguments>`
 		The command line arguments following the `--` will be passed to the topaz 
-		exectuable that runs the script. Typically you will use the `-lq` options to
-		run scripts.
+		shell interpreter that runs the script. Typically you will use the `-lq` 
+		or `MyStone -lq` options to run scripts.
 
 		If you want to use a solo session then you need to define the 
-		`GEM_SOLO_EXTENT` configuration paramter in your gem.conf file or on the 
+		`GEM_SOLO_EXTENT` configuration parameter in your gem.conf file or on the 
 		command line using the `-C` option. The `--solo` option will then initiate a
 		topaz solo login for the session: 
 	

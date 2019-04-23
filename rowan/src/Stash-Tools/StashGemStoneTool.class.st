@@ -41,9 +41,7 @@ StashGemStoneTool >> snapshot: snapshotExtension to: snapshotDirPath suspendInMi
 						, snapshotExtension ].
 			snapshotFile:= snapshotDirRef / snapshotName.
 			performCopy := safely
-				ifTrue: [ 
-					"account for nil return value"
-					snapshotFile exists ]
+				ifTrue: [ snapshotFile exists not ]
 				ifFalse: [ true ].
 			GsFile stdout lf.
 			performCopy
@@ -52,6 +50,8 @@ StashGemStoneTool >> snapshot: snapshotExtension to: snapshotDirPath suspendInMi
 							'---Starting snapshot to ' , (extentPath , ' ' , snapshotFile pathString) printString
 								, '(' , DateAndTime now asString , ')';
 						lf.
+					snapshotFile exists
+						ifTrue: [ snapshotFile delete ].
 					extent copyTo: snapshotFile.
 					snapshots add: snapshotFile.
 					GsFile stdout

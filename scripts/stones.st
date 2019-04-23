@@ -51,7 +51,8 @@ GsDevKit_StonesScript >> usage [
 		(self manPageClass
           fromString:
 'NAME
-	stones - List information about the installed stones, running stones and running netldis.
+	stones - List information about the installed stones, running stones and 
+		running netldi processes (GsDevKit_home REQUIRED).
 SYNOPSIS
 	stones.st [ -h | --help ] -- <topaz-arguments>
 	stones.st [ -a | --all ] -- <topaz-arguments>
@@ -75,15 +76,15 @@ DESCRIPTION
 
 	`-- <topaz-arguments>`
 		The command line arguments following the `--` will be passed to the topaz 
-		exectuable that runs the script. Typically you will use the `-lq` options to
-		run scripts.
+		shell interpreter that runs the script. Typically you will use the 
+		`MyStone -lq` options to run scripts.
 
 		If you want to use a solo session then you need to define the 
 		`GEM_SOLO_EXTENT` configuration paramter in your gem.conf file or on the 
 		command line using the `-C` option. The `--solo` option will then initiate a
 		topaz solo login for the session: 
 	
-		-lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf" --solo
+			MyStone -lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf" --solo
 
 		GsDevKit_home
 		-------------
@@ -93,8 +94,8 @@ DESCRIPTION
 
 		GEMSTONE
 		--------
-		If you are not using GsDevKit_home, then the env var `$GEMSTONE` must be
-		defined, `$GEMSTONE/bin/topaz` must be in your `$PATH` env variable.
+		This is a GsDevKit_home script. It does not apply to non-GsDevKit_home 
+		installations
 
 EXAMPLES
 	error.st --help -- MyStone -lq							# GsDevKit_home
