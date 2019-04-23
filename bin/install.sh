@@ -21,7 +21,6 @@ pushd  /usr/bin
 	if [ ! -e smalltalk ] ; then
 		sudo ln -s $scriptDir/smalltalk_350_interpretter smalltalk
 		sudo ln -s $scriptDir/topaz_350_interpretter topaz
-		sudo ln -s $scriptDir/topaz_solo_interpretter topaz_solo
 	fi
 popd
 
