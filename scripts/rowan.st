@@ -74,7 +74,7 @@ rowan >> list [
 	stream := GsFile stdin.
 	fields := (((Rowan projectNames 
 		select: [:aProjectName | aProjectName ~= '__EXECUTE_STASH_SCRIPT_PROJECT__']) 
-			collect: [:aProjectName | (Rowan globalNamed: 'RwProject') newNamed: aProjectName ]) 
+			collect: [:aProjectName | Rowan projectNamed: aProjectName ]) 
 				sort: [:a :b | a name <= b name])
 					collect: [:project |
 						| field branch path |

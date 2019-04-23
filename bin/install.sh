@@ -1,7 +1,24 @@
 #!/usr/bin/env bash
 #
+# Define ROWAN_PROJECTS_HOME ... directory where the projects Rowan and stash 
+#		will be cloned
+#
 # invocation
-#		install.sh <stone-name> <stone-vers>
+#		install.sh <stone-name> [ <stone-version> ]
+#
+#	<stone-version> only needed when using GsDevKit_home to create a stone
+#
+#	GsDevKit_home
+#	-------------
+#	For the GsDevKit_home environment, the env var `$GS_HOME` must be dfined and
+#	the name of the stone must be supplied on the command line as the first 
+#	argument after the `--`.
+#
+#	GEMSTONE
+#	--------
+#	If you are not using GsDevKit_home, then the env var `$GEMSTONE` must be
+#	defined and `$GEMSTONE/bin/topaz` must be in your `$PATH`.
+#
 
 set -e
 
@@ -23,19 +40,21 @@ pushd  /usr/bin
 	cd gemstone
 	if [ ! -e smalltalk ] ; then
 		sudo ln -s $scriptDir/smalltalk_350_interpreter smalltalk
+	fi
+	if [ ! -e topaz ] ; then
 		sudo ln -s $scriptDir/topaz_350_interpreter topaz
 	fi
 popd
 
 if [ ! -d "$ROWAN_PROJECTS_HOME/Rowan" ] ; then
-	pushd $OWAN_PROJECTS_HOME
+	pushd $ROWAN_PROJECTS_HOME
 		git clone https://github.com/GemTalk/Rowan.git
 		cd Rowan
 		git checkout candidateV2.0
 	popd
 fi
 
-if [ "$GS_HOME"x = "x" ] ; then
+if [ "$GS_HOME"x != "x" ] ; then
 	# GsDevKit_home
 	#		if $stoneName exists, then start it. Otherwise create a new stone
 	#
@@ -52,12 +71,17 @@ EOF
 	stopNetldi $stoneName
 	startNetldi $stoneName
 
-	$scriptDir/../scripts/install.tpz $stoneName $topazArgs
+	$scriptDir/../scripts/install.tpz $stoneName -l
 else
 	# GEMSTONE - expect the stone to be running
 	waitstone $stoneName
 
-	$scriptDir/../scripts/install.tpz $topazArgs
+	iniFile=`mktemp`
+	cat - > $iniFile << EOF
+	SET GEMSTONE $stoneName
+EOF
+
+	$scriptDir/../scripts/install.tpz -I $iniFile -l
 fi
 
 
