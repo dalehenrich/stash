@@ -70,7 +70,7 @@ rowan >> install: projectSpecUrl [
 rowan >> list [
 
 	| stream fields col1Max col2Max col3Max col4Max space separator titleFields titleField1 
-		titleField2 titleField3 titleField4 fieldPrintBlock |
+		titleField2 titleField3 titleField4 fieldPrintBlock userIdHeader stoneHeader |
 	stream := GsFile stdin.
 	fields := (((Rowan projectNames 
 		select: [:aProjectName | aProjectName ~= '__EXECUTE_STASH_SCRIPT_PROJECT__']) 
@@ -87,6 +87,25 @@ rowan >> list [
 							at: 3 put: { branch . branch size . 0};
 							at: 4 put: { path . path size . 0};
 							yourself ].
+	stoneHeader := '| Stone: ', (System stoneName subStrings: $!) last.
+	userIdHeader := '| User:  ', System myUserProfile userId.
+	((userIdHeader size max: stoneHeader size) + 2) timesRepeat: [ stream nextPut: $- ].
+	stream 
+		lf;
+		nextPutAll: stoneHeader.
+	userIdHeader size >= stoneHeader size
+		ifTrue: [ (userIdHeader size - stoneHeader size + 1) timesRepeat: [ stream nextPut: Character space ] ]
+		ifFalse: [ stream nextPut: Character space ].
+	stream 
+		nextPut: $|;
+		lf;
+		nextPutAll: userIdHeader.
+	userIdHeader size >= stoneHeader size
+		ifTrue: [ stream nextPut: Character space ]
+		ifFalse: [ (stoneHeader size - userIdHeader size + 1) timesRepeat: [ stream nextPut: Character space ] ].
+	stream
+		nextPut: $|;
+		lf.
 	titleField1 := 'Project'.
 	titleField2 := 'Commit'.
 	titleField3 := 'Branch'.
