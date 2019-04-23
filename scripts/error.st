@@ -54,9 +54,10 @@ DESCRIPTION
 
 		If you want to use a solo session then you need to define the 
 		`GEM_SOLO_EXTENT` configuration paramter in your gem.conf file or on the 
-		command line using the `-C` option: 
+		command line using the `-C` option. The `--solo` option will then initiate a
+		topaz solo login for the session: 
 	
-			`-lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"`
+		-lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf" --solo
 
 		GsDevKit_home
 		-------------
@@ -72,7 +73,8 @@ DESCRIPTION
 EXAMPLES
 	error.st --help -- MyStone -lq									# GsDevKit_home
 	error.st --help -- -lq										# GEMSTONE
-	error.st --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GS_HOME/server/snapshots/extent_solo.dbf"	# SOLO
+	error.st --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GS_HOME/server/snapshots/extent_solo.dbf" \
+			--solo										# SOLO
 	error.st -h -- -lq										# GEMSTONE
 
 	error.st 	-- MyStone -lq									# GsDevKit_home

@@ -105,9 +105,10 @@ DESCRIPTION
 
 		If you want to use a solo session then you need to define the 
 		`GEM_SOLO_EXTENT` configuration paramter in your gem.conf file or on the 
-		command line using the `-C` option: 
+		command line using the `-C` option. The `--solo` option will then initiate a
+		topaz solo login for the session: 
 	
-			`-lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"`
+		-lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf" --solo
 
 		GsDevKit_home
 		-------------
@@ -121,7 +122,8 @@ DESCRIPTION
 		defined, `$GEMSTONE/bin/topaz` must be in your `$PATH` env variable.
 
 EXAMPLES
-	snapshot.st --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GS_HOME/server/snapshots/extent_solo.dbf"	# SOLO
+	snapshot.st --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GS_HOME/server/snapshots/extent_solo.dbf" \
+				--solo										# SOLO
 
 	snapshot.st --dir=$GS_HOME/gemstone/snapshots sample.dbf -- -lq						# GEMSTONE
 	snapshot.st --dir=$GEMSTONE/data/snapshots --commit sample.dbf	-- MyStone -lq				# GsDevKit_home

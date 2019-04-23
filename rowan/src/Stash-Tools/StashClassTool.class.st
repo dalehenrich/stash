@@ -79,9 +79,10 @@ DESCRIPTION
 
 		If you want to use a solo session then you need to define the 
 		`GEM_SOLO_EXTENT` configuration paramter in your gem.conf file or on the 
-		command line using the `-C` option: 
+		command line using the `-C` option. The `--solo` option will then initiate a
+		topaz solo login for the session: 
 		
-			`-lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"`
+			-lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf" --solo
 
 		GsDevKit_home
 		-------------
@@ -97,8 +98,8 @@ DESCRIPTION
 EXAMPLES
 	', scriptName, ' --help -- MyStone -lq							# GsDevKit_home
 	', scriptName, ' --help -- -lq								# GEMSTONE
-	', scriptName, ' --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"	# SOLO
-	', scriptName, ' -h -- -lq								# GEMSTONE
+	', scriptName, ' --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf" --solo	# SOLO
+	', scriptName, ' -h -- -lq									# GEMSTONE
 
 
 '') printString, dashes'
@@ -116,6 +117,7 @@ StashClassTool >> createScriptNamed: scriptName classNamed: className inDirector
 		addInstanceMethod: (self _usageSource: scriptFileName) protocol: 'usage';
 		yourself.
 	self writeTonelClassDefinition: classDefinition toDirectory: directoryPath as: scriptFileName.
+	GsHostProcess execute: '/bin/chmod +x ', (directoryPath asFileReference / scriptFileName) pathString.
 	^ classDefinition
 ]
 

@@ -232,9 +232,10 @@ DESCRIPTION
 
 		If you want to use a solo session then you need to define the 
 		`GEM_SOLO_EXTENT` configuration paramter in your gem.conf file or on the 
-		command line using the `-C` option: 
+		command line using the `-C` option. The `--solo` option will then initiate a
+		topaz solo login for the session: 
 	
-			`-lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"`
+		-lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf" --solo
 
 		GsDevKit_home
 		-------------
@@ -248,17 +249,17 @@ DESCRIPTION
 		defined, `$GEMSTONE/bin/topaz` must be in your `$PATH` env variable.
 
 EXAMPLES
-	rowan.st --help				-- MyStone -lq						# GsDevKit_home
-	rowan.st -h				-- -lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"	# SOLO
-	rowan.st -h 				-- MyStone -lq						# GsDevKit_home
+	rowan.st --help				-- MyStone -lq							# GsDevKit_home
+	rowan.st -h				-- -lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf" --solo	# SOLO
+	rowan.st -h 				-- MyStone -lq							# GsDevKit_home
 
 	rowan.st --install=https://raw.githubusercontent.com/GsDevKit/GsDevKit_upgrade/master/rowan/specs/GsDevKit_upgrade.ston \
-						-- -lq							# GEMSTONE
+						-- -lq								# GEMSTONE
 
-	rowan.st --load=GsDevKit_upgrade 	-- MyStone -lq						# GsDevKit_home
-	rowan.st --unload=GsDevKit_upgrade	-- -lq							# GEMSTONE
-	rowan.st --list 			-- MyStone -lq						# GsDevKit_home
-	rowan.st --edit				-- -lq							# GEMSTONE
+	rowan.st --load=GsDevKit_upgrade 	-- MyStone -lq							# GsDevKit_home
+	rowan.st --unload=GsDevKit_upgrade	-- -lq								# GEMSTONE
+	rowan.st --list 			-- MyStone -lq							# GsDevKit_home
+	rowan.st --edit				-- -lq								# GEMSTONE
 ') printString, dashes
 ]
 

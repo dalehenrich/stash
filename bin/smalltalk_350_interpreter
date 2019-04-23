@@ -17,6 +17,7 @@ pwd=`pwd`
 #		just stripping out topaz arguments
 stashArgs="$*" 
 startTopaz="false"
+solo=""
 #	echo "1: $@"
 for argument in $@ ; do
 #	echo "===>$argument"
@@ -25,7 +26,11 @@ for argument in $@ ; do
 		topazArgs=""
 	else
 		if [ "${startTopaz}" = "true" ] ; then
-			topazArgs+=" $argument"
+			if [ "$argument" = "--solo" ] ; then
+				solo="set solologin on"
+			else
+				topazArgs+=" $argument"
+			fi
 		fi
 	fi
 done
