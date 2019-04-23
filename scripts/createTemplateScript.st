@@ -96,7 +96,7 @@ DESCRIPTION
 EXAMPLES
 	createTemplateScript.st --help -- MyStone -lq									# GsDevKit_home
 	createTemplateScript.st --help -- -lq										# GEMSTONE
-	createTemplateScript.st --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GS_HOME/server/snapshots/extent_solo.dbf" \
+	createTemplateScript.st --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GS_HOME/server/snapshots/extent0.solo.dbf" \
 				--solo											# SOLO
 	createTemplateScript.st -h -- -lq										# GEMSTONE
 

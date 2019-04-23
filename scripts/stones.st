@@ -98,24 +98,23 @@ DESCRIPTION
 
 EXAMPLES
 	error.st --help -- MyStone -lq							# GsDevKit_home
-	error.st --help -- -lq								# GEMSTONE
-	error.st --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf" \
+	error.st --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.solo.dbf" \
 				--solo							# SOLO
-	error.st -h -- -lq								# GEMSTONE
+	error.st -h -- MyStone -lq							# GsDevKit_home
 
 	stones.st -- MyStone -lq							# GsDevKit_home
 
-	stones.st --all -- -lq								# GEMSTONE
+	stones.st --all -- MyStone -lq							# GsDevKit_home
 	stones.st --running -- MyStone -lq						# GsDevKit_home
-	stones.st --installed=name -- -lq						# GEMSTONE
+	stones.st --installed=name -- MyStone -lq					# GsDevKit_home
 	stones.st --netldi -- MyStone -lq						# GsDevKit_home
 
-	stones.st --installed --netldi -- -lq						# GEMSTONE
+	stones.st --installed --netldi -- MyStone -lq					# GsDevKit_home
 
 	stones.st -a -- MyStone -lq							# GsDevKit_home
-	stones.st -r -- -lq								# GEMSTONE
+	stones.st -r -- MyStone -lq							# GsDevKit_home
 	stones.st -i version -- MyStone -lq						# GsDevKit_home
-	stones.st -n -- -lq								# GEMSTONE
+	stones.st -n -- MyStone -lq							# GsDevKit_home
 
 ') printString, dashes
 ]

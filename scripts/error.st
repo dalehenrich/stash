@@ -22,7 +22,7 @@ Class {
 	opts
 		at: 'help'
     ifAbsent: [
-			opts at: 'boom' ifPresent: [ self halt ].
+			opts at: 'boom' ifPresent: [ self error: 'BOOM' ].
 			GsFile stdout nextPutAll: 'No error today'; lf  ] 
     ifPresent: [ ^ self usage ]
 ]
@@ -73,7 +73,7 @@ DESCRIPTION
 EXAMPLES
 	error.st --help -- MyStone -lq									# GsDevKit_home
 	error.st --help -- -lq										# GEMSTONE
-	error.st --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GS_HOME/server/snapshots/extent_solo.dbf" \
+	error.st --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GS_HOME/server/snapshots/extent0.solo.dbf" \
 			--solo										# SOLO
 	error.st -h -- -lq										# GEMSTONE
 

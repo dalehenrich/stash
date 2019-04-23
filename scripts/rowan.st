@@ -74,7 +74,7 @@ rowan >> list [
 	stream := GsFile stdin.
 	fields := (((Rowan projectNames 
 		select: [:aProjectName | aProjectName ~= '__EXECUTE_STASH_SCRIPT_PROJECT__']) 
-			collect: [:aProjectName | RwProject newNamed: aProjectName ]) 
+			collect: [:aProjectName | (Rowan globalNamed: 'RwProject') newNamed: aProjectName ]) 
 				sort: [:a :b | a name <= b name])
 					collect: [:project |
 						| field branch path |
@@ -250,7 +250,8 @@ DESCRIPTION
 
 EXAMPLES
 	rowan.st --help				-- MyStone -lq							# GsDevKit_home
-	rowan.st -h				-- -lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf" --solo	# SOLO
+	rowan.st -h				-- -lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.solo.dbf" --solo \
+														# SOLO
 	rowan.st -h 				-- MyStone -lq							# GsDevKit_home
 
 	rowan.st --install=https://raw.githubusercontent.com/GsDevKit/GsDevKit_upgrade/master/rowan/specs/GsDevKit_upgrade.ston \

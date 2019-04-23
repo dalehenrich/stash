@@ -7,6 +7,6 @@ login
 run
 	false
 		ifTrue: [ GsFile stdout nextPutAll: 'hello world' ]
-		ifFalse: [ self halt ]
+		ifFalse: [ self error: 'hello error' ]
 %
 exit

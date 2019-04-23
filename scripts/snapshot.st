@@ -122,7 +122,7 @@ DESCRIPTION
 		defined, `$GEMSTONE/bin/topaz` must be in your `$PATH` env variable.
 
 EXAMPLES
-	snapshot.st --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GS_HOME/server/snapshots/extent_solo.dbf" \
+	snapshot.st --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GS_HOME/server/snapshots/extent0.solo.dbf" \
 				--solo										# SOLO
 
 	snapshot.st --dir=$GS_HOME/gemstone/snapshots sample.dbf -- -lq						# GEMSTONE
