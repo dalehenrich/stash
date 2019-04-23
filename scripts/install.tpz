@@ -1,4 +1,4 @@
-#!/usr/bin/gemstone/topaz
+#!/usr/bin/gemstone/topaz_raw
 
 iferr 1 exit 1
 
@@ -12,7 +12,7 @@ iferr 1 exit 1
 	input $ROWAN_PROJECTS_HOME/Rowan/platforms/gemstone/topaz/3.5.0/install_4.tpz
 
 # install stash
-	iferr clear
+#	iferr_clear		# for interactive debugging of errors in remaing script
 
 	set u SystemUser p swordfish
 	login

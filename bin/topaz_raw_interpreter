@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+#
+#	command line interpretter for topaz script
+#	
+#	route script into topaz on stdin ... until 3.5.0 topaz can dump to stdout with -S
+#
+
+topazFile=`realpath $1`
+shift
+
+topazArgs="$*"
+
+if [ "$GS_HOME"x = "x" ] ; then
+	# GEMSTONE installation
+	if [ "$GEMSTONE"x = "x" ] ; then
+		echo "\$GEMSTONE env variable not defined"
+		exit 1
+	fi
+	topazCommand=$GEMSTONE/bin/topaz
+else
+	# GsDevKit_home installattion
+	if [ "${topazArgs}"x = "x" ] ; then
+		echo "missing startTopaz command line args (stoneName -lq)"
+		exit 1
+	fi
+	topazCommand=$GS_HOME/bin/scriptTopaz
+fi
+
+$topazCommand $topazArgs < $topazFile
