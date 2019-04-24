@@ -48,10 +48,10 @@ select the desired execution environment.
 
 ## Classic GemStone
 ### topaz script invocation
-For example, a command line invocation of the `hello.tpz` script using the 
+A command line invocation of the `hello.tpz` script using the 
 [classic GemStone](#classic-gemstone) environment would look like the following:
 ```bash
-rogue:stash_350_g>hello.tpz -lq 
+bash> hello.tpz -lq 
 hello world
 ```
 ### smalltalk script invocation
@@ -59,7 +59,7 @@ A command line invocation of the `hello.st` script using the
 [classic GemStone](#classic-gemstone) environment would look like the following:
 ```bash
 
-rogue:stash_350_g>scripts/hello.st -- -lq 
+bash> scripts/hello.st -- -lq 
 Hello world
 ```
  
