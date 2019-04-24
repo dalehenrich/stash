@@ -45,13 +45,22 @@ particular GemStone Object Server or against a single user GemStone extent
 file, using a topaz solo login.
 A combination of environmentvariables and command line arguments are used to
 select the desired execution environment.
+There are two execution environments that are currently supported:
+1. [classic GemStone](#classic-gemstone)
+2. [GsDevKit_home](#gsdevkit_home)
 
 ## Classic GemStone
+The **Classic GemStone** environment expects:
+1. The **GEMSTONE** environmnent variable to refence the GemStone/S 64 product
+tree to be used.
+2. The **PATH** environment variable to reference `$GEMSTONE/bin`, where the `topaz` executable is located.
+3. and a [`.topazini` file][5] to specify the name of the GemStone Object Server to be used, 
+as well as the the userId, and password to be used to create GemStone session to execute the script.
 ### topaz script invocation
 A command line invocation of the `hello.tpz` script using the 
 [classic GemStone](#classic-gemstone) environment would look like the following:
 ```bash
-bash> hello.tpz -lq 
+bash> hello.tpz -lq -I ./.topazini
 hello world
 ```
 ### smalltalk script invocation
@@ -59,7 +68,7 @@ A command line invocation of the `hello.st` script using the
 [classic GemStone](#classic-gemstone) environment would look like the following:
 ```bash
 
-bash> scripts/hello.st -- -lq 
+bash> scripts/hello.st -- -lq  -I ./.topazini
 Hello world
 ```
  
@@ -240,3 +249,4 @@ EXAMPLES
 [2]: https://downloads.gemtalksystems.com/docs/GemStone64/3.4.x/GS64-Topaz-3.4/GS64-Topaz-3.4.htm
 [3]: scripts/hello.tpz
 [4]: scripts/hello.st
+[5]: https://downloads.gemtalksystems.com/docs/GemStone64/3.4.x/GS64-Topaz-3.4/1-Tutorial.htm#pgfId-923343
