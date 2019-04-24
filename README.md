@@ -1,7 +1,48 @@
-# stash
-smalltalk shell - new life for an old idea (http://seaside.gemtalksystems.com/ss/stash.html)
+# Stash
+Shell interpreters for [GemStone/S 64 smalltalk][1] and [topaz][2].
 
-### Installation with GsDevKit_home
+Stash makes it possible to directly execute standalone topaz scripts.
+Here is a [`hello world` topaz script][3]:
+```smalltalk
+#!/usr/bin/gemstone/topaz
+#
+login
+run
+	GsFile stdout nextPutAll: 'hello world'
+%
+exit
+```
+and here is a [`hello world` smalltalk script][]:
+```smalltalk
+#!/usr/bin/gemstone/smalltalk
+"
+	Write `hello world` to stdout and exit.
+"
+Class {
+     #name : 'HelloWorldScript',
+     #superclass : 'StashScript',
+     #category : 'Stash-Scripts'
+}
+
+{ #category : 'script execution' }
+ HelloWorldScript>> executeScript [
+
+	opts
+		at: 'help'
+    ifAbsent: [
+			GsFile stdout nextPutAll: 'Hello world'; lf  ] 
+    ifPresent: [ ^ self usage ]
+]
+
+{ #category : 'usage' }
+ HelloWorldScript>> usage [
+	self usage: 'hello.st'
+]
+```
+
+# Installation 
+
+with GsDevKit_home
 **stash** is dependent upon **Rowan** and currently **Rowan** runs on GemStone 3.2.15 and soon to be released GemStone 3.5.0.
 ```
 #	clone Rowan and stash
@@ -166,3 +207,8 @@ EXAMPLES
 "create component project on disk"
 	cpd create.
 ```
+
+[1]: https://downloads.gemtalksystems.com/docs/GemStone64/3.4.x/GS64-ProgGuide-3.4/GS64-ProgGuide-3.4.htm
+[2]: https://downloads.gemtalksystems.com/docs/GemStone64/3.4.x/GS64-Topaz-3.4/GS64-Topaz-3.4.htm
+[3]: scripts/hello.tpz
+[4]: scripts/hello.st

@@ -364,7 +364,11 @@ StashScript >> projectName: aString [
 { #category : 'script execution' }
 StashScript >> scriptOptions [
 
-	self subclassResponsibility: #scriptOptions
+	"help should always be available"
+
+	^ {
+			#('help' $h #'none').
+	}
 ]
 
 { #category : 'testing' }
@@ -433,6 +437,57 @@ StashScript >> topazArgs [
 StashScript >> topazArgString: aString [
 
 	topazArgs := aString
+]
+
+{ #category : 'usage' }
+StashScript >> usage: scriptName [
+	| dashes |
+	dashes := '----------------------------------------------------
+'.
+  GsFile stdout nextPutAll: dashes,
+		(self manPageClass
+          fromString:
+'NAME
+	', scriptName, ' - Write `hello world` to stdout and exit.
+
+SYNOPSIS
+  ', scriptName, ' [ -h | --help ] -- <topaz-arguments>
+
+DESCRIPTION
+	With no options, write `hello world` to stdout and exit.
+
+	`-- <topaz-arguments>`
+		The command line arguments following the `--` will be passed to the topaz 
+		shell interpreter that runs the script. Typically you will use the `-lq` 
+		or `MyStone -lq` options to run scripts.
+
+		If you want to use a solo session then you need to define the 
+		`GEM_SOLO_EXTENT` configuration parameter in your gem.conf file or on the 
+		command line using the `-C` option. The `--solo` option will then initiate a
+		topaz solo login for the session: 
+	
+		-lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf" --solo
+
+		GsDevKit_home
+		-------------
+		In the GsDevKit_home environment, the env var `$GS_HOME` must be dfined and
+		the name of the stone must be supplied on the command line as the first 
+		argument after the `--`.
+
+		GEMSTONE
+		--------
+		If you are not using GsDevKit_home, then the env var `$GEMSTONE` must be
+		defined, `$GEMSTONE/bin/topaz` must be in your `$PATH` env variable.
+
+EXAMPLES
+	', scriptName, ' --help -- MyStone -lq									# GsDevKit_home
+	', scriptName, ' --help -- -lq										# GEMSTONE
+	', scriptName, ' --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GS_HOME/server/snapshots/extent0.solo.dbf" \
+			--solo										# SOLO
+	', scriptName, ' -- -lq										# GEMSTONE
+
+	', scriptName, ' 	-- MyStone -lq									# GsDevKit_home
+') printString, dashes
 ]
 
 { #category : 'script utilities' }

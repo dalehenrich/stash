@@ -1,0 +1,8 @@
+#!/usr/bin/gemstone/topaz
+#
+login
+run
+	GsFile stdout nextPutAll: 'hello world'
+%
+exit
+
