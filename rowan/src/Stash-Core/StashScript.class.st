@@ -150,10 +150,8 @@ StashScript >> command [
 StashScript >> commit [
 	"Commits are not allowed when running with a solo session, so skip the commit if running against a solo extent"
 
-	(GsSession respondsTo: #isSolo)
-		ifTrue: [ 
-			(GsSession perform: #isSolo)
-			ifTrue: [ ^ true ] ].
+	self sessionIsSolo
+		ifTrue: [^ true ].
 	^ System commit
 ]
 
@@ -267,6 +265,14 @@ StashScript >> projectName: aString [
 StashScript >> scriptOptions [
 
 	self subclassResponsibility: #scriptOptions
+]
+
+{ #category : 'testing' }
+StashScript >> sessionIsSolo [
+
+	^(GsSession respondsTo: #isSolo)
+		ifTrue: [ GsSession perform: #isSolo ]
+		ifFalse: [ false ]
 ]
 
 { #category : 'script execution' }

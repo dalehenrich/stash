@@ -87,7 +87,9 @@ rowan >> list [
 							at: 3 put: { branch . branch size . 0};
 							at: 4 put: { path . path size . 0};
 							yourself ].
-	stoneHeader := '| Stone: ', (System stoneName subStrings: $!) last.
+	stoneHeader := (self sessionIsSolo
+		ifTrue: [ '| Stone: (solo session)' ]
+		ifFalse: [ '| Stone: ', (System stoneName subStrings: $!) last ]) .
 	userIdHeader := '| User:  ', System myUserProfile userId.
 	((userIdHeader size max: stoneHeader size) + 2) timesRepeat: [ stream nextPut: $- ].
 	stream 
