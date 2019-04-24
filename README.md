@@ -184,10 +184,9 @@ From this point you can use the [topaz debugger][11] or you can quit execution.
 If you hit a command line error (i.e., unknown option, etc.), the error message
 is displayed in red and the topaz process exits:
 ![](docs/error.png?raw=true)
-If you use the stash interpretter option `--debugCommandError`, the debugger will be raised instead: 
+If you use the stash interpretter option `--debugCommandError`, then topaz will be left open and ready to debug instead of exiting: 
 ```bash
 bash> error.st --b -- -lq --debugCommandError
-GemStone Smalltalk Compiler Errors:
 ERROR 2710 , a StashCommandError occurred (error 2710), , Unknown option: b (StashCommandError)
 topaz > exec iferr 1 : stk 
 ==> 1 StashCommandError (AbstractException) >> _signalWith: @6 line 25
@@ -209,6 +208,7 @@ topaz > exec iferr 1 : stk
 17 Executed Code                                 @2 line 10
 18 GsNMethod class >> _gsReturnToC               @1 line 1
 Stopping at line 25 of /tmp/tmp.kEjxfwNJ52
+topaz 1>
 ```
 
 
