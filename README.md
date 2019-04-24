@@ -48,10 +48,10 @@ file, using a topaz solo login.
 A combination of environmentvariables and command line arguments are used to
 select the desired execution environment.
 There are two execution environments that are currently supported:
-1. [Classic GemStone](#classic-gemstone)
-2. [GsDevKit_home](#gsdevkit_home)
+1. [Classic GemStone](#classic-gemstone-environment)
+2. [GsDevKit_home](#gsdevkit_home-environment)
 
-## Classic GemStone
+## Classic GemStone environment
 The **Classic GemStone** environment expects:
 1. The **GEMSTONE** environmnent variable to refence the GemStone/S 64 product
 tree to be used.
@@ -60,19 +60,19 @@ tree to be used.
 as well as the the userId, and password to be used to create GemStone session to execute the script.
 ### topaz script invocation
 A command line invocation of the `hello.tpz` script using the 
-[classic GemStone](#classic-gemstone) environment would look like the following:
+[classic GemStone environment](#classic-gemstone-environment) would look like the following:
 ```bash
 bash> hello.tpz -lq -I ./.topazini
 hello world
 ```
 ### smalltalk script invocation
 A command line invocation of the `hello.st` script using the 
-[classic GemStone](#classic-gemstone) environment would look like the following:
+[Classic GemStone environment](#classic-gemstone-environment) would look like the following:
 ```bash
 bash> hello.st -- -lq  -I ./.topazini
 Hello World
 ```
-## GsDevKit_home
+## GsDevKit_home environment
 The **GsDevKit_home** environment expects:
 1. The **GS_HOME** environmnet variable to reference the root directory of the 
 [GsDdevKit_home][6] installation.
@@ -80,14 +80,14 @@ The **GsDevKit_home** environment expects:
 tree is located as well as where the default [`.topazini` file][5] is located.
 ### topaz script invocation
 A command line invocation of the `hello.tpz` script using the 
-[GsDevKit_home](#gsdevkit_home) environment would look like the following:
+[GsDevKit_home environment](#gsdevkit_home-environment) would look like the following:
 ```bash
 bash> hello.tpz MyStone -lq
 hello world
 ```
 ### smalltalk script invocation
 A command line invocation of the `hello.st` script using the 
-[GsDevKit_home](#gsdevkit_home) environment would look like the following:
+[GsDevKit_home environment](#gsdevkit_home-environment) would look like the following:
 ```bash
 bash> hello.st -- MyStone -lq
 Hello World
@@ -104,7 +104,7 @@ variable defined.
 and Rowan will be located.
 
 ## Classic GemStone install
-For a [Classic GemStone](#classic-gemstone) installation, you need to have the
+For a [Classic GemStone installation](#classic-gemstone-install), you need to have the
 environment variables set up and create a stone that will be used to provide
 the the scripting environment. You will supply the name of the stone on the 
 [`install.sh`][9] command line:
@@ -116,11 +116,11 @@ $ROWAN_PROJECTS_HOME/stash/bin/install.sh <stone-name>
 ```
 
 ## GsDevKit_home install
-For a [GsDevKit_home](#gsdevkit_home) installation, you need to have `$GS_HOME`
+For a [GsDevKit_home installation](#gsdevkit_home-install), you need to have `$GS_HOME`
 defined. You do not need to have a stone created before running the 
 [`install.sh`][9] script.
 If you provide the GemStone/S 65 version number on the command line, the script
-will create the stone for you.
+will create the stone for you:
 ```bash
 export ROWAN_PROJECTS_HOME=$GS_HOME/shared/repos
 cd $ROWAN_PROJECTS_HOME
