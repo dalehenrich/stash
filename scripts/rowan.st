@@ -77,15 +77,20 @@ rowan >> list [
 			collect: [:aProjectName | Rowan projectNamed: aProjectName ]) 
 				sort: [:a :b | a name <= b name])
 					collect: [:project |
-						| field branch path |
+						| field branch path isSkew loadedCommitId repositoryCommitId |
+						loadedCommitId := project loadedCommitId.
+						repositoryCommitId := project repositoryCommitId.
+						isSkew := loadedCommitId ~= repositoryCommitId.
+						isSkew ifTrue: [ loadedCommitId := loadedCommitId, ' ^ ', repositoryCommitId ].
 						[ branch :=  project currentBranchName ] on: Error do: [:ex | branch :=  'ERROR getting repository branch' ].
 						path := (project repositoryRootPath ifNil: ['no repositoryRootPath']).
-						field := Array new: 4.
+						field := Array new: 5.
 						field
 							at: 1 put: { project name . project name size . 0 };
-							at: 2 put: { project loadedCommitId . project loadedCommitId size . 0};
+							at: 2 put: { loadedCommitId . loadedCommitId size . 0};
 							at: 3 put: { branch . branch size . 0};
 							at: 4 put: { path . path size . 0};
+							at: 5 put: isSkew;
 							yourself ].
 	stoneHeader := (self sessionIsSolo
 		ifTrue: [ '| Stone: (solo session)' ]
@@ -134,16 +139,26 @@ rowan >> list [
 	}.
 
 	fieldPrintBlock := [:field |
-			stream nextPutAll: '| '.
-			stream nextPutAll: ((field at: 1) at: 1).
-			(((field at: 1) at: 3) + 1) timesRepeat: [stream nextPut: space].
-			stream nextPutAll: separator, ((field at: 2) at: 1).
-			(((field at: 2) at: 3) + 1) timesRepeat: [stream nextPut: space].
-			stream nextPutAll: separator, ((field at: 3) at: 1).
-			(((field at: 3) at: 3) + 1) timesRepeat: [stream nextPut: space].
-			stream nextPutAll: separator, ((field at: 4) at: 1).
-			(((field at: 4) at: 3) + 1) timesRepeat: [stream nextPut: space].
-			stream nextPutAll: separator.
+			| line isSkew |
+			line := stream.
+			isSkew := false.
+			field size = 5
+				ifTrue: [ 
+					isSkew := field at: 5.
+					line := isSkew
+						ifTrue: [ WriteStream on: String new ]
+						ifFalse: [ stream ] ].
+			line nextPutAll: '| '.
+			line nextPutAll: ((field at: 1) at: 1).
+			(((field at: 1) at: 3) + 1) timesRepeat: [line nextPut: space].
+			line nextPutAll: separator, ((field at: 2) at: 1).
+			(((field at: 2) at: 3) + 1) timesRepeat: [line nextPut: space].
+			line nextPutAll: separator, ((field at: 3) at: 1).
+			(((field at: 3) at: 3) + 1) timesRepeat: [line nextPut: space].
+			line nextPutAll: separator, ((field at: 4) at: 1).
+			(((field at: 4) at: 3) + 1) timesRepeat: [line nextPut: space].
+			line nextPutAll: separator.
+			isSkew ifTrue: [ self ansiRedOn: stream during: [ stream nextPutAll: line contents ] ].
 			stream lf ].
 
 	space := Character space.
@@ -205,6 +220,23 @@ rowan >> unload: aProjectName [
 	self deleteScriptProject.
 	self commit.
 	^ result
+]
+
+{ #category : 'private' }
+rowan >> _ansiRed [
+	^ (Character esc) asString, '[91;1m'
+]
+
+{ #category : 'private' }
+rowan >> _ansiReset [
+	^ (Character esc) asString, '[0m'
+]
+
+{ #category : 'utility' }
+rowan >> ansiRedOn: stream during: aBlock [
+
+	stream nextPutAll: self _ansiRed.
+	aBlock ensure: [ stream nextPutAll: self _ansiReset ].
 ]
 
 { #category : 'usage' }
