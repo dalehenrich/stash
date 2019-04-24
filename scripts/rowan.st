@@ -86,133 +86,7 @@ rowan >> install: projectSpecUrl [
 { #category : 'script implementation' }
 rowan >> list [
 
-	self listY
-]
-
-{ #category : 'script implementation' }
-rowan >> listX [
-
-	| stream fields col1Max col2Max col3Max col4Max space separator titleFields titleField1 
-		titleField2 titleField3 titleField4 fieldPrintBlock userIdHeader stoneHeader |
-	stream := GsFile stdin.
-	fields := (((Rowan projectNames 
-		select: [:aProjectName | aProjectName ~= '__EXECUTE_STASH_SCRIPT_PROJECT__']) 
-			collect: [:aProjectName | Rowan projectNamed: aProjectName ]) 
-				sort: [:a :b | a name <= b name])
-					collect: [:project |
-						| field branch path isSkew loadedCommitId repositoryCommitId |
-						loadedCommitId := project loadedCommitId.
-						repositoryCommitId := project repositoryCommitId.
-						isSkew := loadedCommitId ~= repositoryCommitId.
-						isSkew ifTrue: [ loadedCommitId := loadedCommitId, ' -> ', repositoryCommitId ].
-						[ branch :=  project currentBranchName ] on: Error do: [:ex | branch :=  'ERROR getting repository branch' ].
-						path := (project repositoryRootPath ifNil: ['no repositoryRootPath']).
-						field := Array new: 5.
-						field
-							at: 1 put: { project name . project name size . 0 };
-							at: 2 put: { loadedCommitId . loadedCommitId size . 0};
-							at: 3 put: { branch . branch size . 0};
-							at: 4 put: { path . path size . 0};
-							at: 5 put: isSkew;
-							yourself ].
-	stoneHeader := (self sessionIsSolo
-		ifTrue: [ '| Stone: (solo session)' ]
-		ifFalse: [ '| Stone: ', (System stoneName subStrings: $!) last ]) .
-	userIdHeader := '| User:  ', System myUserProfile userId.
-	((userIdHeader size max: stoneHeader size) + 2) timesRepeat: [ stream nextPut: $- ].
-	stream 
-		lf;
-		nextPutAll: stoneHeader.
-	userIdHeader size >= stoneHeader size
-		ifTrue: [ (userIdHeader size - stoneHeader size + 1) timesRepeat: [ stream nextPut: Character space ] ]
-		ifFalse: [ stream nextPut: Character space ].
-	stream 
-		nextPut: $|;
-		lf;
-		nextPutAll: userIdHeader.
-	userIdHeader size >= stoneHeader size
-		ifTrue: [ stream nextPut: Character space ]
-		ifFalse: [ (stoneHeader size - userIdHeader size + 1) timesRepeat: [ stream nextPut: Character space ] ].
-	stream
-		nextPut: $|;
-		lf.
-	titleField1 := 'Project'.
-	titleField2 := 'Commit'.
-	titleField3 := 'Branch'.
-	titleField4 := 'Repository'.
-	col1Max := titleField1 size.
-	col2Max := titleField2 size.
-	col3Max := titleField3 size.
-	col4Max := titleField4 size.
-	fields do: [:field |
-		col1Max := ((field at: 1) at: 2) max: col1Max.
-		col2Max := ((field at: 2) at: 2) max: col2Max.
-		col3Max := ((field at: 3) at: 2) max: col3Max.
-		col4Max := ((field at: 4) at: 2) max: col4Max ].
-	fields do: [:field |
-		(field at: 1) at: 3 put: (col1Max - ((field at: 1) at: 2)).
-		(field at: 2) at: 3 put: (col2Max - ((field at: 2) at: 2)).
-		(field at: 3) at: 3 put: (col3Max - ((field at: 3) at: 2)).
-		(field at: 4) at: 3 put: (col4Max - ((field at: 4) at: 2)) ].
-	titleFields := { 
-		{titleField1 . nil. col1Max - titleField1 size }.
-		{titleField2 . nil. col2Max - titleField2 size }.
-		{titleField3 . nil. col3Max - titleField3 size }.
-		{titleField4 . nil. col4Max - titleField4 size }.
-	}.
-
-	fieldPrintBlock := [:field |
-			| line isSkew |
-			line := stream.
-			isSkew := false.
-			field size = 5
-				ifTrue: [ 
-					isSkew := field at: 5.
-					line := isSkew
-						ifTrue: [ WriteStream on: String new ]
-						ifFalse: [ stream ] ].
-			line nextPutAll: '| '.
-			line nextPutAll: ((field at: 1) at: 1).
-			(((field at: 1) at: 3) + 1) timesRepeat: [line nextPut: space].
-			line nextPutAll: separator, ((field at: 2) at: 1).
-			(((field at: 2) at: 3) + 1) timesRepeat: [line nextPut: space].
-			line nextPutAll: separator, ((field at: 3) at: 1).
-			(((field at: 3) at: 3) + 1) timesRepeat: [line nextPut: space].
-			line nextPutAll: separator, ((field at: 4) at: 1).
-			(((field at: 4) at: 3) + 1) timesRepeat: [line nextPut: space].
-			line nextPutAll: separator.
-			isSkew ifTrue: [ self ansiRedOn: stream during: [ stream nextPutAll: line contents ] ].
-			stream lf ].
-
-	space := Character space.
-	separator := ' | '.
-	2 + col1Max + col2Max + col3Max + col4Max + 3 + (4 * separator size) timesRepeat: [ stream nextPut: $- ].
-	stream lf.
-
-	fieldPrintBlock value: titleFields.
-
-	stream nextPutAll: '| '.
-	col1Max + 1 timesRepeat: [ stream nextPut: $- ].
-	stream nextPutAll: separator. 
-	col2Max + 1 timesRepeat: [ stream nextPut: $- ].
-	stream nextPutAll: separator. 
-	col3Max + 1 timesRepeat: [ stream nextPut: $- ].
-	stream nextPutAll: separator. 
-	col4Max + 1 timesRepeat: [ stream nextPut: $- ].
-	stream nextPutAll: separator.
-	stream lf.
-
-	fields do: fieldPrintBlock.
-
-	2 + col1Max + col2Max + col3Max + col4Max + 3 + (4 * separator size) timesRepeat: [ stream nextPut: $- ].
-	stream lf.
-]
-
-{ #category : 'script implementation' }
-rowan >> listY [
-
-	| stream fields col1Max col2Max col3Max col4Max space separator titleFields titleField1 
-		titleField2 titleField3 titleField4 fieldPrintBlock userIdHeader stoneHeader |
+	| stream fields userIdHeader stoneHeader |
 	stream := GsFile stdin.
 
 	stoneHeader := (self sessionIsSolo
@@ -251,7 +125,12 @@ rowan >> listY [
 		asciiTabulate: 4 
 		titleRow: { 'Project'. 'Commit'. 'Branch'. 'Repository' }
 		bodyRows: fields
-		do: [:rowString :rowArray | stream nextPutAll: rowString; lf ].
+		do: [:rowString :rowArray | 
+			((rowArray size = 5) and: [ rowArray at: 5 ])
+				ifTrue: [ 
+					self ansiRedOn: stream during: [ stream nextPutAll: rowString ] ]
+				ifFalse: [ stream nextPutAll: rowString ].
+			stream lf ].
 ]
 
 { #category : 'script implementation' }
