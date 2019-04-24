@@ -147,7 +147,8 @@ $ROWAN_PROJECTS_HOME/stash/scripts/snapshot.st --help -- <stone-name> -lq	# GsDe
 # Debugging scripts
 By default if an error occurs during script exection (topaz or smalltalk 
 script), script execution halts, the error stack is printed and you are 
-left at a topaz command prompt:
+left at a topaz command prompt.
+### Debugging error
 ```bash
 bash> error.st --boom -- -lq
 ERROR 2010 , a MessageNotUnderstood occurred (error 2010), a StashScript class does not understand  #'ansiRedOn:during:' (MessageNotUnderstood)
@@ -179,9 +180,36 @@ Stopping at line 25 of /tmp/tmp.lzu8EwafAw
 topaz 1> 
 ```
 From this point you can use the [topaz debugger][11] or you can quit execution.
-
-If you hit a command error:
+### Debugging command line errors
+If you hit a command line error (i.e., unknown option, etc.), the error message
+is displayed in red and the topaz process exits:
 ![](docs/error.png?raw=true)
+If you use the stash interpretter option `--debugCommandError`, the debugger will be raised instead: 
+```bash
+bash> error.st --b -- -lq --debugCommandError
+GemStone Smalltalk Compiler Errors:
+ERROR 2710 , a StashCommandError occurred (error 2710), , Unknown option: b (StashCommandError)
+topaz > exec iferr 1 : stk 
+==> 1 StashCommandError (AbstractException) >> _signalWith: @6 line 25
+2 StashCommandError (AbstractException) >> signal: @3 line 7
+3 StashCommandError class (AbstractException class) >> signal: @3 line 4
+4 StashCommandGetOpts >> error:                 @2 line 3
+5 [] in StashCommandGetOpts >> parseLongOptions:shortOptions:do:nonOptionsDo: @114 line 83
+6 Dictionary >> at:ifAbsent:                    @8 line 10
+7 StashCommandGetOpts >> parseLongOptions:shortOptions:do:nonOptionsDo: @64 line 82
+8 StashCommandGetOpts >> getOptsLong:short:do:nonOptionsDo: @2 line 7
+9 StashCommandGetOpts class >> getOptsLongFor:longOptionSpec:shortOptionAliases:do:nonOptionsDo: @4 line 4
+10 StashCommandLine >> getCommandLongOpts:short:do:argsDo: @9 line 6
+11 StashCommandLine >> getOptsLong:short:optionsAndArguments: @10 line 14
+12 StashCommandLine >> getOptsMixedLongShort:optionsAndArguments: @8 line 26
+13 ErrorExampleScript (StashScript) >> setupAndExecuteScript @12 line 7
+14 StashScript class >> loadAndExecuteScriptClassFile:stashArgs:topazArgs:workingDir:projectName:packageName:symDictName: @24 line 19
+15 [] in Executed Code                           @5 line 3
+16 ExecBlock0 (ExecBlock) >> on:do:              @3 line 44
+17 Executed Code                                 @2 line 10
+18 GsNMethod class >> _gsReturnToC               @1 line 1
+Stopping at line 25 of /tmp/tmp.kEjxfwNJ52
+```
 
 
 [1]: https://downloads.gemtalksystems.com/docs/GemStone64/3.4.x/GS64-ProgGuide-3.4/GS64-ProgGuide-3.4.htm
