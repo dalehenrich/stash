@@ -145,16 +145,89 @@ $ROWAN_PROJECTS_HOME/stash/scripts/snapshot.st --help -- -lq			# GEMSTONE
 $ROWAN_PROJECTS_HOME/stash/scripts/snapshot.st --help -- <stone-name> -lq	# GsDevKit_home
 ```
 # Creating your own scripts
+### topaz script creation
 If you want to create a new topaz script, simply copy the `template.tpz` 
 example script and then edit it as needed:
 ```bash
 cp $ROWAN_PROJECTS_HOME/stash/scripts/template.tpz myscript.tpz
 ```
+### smalltalk script creation
 To create a new smalltalk script, use the `createTemplateScript.st` script
 ```bash
 $ROWAN_PROJECTS_HOME/stash/scripts/createTemplateScript.st \
 	--script=myScript --class=MyScript --dir=/home/me/bin -- MyStone -lq	
 ```
+If take a close look at a smalltalk script, you will notice that this is simply
+a Tonel class file and that the class is a subclass of StashScript:
+```smalltalk
+#!/usr/bin/gemstone/smalltalk
+"
+	Write `Hello World` to stdout and exit.
+"
+Class {
+     #name : 'HelloWorldScript',
+     #superclass : 'StashScript',
+     #category : 'Stash-Scripts'
+}
+
+{ #category : 'script execution' }
+ HelloWorldScript>> executeScript [
+
+	opts at: 'help' ifPresent: [ ^ self usage ].
+	GsFile stdout nextPutAll: 'Hello World'; lf
+]
+
+{ #category : 'usage' }
+ HelloWorldScript>> usage [
+
+	self usage: 'hello.st' description: 'Write `hello world` to stdout and exit.'
+]
+```
+The implication here is that this is not just a chunk of workspace code, but a
+real live class to which you can add methods and instance variables, etc. 
+
+It is also worth taking a close look at the 
+`$ROWAN_PROJECTS_HOME/stash/scripts/rowan.st` script. Specifically, the
+`#scriptOptions` and `#executeScript` methods are interesting.
+The `#scriptOptions` method is interesting because you can
+see an example where a range of command line options, some with 
+arguments and some without are declared:
+```smalltalk
+{ #category : 'script execution' }
+rowan >> scriptOptions [
+	"specify the command line options"
+	^ {
+			#('help' $h #none).
+			#('install' nil #required).
+			#('load' nil #required).
+			#('unload' nil #required).
+			#('list' nil #none).
+			#('write' nil #required).
+			#('commit' nil #required).
+			#('edit' nil #none).
+	}
+]
+```
+The `#executeScript` method because you can see how the various command line 
+options are handeled and dispatched:
+```smalltalk
+{ #category : 'script execution' }
+rowan >> executeScript [
+	"Called to initiate execution of the script"
+	^ opts
+			at: 'help'
+			ifAbsent: [ 
+				opts at: 'edit' ifPresent: [:arg | self edit ].
+				opts at: 'install' ifPresent: [:arg | self install: arg ].
+				opts at: 'load' ifPresent: [:arg | self load: arg ].
+				opts at: 'unload' ifPresent: [:arg | self unload: arg ].
+				opts at: 'write' ifPresent: [:arg | self write: arg ].
+				opts at: 'commit' ifPresent: [:arg | self commit: arg message: (args at: 1) ].
+				opts at: 'list' ifPresent: [:arg | self list ].
+				^ true ]
+			ifPresent: [ self usage ]
+]
+``` 
 # Debugging scripts
 By default if an error occurs during script exection (topaz or smalltalk 
 script), script execution halts, the error stack is printed and you are 
