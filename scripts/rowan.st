@@ -81,7 +81,7 @@ rowan >> list [
 						loadedCommitId := project loadedCommitId.
 						repositoryCommitId := project repositoryCommitId.
 						isSkew := loadedCommitId ~= repositoryCommitId.
-						isSkew ifTrue: [ loadedCommitId := loadedCommitId, ' ^ ', repositoryCommitId ].
+						isSkew ifTrue: [ loadedCommitId := loadedCommitId, ' -> ', repositoryCommitId ].
 						[ branch :=  project currentBranchName ] on: Error do: [:ex | branch :=  'ERROR getting repository branch' ].
 						path := (project repositoryRootPath ifNil: ['no repositoryRootPath']).
 						field := Array new: 5.
