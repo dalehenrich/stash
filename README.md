@@ -7,6 +7,8 @@ Here is a [`hello world` topaz script][3]:
 ```smalltalk
 #!/usr/bin/gemstone/topaz
 #
+#	Write `hello world` to stdout and exit.
+#
 login
 run
 	GsFile stdout nextPutAll: 'hello world'
@@ -18,7 +20,7 @@ Here is a [`hello world` smalltalk script][4]:
 ```smalltalk
 #!/usr/bin/gemstone/smalltalk
 "
-	Write `hello world` to stdout and exit.
+	Write `Hello World` to stdout and exit.
 "
 Class {
      #name : 'HelloWorldScript',
@@ -30,7 +32,7 @@ Class {
  HelloWorldScript>> executeScript [
 
 	opts at: 'help' ifPresent: [ ^ self usage ].
-	GsFile stdout nextPutAll: 'Hello world'; lf
+	GsFile stdout nextPutAll: 'Hello World'; lf
 ]
 
 { #category : 'usage' }
@@ -69,11 +71,8 @@ A command line invocation of the `hello.st` script using the
 ```bash
 
 bash> scripts/hello.st -- -lq  -I ./.topazini
-Hello world
+Hello World
 ```
- 
-Stash requires GemStone/S 3.5.0 or later.
-
 ## GsDevKit_home
 ### topaz script invocation
 ### smalltalk script invocation

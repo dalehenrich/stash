@@ -1,6 +1,6 @@
 #!/usr/bin/gemstone/smalltalk
 "
-	Write `hello world` to stdout and exit.
+	Write `Hello World` to stdout and exit.
 "
 Class {
      #name : 'HelloWorldScript',
@@ -12,7 +12,7 @@ Class {
  HelloWorldScript>> executeScript [
 
 	opts at: 'help' ifPresent: [ ^ self usage ].
-	GsFile stdout nextPutAll: 'Hello world'; lf
+	GsFile stdout nextPutAll: 'Hello World'; lf
 ]
 
 { #category : 'usage' }
