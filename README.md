@@ -48,7 +48,7 @@ file, using a topaz solo login.
 A combination of environmentvariables and command line arguments are used to
 select the desired execution environment.
 There are two execution environments that are currently supported:
-1. [classic GemStone](#classic-gemstone)
+1. [Classic GemStone](#classic-gemstone)
 2. [GsDevKit_home](#gsdevkit_home)
 
 ## Classic GemStone
@@ -87,13 +87,46 @@ hello world
 ```
 ### smalltalk script invocation
 A command line invocation of the `hello.st` script using the 
-[classic GemStone](#classic-gemstone) environment would look like the following:
+[GsDevKit_home](#gsdevkit_home) environment would look like the following:
 ```bash
 bash> hello.st -- MyStone -lq
 Hello World
 ```
 # Installation 
+To install Stash, you need to have `sudo` privileges, as the shell interpreters
+([smalltalk_350_interpreter][7] and [topaz_350_interpreter][8]) need to be
+installed in `/usr/bin/gemstone`.
 
+Stash will install [Rowan][10] into your stone as it is required.
+The Rowan environment needs to have the **ROWAN_PROJECTS_HOME** environment 
+variable defined. 
+**ROWAN_PROJECTS_HOME** defines the directory where the git clones for stash
+and Rowan will be located.
+
+## Classic GemStone install
+For a [Classic GemStone](#classic-gemstone) installation, you need to have the
+environment variables set up and create a stone that will be used to provide
+the the scripting environment. You will supply the name of the stone on the 
+[`install.sh`][9] command line:
+```bash
+export ROWAN_PROJECTS_HOME=<git-clone-directory>
+cd $ROWAN_PROJECTS_HOME
+git clone https://github.com/dalehenrich/stash.git
+$ROWAN_PROJECTS_HOME/stash/bin/install.sh <stone-name>
+```
+
+## GsDevKit_home install
+For a [GsDevKit_home](#gsdevkit_home) installation, you need to have `$GS_HOME`
+defined. You do not need to have a stone created before running the 
+[`install.sh`][9] script.
+If you provide the GemStone/S 65 version number on the command line, the script
+will create the stone for you.
+```bash
+export ROWAN_PROJECTS_HOME=$GS_HOME/shared/repos
+cd $ROWAN_PROJECTS_HOME
+git clone https://github.com/dalehenrich/stash.git
+$ROWAN_PROJECTS_HOME/stash/bin/install.sh <stone-name> 3.5.0
+```
 
 
 
@@ -272,3 +305,7 @@ EXAMPLES
 [4]: scripts/hello.st
 [5]: https://downloads.gemtalksystems.com/docs/GemStone64/3.4.x/GS64-Topaz-3.4/1-Tutorial.htm#pgfId-923343
 [6]: https://github.com/GsDevKit/GsDevKit_home
+[7]: bin/smalltalk_350_interpreter
+[8]: bin/topaz_350_interpreter
+[9]: bin/install.sh
+[10]: https://github.com/GemTalk/Rowan
