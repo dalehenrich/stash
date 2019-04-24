@@ -4,7 +4,6 @@
 #
 login
 
-#	status
 run
 	GsFile stdout nextPutAll: 'put your smalltalk code here'.
 %

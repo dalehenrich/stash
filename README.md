@@ -47,6 +47,7 @@ Class {
 1. [Script execution environment](#script-execution-environment)
 2. [Installation](#installation)
 3. [Examples](#examples)
+4. [Creating your own scripts](#creating-your-own-scripts)
 4. [Debugging scripts](#debugging-scripts)
 # Script execution environment
 Stash scripts are executed in a GemStone session that is running against a 
@@ -143,7 +144,17 @@ $ROWAN_PROJECTS_HOME/stash/scripts/snapshot.st --help -- -lq			# GEMSTONE
 
 $ROWAN_PROJECTS_HOME/stash/scripts/snapshot.st --help -- <stone-name> -lq	# GsDevKit_home
 ```
-
+# Creating your own scripts
+If you want to create a new topaz script, simply copy the `template.tpz` 
+example script and then edit it as needed:
+```bash
+cp $ROWAN_PROJECTS_HOME/stash/scripts/template.tpz myscript.tpz
+```
+To create a new smalltalk script, use the `createTemplateScript.st` script
+```bash
+$ROWAN_PROJECTS_HOME/stash/scripts/createTemplateScript.st \
+	--script=myScript --class=MyScript --dir=/home/me/bin -- MyStone -lq	
+```
 # Debugging scripts
 By default if an error occurs during script exection (topaz or smalltalk 
 script), script execution halts, the error stack is printed and you are 
