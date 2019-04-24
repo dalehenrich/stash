@@ -1,7 +1,8 @@
 # Stash
 Shell interpreters for [GemStone/S 64 smalltalk][1] and [topaz][2].
 
-Stash makes it possible to directly execute standalone topaz scripts.
+Stash makes it possible to directly execute standalone topaz and smalltalk scripts.
+### topaz script
 Here is a [`hello world` topaz script][3]:
 ```smalltalk
 #!/usr/bin/gemstone/topaz
@@ -12,7 +13,8 @@ run
 %
 exit
 ```
-and here is a [`hello world` smalltalk script][4]:
+### smalltalk script
+Here is a [`hello world` smalltalk script][4]:
 ```smalltalk
 #!/usr/bin/gemstone/smalltalk
 "
@@ -34,9 +36,10 @@ Class {
 { #category : 'usage' }
  HelloWorldScript>> usage [
 
-	self usage: 'hello.st'
+	self usage: 'hello.st' description: 'Write `hello world` to stdout and exit.'
 ]
 ```
+When running a smalltalk script, it is possible to pass in command line arguments
 
 # Installation 
 

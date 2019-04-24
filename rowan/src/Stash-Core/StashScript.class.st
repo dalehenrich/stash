@@ -440,7 +440,7 @@ StashScript >> topazArgString: aString [
 ]
 
 { #category : 'usage' }
-StashScript >> usage: scriptName [
+StashScript >> usage: scriptName description: description [
 	| dashes |
 	dashes := '----------------------------------------------------
 '.
@@ -448,13 +448,13 @@ StashScript >> usage: scriptName [
 		(self manPageClass
           fromString:
 'NAME
-	', scriptName, ' - Write `hello world` to stdout and exit.
+	', scriptName, ' - ', description, '.
 
 SYNOPSIS
   ', scriptName, ' [ -h | --help ] -- <topaz-arguments>
 
 DESCRIPTION
-	With no options, write `hello world` to stdout and exit.
+	', description, '
 
 	`-- <topaz-arguments>`
 		The command line arguments following the `--` will be passed to the topaz 
@@ -484,7 +484,7 @@ EXAMPLES
 	', scriptName, ' --help -- -lq										# GEMSTONE
 	', scriptName, ' --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GS_HOME/server/snapshots/extent0.solo.dbf" \
 			--solo										# SOLO
-	', scriptName, ' -- -lq										# GEMSTONE
+	', scriptName, ' -- -lq											# GEMSTONE
 
 	', scriptName, ' 	-- MyStone -lq									# GsDevKit_home
 ') printString, dashes

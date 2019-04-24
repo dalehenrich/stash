@@ -18,6 +18,6 @@ Class {
 { #category : 'usage' }
  HelloWorldScript>> usage [
 
-	self usage: 'hello.st'
+	self usage: 'hello.st' description: 'Write `hello world` to stdout and exit.'
 ]
 
