@@ -8,23 +8,6 @@ Class {
 	#category : 'Stash-Scripts'
 }
 
-{ #category : 'private' }
-rowan >> _ansiRed [
-	^ (Character esc) asString, '[91;1m'
-]
-
-{ #category : 'private' }
-rowan >> _ansiReset [
-	^ (Character esc) asString, '[0m'
-]
-
-{ #category : 'utility' }
-rowan >> ansiRedOn: stream during: aBlock [
-
-	stream nextPutAll: self _ansiRed.
-	aBlock ensure: [ stream nextPutAll: self _ansiReset ].
-]
-
 { #category : 'script implementation' }
 rowan >> commit: aProjectName message: commitMessage [
 	"commit the project to a git repository"

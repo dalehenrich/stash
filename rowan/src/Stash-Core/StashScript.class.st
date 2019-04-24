@@ -120,12 +120,29 @@ StashScript class >> writeToDirectory: directoryPath as: filename [
 		as: filename.
 ]
 
+{ #category : 'private' }
+StashScript >> _ansiRed [
+	^ (Character esc) asString, '[91;1m'
+]
+
+{ #category : 'private' }
+StashScript >> _ansiReset [
+	^ (Character esc) asString, '[0m'
+]
+
 { #category : 'script utilities' }
 StashScript >> _downloadErrorFileNameFor: outputFileName [
 	| pid |
 	pid := (System gemVersionReport at: 'processId') printString.
 	^ '/tmp/curl-' , pid , '-' , (outputFileName select: [ :c | c isAlphaNumeric ])
 		, '.err'
+]
+
+{ #category : 'script utilities' }
+StashScript >> ansiRedOn: stream during: aBlock [
+
+	stream nextPutAll: self _ansiRed.
+	aBlock ensure: [ stream nextPutAll: self _ansiReset ].
 ]
 
 { #category : 'script utilities' }
