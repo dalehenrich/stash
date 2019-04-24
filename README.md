@@ -27,14 +27,13 @@ Class {
 { #category : 'script execution' }
  HelloWorldScript>> executeScript [
 
-	opts
-		at: 'help'
-		ifAbsent: [ GsFile stdout nextPutAll: 'Hello world'; lf  ] 
-		ifPresent: [ ^ self usage ]
+	opts at: 'help' ifPresent: [ ^ self usage ].
+	GsFile stdout nextPutAll: 'Hello world'; lf
 ]
 
 { #category : 'usage' }
  HelloWorldScript>> usage [
+
 	self usage: 'hello.st'
 ]
 ```
