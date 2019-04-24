@@ -69,64 +69,36 @@ hello world
 A command line invocation of the `hello.st` script using the 
 [classic GemStone](#classic-gemstone) environment would look like the following:
 ```bash
-
-bash> scripts/hello.st -- -lq  -I ./.topazini
+bash> hello.st -- -lq  -I ./.topazini
 Hello World
 ```
-Here is an example of using command line options for the `hello.st` script:
-```bash
-bash> hello.st --help -- -lq 
-----------------------------------------------------
-NAME
-	hello.st - Write `hello world` to stdout and exit..
-
-SYNOPSIS
-	hello.st [ -h | --help ] -- <topaz-arguments>
-
-DESCRIPTION
-	Write `hello world` to stdout and exit.
-
-	`-- <topaz-arguments>`
-		The command line arguments following the `--` will be passed to the topaz 
-		shell interpreter that runs the script. Typically you will use the `-lq` 
-		or `MyStone -lq` options to run scripts.
-
-		If you want to use a solo session then you need to define the 
-		`GEM_SOLO_EXTENT` configuration parameter in your gem.conf file or on the 
-		command line using the `-C` option. The `--solo` option will then initiate a
-		topaz solo login for the session: 
-	
-		-lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf" --solo
-
-		GsDevKit_home
-		-------------
-		In the GsDevKit_home environment, the env var `$GS_HOME` must be dfined and
-		the name of the stone must be supplied on the command line as the first 
-		argument after the `--`.
-
-		GEMSTONE
-		--------
-		If you are not using GsDevKit_home, then the env var `$GEMSTONE` must be
-		defined, `$GEMSTONE/bin/topaz` must be in your `$PATH` env variable.
-
-EXAMPLES
-	hello.st --help -- MyStone -lq									# GsDevKit_home
-	hello.st --help -- -lq										# GEMSTONE
-	hello.st --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GS_HOME/server/snapshots/extent0.solo.dbf" \
-			--solo										# SOLO
-	hello.st -- -lq											# GEMSTONE
-
-	hello.st 	-- MyStone -lq									# GsDevKit_home
-
-SEE ALSO
-	
-	
-----------------------------------------------------
-```
 ## GsDevKit_home
+The **GsDevKit_home** environment expects:
+1. The **GS_HOME** environmnet variable to reference the root directory of the 
+[GsDdevKit_home][6] installation.
+2. The name of the stone is enough to identify where the GemStone/S 64 product
+tree is located as well as where the default [`.topazini` file][5] is located.
 ### topaz script invocation
+A command line invocation of the `hello.tpz` script using the 
+[GsDevKit_home](#gsdevkit_home) environment would look like the following:
+```bash
+bash> hello.tpz MyStone -lq
+hello world
+```
 ### smalltalk script invocation
+A command line invocation of the `hello.st` script using the 
+[classic GemStone](#classic-gemstone) environment would look like the following:
+```bash
+bash> hello.st -- MyStone -lq
+Hello World
+```
 # Installation 
+
+
+
+
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
 
 with GsDevKit_home
 **stash** is dependent upon **Rowan** and currently **Rowan** runs on GemStone 3.2.15 and soon to be released GemStone 3.5.0.
@@ -299,3 +271,4 @@ EXAMPLES
 [3]: scripts/hello.tpz
 [4]: scripts/hello.st
 [5]: https://downloads.gemtalksystems.com/docs/GemStone64/3.4.x/GS64-Topaz-3.4/1-Tutorial.htm#pgfId-923343
+[6]: https://github.com/GsDevKit/GsDevKit_home
