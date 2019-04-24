@@ -82,14 +82,14 @@ tree is located as well as where the default [`.topazini` file][5] is located.
 A command line invocation of the `hello.tpz` script using the 
 [GsDevKit_home environment](#gsdevkit_home-environment) would look like the following:
 ```bash
-bash> hello.tpz MyStone -lq
+bash> hello.tpz <stone-name> -lq
 hello world
 ```
 ### smalltalk script invocation
 A command line invocation of the `hello.st` script using the 
 [GsDevKit_home environment](#gsdevkit_home-environment) would look like the following:
 ```bash
-bash> hello.st -- MyStone -lq
+bash> hello.st -- <stone-name> -lq
 Hello World
 ```
 # Installation 
