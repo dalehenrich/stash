@@ -39,8 +39,35 @@ Class {
 	self usage: 'hello.st' description: 'Write `hello world` to stdout and exit.'
 ]
 ```
-When running a smalltalk script, it is possible to pass in command line arguments
+# Script execution environment
+Stash scripts are executed in a GemStone session that is running against a 
+particular GemStone Object Server or against a single user GemStone extent
+file, using a topaz solo login.
+A combination of environmentvariables and command line arguments are used to
+select the desired execution environment.
 
+## Classic GemStone
+### topaz script invocation
+For example, a command line invocation of the `hello.tpz` script using the 
+[classic GemStone](#classic-gemstone) environment would look like the following:
+```bash
+rogue:stash_350_g>hello.tpz -lq 
+hello world
+```
+### smalltalk script invocation
+A command line invocation of the `hello.st` script using the 
+[classic GemStone](#classic-gemstone) environment would look like the following:
+```bash
+
+rogue:stash_350_g>scripts/hello.st -- -lq 
+Hello world
+```
+ 
+Stash requires GemStone/S 3.5.0 or later.
+
+## GsDevKit_home
+### topaz script invocation
+### smalltalk script invocation
 # Installation 
 
 with GsDevKit_home
