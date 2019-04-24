@@ -13,12 +13,12 @@ Class {
 
 	opts
 		at: 'help'
-    ifAbsent: [
-			GsFile stdout nextPutAll: 'Hello world'; lf  ] 
-    ifPresent: [ ^ self usage ]
+		ifAbsent: [ GsFile stdout nextPutAll: 'Hello world'; lf  ] 
+		ifPresent: [ ^ self usage ]
 ]
 
 { #category : 'usage' }
  HelloWorldScript>> usage [
 	self usage: 'hello.st'
 ]
+

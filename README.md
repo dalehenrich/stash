@@ -12,7 +12,7 @@ run
 %
 exit
 ```
-and here is a [`hello world` smalltalk script][]:
+and here is a [`hello world` smalltalk script][4]:
 ```smalltalk
 #!/usr/bin/gemstone/smalltalk
 "
@@ -29,9 +29,8 @@ Class {
 
 	opts
 		at: 'help'
-    ifAbsent: [
-			GsFile stdout nextPutAll: 'Hello world'; lf  ] 
-    ifPresent: [ ^ self usage ]
+		ifAbsent: [ GsFile stdout nextPutAll: 'Hello world'; lf  ] 
+		ifPresent: [ ^ self usage ]
 ]
 
 { #category : 'usage' }
