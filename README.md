@@ -43,7 +43,7 @@ Class {
 	self usage: 'hello.st' description: 'Write `hello world` to stdout and exit.'
 ]
 ```
-### TOC
+### Table of Contents
 1. [Script execution environment](#script-execution-environment)
 2. [Installation](#installation)
 3. [Examples](#examples)
