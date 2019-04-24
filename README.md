@@ -3,7 +3,7 @@ Shell interpreters for [GemStone/S 64 smalltalk][1] and [topaz][2].
 
 Stash makes it possible to directly execute standalone topaz and smalltalk scripts.
 
-Note that **GemStone/S 64 3.5.0** is required.
+Note that **GemStone/S 64 3.5.0** or later is required.
 ### topaz script
 Here is a [`hello world` topaz script][3]:
 ```smalltalk
@@ -134,7 +134,7 @@ There are a number of scripts in the `$ROWAN_PROJECTS_HOME/stash/scripts`
 directory.
 Each of the `.st` scripts has a `--help` option defined:
 ```bash
-$ROWAN_PROJECTS_HOME/stash/scripts/snapshot.st --help -- -lq              # GEMSTONE
+$ROWAN_PROJECTS_HOME/stash/scripts/snapshot.st --help -- -lq				# GEMSTONE
 $ROWAN_PROJECTS_HOME/stash/scripts/snapshot.st --help -- <stone-name> -lq	# GsDevKit_home
 ```
 
