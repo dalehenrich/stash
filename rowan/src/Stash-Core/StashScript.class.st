@@ -134,6 +134,89 @@ StashScript >> args [
 	^args
 ]
 
+{ #category : 'formatting' }
+StashScript >> asciiTabulate: columnWidth titleRow: titleRow bodyRows: bodyRows do: rowBlock [
+
+	"
+		Each row of the table (titleRow plus bodyRows) is expected to be an array with at least columnWidth slots.
+		The columnWidth slots are expected to Strings. Any slots beyond the columnWidth are assumed to be user
+		data.
+
+		rowBlock is a 2 arg block: arg1 is a formatted string for the row and arg2 is the row array.
+	"
+
+	|  rows colMax title space separator rowPrintBlock dashCount rowStream |
+
+	colMax := Array new: columnWidth withAll: 0.
+
+	title := Array new: titleRow size.
+	titleRow isEmpty
+		ifFalse: [ 
+		1 to: columnWidth do: [:column | | entry |
+			entry := titleRow at: column.
+			colMax at: column put: entry size.
+			title at: column put: { entry . entry size . 0 }	"string, string size, padding" ] ].
+
+	rows := Array new.
+	bodyRows do: [:theRow | | row |
+		row := Array new: theRow size. 
+		1 to: columnWidth do: [:column | | entry |
+			entry := theRow at: column.
+			colMax at: column put: (entry size  max: (colMax at: column)).
+			row at: column put: { entry . entry size . 0 }.	"string, string size, padding"
+			(column = columnWidth and: [ theRow size > columnWidth ])
+				ifTrue: [
+					"additional column data is user specific, so preserve it"
+					columnWidth + 1 to: theRow size do: [:index |
+						row at: index put: (theRow at: index) ] ] ].
+		rows add: row ].
+
+	{title}, rows do: [:theRow |
+		theRow isEmpty
+			ifFalse: [ 
+				1 to: columnWidth do: [:column | | entryArray |
+					entryArray := theRow at: column.	"string, string size, padding"
+					entryArray at: 3 put: ((colMax at: column) - (entryArray at: 2)) ] ] ].
+
+	rowPrintBlock := [:row |
+			rowStream := WriteStream on: String new.
+			rowStream nextPutAll: '| '.
+			1 to: columnWidth do: [:column | | entry |
+				entry := row at: column.
+				rowStream nextPutAll: (entry at: 1).
+				(entry at: 3) timesRepeat: [rowStream nextPut: space].
+				rowStream nextPutAll: separator ].
+			rowBlock cull: rowStream contents cull: row ].
+
+	space := Character space.
+	separator := ' | '.
+	rowStream := WriteStream on: String new.
+	dashCount := 2  + (columnWidth * separator size) - 1.
+	1 to: columnWidth do: [:column | dashCount := dashCount + (colMax at: column) ].
+	dashCount timesRepeat: [ rowStream nextPut: $- ].
+	rowBlock cull: rowStream contents cull: nil.
+
+	title isEmpty
+		ifFalse: [ rowPrintBlock value: title ].
+
+	rows isEmpty
+		ifFalse: [ 
+			title isEmpty
+				ifFalse: [ 
+					rowStream := WriteStream on: String new.
+					rowStream nextPutAll: '| '.
+					1 to: columnWidth do: [:column |
+						(colMax at: column) timesRepeat: [ rowStream nextPut: $- ].
+						rowStream nextPutAll: separator ]. 
+					rowBlock cull: rowStream contents cull: nil ].
+
+			rows do: rowPrintBlock.
+
+			rowStream := WriteStream on: String new.
+			dashCount timesRepeat: [ rowStream nextPut: $- ].
+			rowBlock cull: rowStream contents cull: nil ]
+]
+
 { #category : 'script utilities' }
 StashScript >> basename [
 
@@ -315,6 +398,12 @@ StashScript >> stashFile [
 StashScript >> stashFilePath: aString [
 
 	stashFile := aString asFileReference
+]
+
+{ #category : 'error handling' }
+StashScript >> stError: aString [
+
+	^ Error signal: aString
 ]
 
 { #category : 'accessing' }

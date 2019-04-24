@@ -8,6 +8,23 @@ Class {
 	#category : 'Stash-Scripts'
 }
 
+{ #category : 'private' }
+rowan >> _ansiRed [
+	^ (Character esc) asString, '[91;1m'
+]
+
+{ #category : 'private' }
+rowan >> _ansiReset [
+	^ (Character esc) asString, '[0m'
+]
+
+{ #category : 'utility' }
+rowan >> ansiRedOn: stream during: aBlock [
+
+	stream nextPutAll: self _ansiRed.
+	aBlock ensure: [ stream nextPutAll: self _ansiReset ].
+]
+
 { #category : 'script implementation' }
 rowan >> commit: aProjectName message: commitMessage [
 	"commit the project to a git repository"
@@ -68,6 +85,12 @@ rowan >> install: projectSpecUrl [
 
 { #category : 'script implementation' }
 rowan >> list [
+
+	self listY
+]
+
+{ #category : 'script implementation' }
+rowan >> listX [
 
 	| stream fields col1Max col2Max col3Max col4Max space separator titleFields titleField1 
 		titleField2 titleField3 titleField4 fieldPrintBlock userIdHeader stoneHeader |
@@ -186,6 +209,52 @@ rowan >> list [
 ]
 
 { #category : 'script implementation' }
+rowan >> listY [
+
+	| stream fields col1Max col2Max col3Max col4Max space separator titleFields titleField1 
+		titleField2 titleField3 titleField4 fieldPrintBlock userIdHeader stoneHeader |
+	stream := GsFile stdin.
+
+	stoneHeader := (self sessionIsSolo
+		ifTrue: [ 'Stone: (solo session)' ]
+		ifFalse: [ 'Stone: ', (System stoneName subStrings: $!) last ]) .
+	userIdHeader := 'User:  ', System myUserProfile userId.
+
+	fields := (((Rowan projectNames 
+		select: [:aProjectName | aProjectName ~= '__EXECUTE_STASH_SCRIPT_PROJECT__']) 
+			collect: [:aProjectName | Rowan projectNamed: aProjectName ]) 
+				sort: [:a :b | a name <= b name])
+					collect: [:project |
+						| field branch path isSkew loadedCommitId repositoryCommitId |
+						loadedCommitId := project loadedCommitId.
+						repositoryCommitId := project repositoryCommitId.
+						isSkew := loadedCommitId ~= repositoryCommitId.
+						isSkew ifTrue: [ loadedCommitId := loadedCommitId, ' -> ', repositoryCommitId ].
+						[ branch :=  project currentBranchName ] on: Error do: [:ex | branch :=  'ERROR getting repository branch' ].
+						path := (project repositoryRootPath ifNil: ['no repositoryRootPath']).
+						field := Array new: 5.
+						field
+							at: 1 put: project name;
+							at: 2 put: loadedCommitId;
+							at: 3 put: branch;
+							at: 4 put: path;
+							at: 5 put: isSkew;
+							yourself ].
+
+	self 
+		asciiTabulate: 1 
+		titleRow: #()
+		bodyRows: { { stoneHeader } . { userIdHeader } }
+		do: [:rowString :rowArray | stream nextPutAll: rowString; lf ].
+
+	self 
+		asciiTabulate: 4 
+		titleRow: { 'Project'. 'Commit'. 'Branch'. 'Repository' }
+		bodyRows: fields
+		do: [:rowString :rowArray | stream nextPutAll: rowString; lf ].
+]
+
+{ #category : 'script implementation' }
 rowan >> load: aProjectName [
 	"load the project"
 
@@ -220,23 +289,6 @@ rowan >> unload: aProjectName [
 	self deleteScriptProject.
 	self commit.
 	^ result
-]
-
-{ #category : 'private' }
-rowan >> _ansiRed [
-	^ (Character esc) asString, '[91;1m'
-]
-
-{ #category : 'private' }
-rowan >> _ansiReset [
-	^ (Character esc) asString, '[0m'
-]
-
-{ #category : 'utility' }
-rowan >> ansiRedOn: stream during: aBlock [
-
-	stream nextPutAll: self _ansiRed.
-	aBlock ensure: [ stream nextPutAll: self _ansiReset ].
 ]
 
 { #category : 'usage' }
