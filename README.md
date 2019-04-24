@@ -180,6 +180,10 @@ topaz 1>
 ```
 From this point you can use the [topaz debugger][11] or you can quit execution.
 
+If you hit a command error:
+![](docs/error.png?raw=true)
+
+
 [1]: https://downloads.gemtalksystems.com/docs/GemStone64/3.4.x/GS64-ProgGuide-3.4/GS64-ProgGuide-3.4.htm
 [2]: https://downloads.gemtalksystems.com/docs/GemStone64/3.4.x/GS64-Topaz-3.4/GS64-Topaz-3.4.htm
 [3]: scripts/hello.tpz
@@ -191,3 +195,6 @@ From this point you can use the [topaz debugger][11] or you can quit execution.
 [9]: bin/install.sh
 [10]: https://github.com/GemTalk/Rowan
 [11]: https://downloads.gemtalksystems.com/docs/GemStone64/3.4.x/GS64-Topaz-3.4/GS64-Topaz-3.4.htm
+[12]: docs/error.png
+
+
