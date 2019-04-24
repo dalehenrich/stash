@@ -134,7 +134,7 @@ There are a number of scripts in the `$ROWAN_PROJECTS_HOME/stash/scripts`
 directory.
 Each of the `.st` scripts has a `--help` option defined:
 ```bash
-$ROWAN_PROJECTS_HOME/stash/scripts/snapshot.st --help -- -lq				# GEMSTONE
+$ROWAN_PROJECTS_HOME/stash/scripts/snapshot.st --help -- -lq			# GEMSTONE
 $ROWAN_PROJECTS_HOME/stash/scripts/snapshot.st --help -- <stone-name> -lq	# GsDevKit_home
 ```
 
