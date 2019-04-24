@@ -36,6 +36,16 @@ Class {
 }
 
 { #category : 'private' }
+StashScript class >> _ansiRed [
+	^ (Character esc) asString, '[91;1m'
+]
+
+{ #category : 'private' }
+StashScript class >> _ansiReset [
+	^ (Character esc) asString, '[0m'
+]
+
+{ #category : 'private' }
 StashScript class >> _createScriptExecutionSymbolDictionaryNamed: dictName [
 
 	"create and add a symbol dictionary to the current sessions transient symbol list
@@ -57,6 +67,13 @@ StashScript class >> _createScriptExecutionSymbolDictionaryNamed: dictName [
 			transientSymbolList insertObject: newDict at: 1.
 			^ newDict ].
 	self error: 'a symbol dictionary named ', dictName printString, ' is already present in the transient symbol list'
+]
+
+{ #category : 'script utilities' }
+StashScript class >> ansiRedOn: stream during: aBlock [
+
+	stream nextPutAll: self _ansiRed.
+	aBlock ensure: [ stream nextPutAll: self _ansiReset ].
 ]
 
 { #category : 'script launching' }
@@ -120,16 +137,6 @@ StashScript class >> writeToDirectory: directoryPath as: filename [
 		as: filename.
 ]
 
-{ #category : 'private' }
-StashScript >> _ansiRed [
-	^ (Character esc) asString, '[91;1m'
-]
-
-{ #category : 'private' }
-StashScript >> _ansiReset [
-	^ (Character esc) asString, '[0m'
-]
-
 { #category : 'script utilities' }
 StashScript >> _downloadErrorFileNameFor: outputFileName [
 	| pid |
@@ -141,8 +148,7 @@ StashScript >> _downloadErrorFileNameFor: outputFileName [
 { #category : 'script utilities' }
 StashScript >> ansiRedOn: stream during: aBlock [
 
-	stream nextPutAll: self _ansiRed.
-	aBlock ensure: [ stream nextPutAll: self _ansiReset ].
+	self class ansiRedOn: stream during: aBlock
 ]
 
 { #category : 'script utilities' }

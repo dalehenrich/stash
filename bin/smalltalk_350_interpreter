@@ -74,7 +74,11 @@ cat - > $file << EOF
 		do: [:ex |
 			$debugCommandError
 				ifTrue: [ ex pass ]
-				ifFalse: [ GsFile stdout nextPutAll: ex description; lf ] ]
+				ifFalse: [ 
+					StashScript 
+						ansiRedOn: GsFile stdout 
+						during: [ GsFile stdout nextPutAll: ex description ].
+					GsFile stdout lf	] ]
 %
 EOF
 

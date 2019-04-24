@@ -12,6 +12,7 @@ Class {
  ErrorExampleScript>> scriptOptions [
 	^ {
 			#('help' $h #'none').
+			#('bang' nil #'none').
 			#('boom' nil #'none').
 	}
 ]
@@ -23,6 +24,7 @@ Class {
 		at: 'help'
     ifAbsent: [
 			opts at: 'boom' ifPresent: [ self error: 'BOOM' ].
+			opts at: 'bang' ifPresent: [ self stError: 'BANG' ].
 			GsFile stdout nextPutAll: 'No error today'; lf  ] 
     ifPresent: [ ^ self usage ]
 ]
@@ -39,13 +41,16 @@ Class {
 	error.st - bring up topaz debugger on error
 
 SYNOPSIS
-  error.st [ -h | --help ] [ --boom ] -- <topaz-arguments>
+  error.st [ -h | --help ] [ --boom ] [ --bang ] -- <topaz-arguments>
 
 DESCRIPTION
   --boom
-		signal error and bring up topaz debugger.
+		signal a StashCommandError display `red` error message and exit topaz.
 
-	With no `--boom` option, the script exits somewhat quietly.
+  --bang
+		signal an error, stop execution, print stack and ready to debug.
+
+	With no `--boom` or --`bang` option, the script exits somewhat quietly.
 
 	`-- <topaz-arguments>`
 		The command line arguments following the `--` will be passed to the topaz 
@@ -78,7 +83,9 @@ EXAMPLES
 	error.st -h -- -lq										# GEMSTONE
 
 	error.st 	-- MyStone -lq									# GsDevKit_home
- 	error.st --boom	-- MyStone -lq									# GEMSTONE
+ 	error.st --bang	-- MyStone -lq									# GsDevKit_home
+ 	error.st --boom	-- MyStone -lq									# GsDevKit_home
+ 	error.st --boom	-- MyStone -lq --debugCommandError						# GsDevKit_home
 
 ') printString, dashes
 ]

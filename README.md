@@ -43,6 +43,11 @@ Class {
 	self usage: 'hello.st' description: 'Write `hello world` to stdout and exit.'
 ]
 ```
+### TOC
+1. [Script execution environment](#script-execution-environment)
+2. [Installation](#installation)
+3. [Examples](#examples)
+4. [Debugging scripts](#debugging-scripts)
 # Script execution environment
 Stash scripts are executed in a GemStone session that is running against a 
 particular GemStone Object Server or against a single user GemStone extent
@@ -135,8 +140,45 @@ directory.
 Each of the `.st` scripts has a `--help` option defined:
 ```bash
 $ROWAN_PROJECTS_HOME/stash/scripts/snapshot.st --help -- -lq			# GEMSTONE
+
 $ROWAN_PROJECTS_HOME/stash/scripts/snapshot.st --help -- <stone-name> -lq	# GsDevKit_home
 ```
+
+# Debugging scripts
+By default if an error occurs during script exection (topaz or smalltalk 
+script), script execution halts, the error stack is printed and you are 
+left at a topaz command prompt:
+```bash
+bash> error.st --boom -- -lq
+ERROR 2010 , a MessageNotUnderstood occurred (error 2010), a StashScript class does not understand  #'ansiRedOn:during:' (MessageNotUnderstood)
+topaz > exec iferr 1 : stk 
+==> 1 MessageNotUnderstood >> defaultAction         @3 line 3
+2 MessageNotUnderstood (AbstractException) >> _signalWith: @6 line 25
+3 MessageNotUnderstood (AbstractException) >> signal @2 line 47
+4 StashScript class (Object) >> doesNotUnderstand: @10 line 10
+5 StashScript class (Object) >> _doesNotUnderstand:args:envId:reason: @8 line 14
+6 [] in Executed Code                           @10 line 16
+7 StashCommandError (AbstractException) >> _executeHandler: @8 line 11
+8 StashCommandError (AbstractException) >> _signalWith: @1 line 1
+9 StashCommandError (AbstractException) >> signal: @3 line 7
+10 StashCommandError class (AbstractException class) >> signal: @3 line 4
+11 ErrorExampleScript (StashScript) >> error:    @2 line 3
+12 [] in ErrorExampleScript >> executeScript     @14 line 6
+13 ExecBlock0 (ExecBlock) >> cull:               @5 line 7
+14 Dictionary (AbstractDictionary) >> at:ifPresent: @5 line 7
+15 [] in ErrorExampleScript >> executeScript     @7 line 6
+16 Dictionary (AbstractDictionary) >> at:ifAbsent:ifPresent: @4 line 6
+17 ErrorExampleScript >> executeScript           @3 line 4
+18 ErrorExampleScript (StashScript) >> setupAndExecuteScript @13 line 11
+19 StashScript class >> loadAndExecuteScriptClassFile:stashArgs:topazArgs:workingDir:projectName:packageName:symDictName: @24 line 19
+20 [] in Executed Code                           @5 line 3
+21 ExecBlock0 (ExecBlock) >> on:do:              @3 line 44
+22 Executed Code                                 @2 line 10
+23 GsNMethod class >> _gsReturnToC               @1 line 1
+Stopping at line 25 of /tmp/tmp.lzu8EwafAw
+topaz 1> 
+```
+From this point you can use the [topaz debugger][11] or you can quit execution.
 
 [1]: https://downloads.gemtalksystems.com/docs/GemStone64/3.4.x/GS64-ProgGuide-3.4/GS64-ProgGuide-3.4.htm
 [2]: https://downloads.gemtalksystems.com/docs/GemStone64/3.4.x/GS64-Topaz-3.4/GS64-Topaz-3.4.htm
@@ -148,3 +190,4 @@ $ROWAN_PROJECTS_HOME/stash/scripts/snapshot.st --help -- <stone-name> -lq	# GsDe
 [8]: bin/topaz_350_interpreter
 [9]: bin/install.sh
 [10]: https://github.com/GemTalk/Rowan
+[11]: https://downloads.gemtalksystems.com/docs/GemStone64/3.4.x/GS64-Topaz-3.4/GS64-Topaz-3.4.htm
