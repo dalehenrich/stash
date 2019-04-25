@@ -136,8 +136,8 @@ git clone https://github.com/dalehenrich/stash.git
 $ROWAN_PROJECTS_HOME/stash/bin/install.sh <stone-name> 3.5.0
 ```
 # Examples
-There are a number of scripts in the `$ROWAN_PROJECTS_HOME/stash/scripts`
-directory.
+There are a number of scripts in the [`$ROWAN_PROJECTS_HOME/stash/scripts`
+directory][13].
 Each of the `.st` scripts has a `--help` option defined:
 ```bash
 $ROWAN_PROJECTS_HOME/stash/scripts/snapshot.st --help -- -lq			# GEMSTONE
@@ -308,5 +308,5 @@ topaz 1>
 [10]: https://github.com/GemTalk/Rowan
 [11]: https://downloads.gemtalksystems.com/docs/GemStone64/3.4.x/GS64-Topaz-3.4/GS64-Topaz-3.4.htm
 [12]: docs/error.png
-
+[13]: scripts/
 
