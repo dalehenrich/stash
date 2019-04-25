@@ -309,6 +309,9 @@ of the extent by using the configuration parameter **GEM_SOLO_EXTENT**. The
 configuration parameter can be specified on a script command line using the 
 `-C` topaz option or specified in a `gem.conf` file.
 2. you need to include a `set solologin on` topz command in your topaz script.
+
+The `snapshot.st` script can be used to safely copy an extent from a running
+stone that is suitable to be used as **GEM_SOLO_EXTENT**.
 ### solo topaz script
 For a topaz script, you need to explicitly include the `set solologin on` in 
 your topaz script (see [solo.tpz][14]:
@@ -392,7 +395,6 @@ Category__________ (as yet unclassified)
 ```
 
 ---------------------------------------------------------------------------------------------------------
-
 [1]: https://downloads.gemtalksystems.com/docs/GemStone64/3.4.x/GS64-ProgGuide-3.4/GS64-ProgGuide-3.4.htm
 [2]: https://downloads.gemtalksystems.com/docs/GemStone64/3.4.x/GS64-Topaz-3.4/GS64-Topaz-3.4.htm
 [3]: scripts/hello.tpz
