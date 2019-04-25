@@ -384,7 +384,7 @@ Connection Information:
 UserName___________ 'SystemUser'
 Password __________ (set)
 GemNetId___________ 'gcilnkobj'
-SoloLogin       On														<=======================
+SoloLogin       On                                        <=======================
 
 Browsing Information:
 Class_____________ 
