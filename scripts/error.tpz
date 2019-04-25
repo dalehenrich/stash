@@ -2,6 +2,8 @@
 ##
 # just for tests
 #
+
+iferr 1 stk
 login
 
 run
