@@ -1,8 +1,0 @@
-#!/usr/bin/gsdevkit/topaz
-
-login
-
-run
-System stoneName
-%
-
