@@ -349,6 +349,47 @@ Or in a `gem.conf` file:
 ```bash
 error.st --boom -- MyStone -lq --solo
 ```
+In a topaz session you may use the `status` command to determine whether or not
+the session has had `set solologin on` performed:
+```
+topaz 1> status
+
+Current settings are:
+ display level: 0
+ byte limit: 0 lev1bytes: 100
+ omit bytes
+ include deprecated methods in lists of methods
+ display instance variable names
+ omit oops   omit classoops   omit stacktemps 
+ oop limit: 0
+ omit automatic result checks
+ omit interactive pause on errors
+ omit interactive pause on warnings
+ listwindow: 20
+ stackpad: 45
+ tab (ctl-H) equals 8 spaces when listing method source
+ transactionmode  autoBegin
+ using line editor
+   line editor history: 100
+   topaz input is from a tty on stdin
+EditorName________ 
+CompilationEnv____ 0
+SourceStringClass    String
+fileformat           8bit (tty stdin is utf8)
+SessionInit          On
+EnableRemoveAll      On
+CacheName__________ 'Topaz'
+
+Connection Information:
+UserName___________ 'SystemUser'
+Password __________ (set)
+GemNetId___________ 'gcilnkobj'
+SoloLogin       On														<=======================
+
+Browsing Information:
+Class_____________ 
+Category__________ (as yet unclassified)
+```
 
 ---------------------------------------------------------------------------------------------------------
 
@@ -365,4 +406,4 @@ error.st --boom -- MyStone -lq --solo
 [11]: https://downloads.gemtalksystems.com/docs/GemStone64/3.4.x/GS64-Topaz-3.4/2-Debug.htm
 [12]: docs/error.png
 [13]: scripts/
-[14]: scripts/solo.tpz
+[14]: scripts/solo.tpz#L6
