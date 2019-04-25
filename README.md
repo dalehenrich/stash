@@ -48,11 +48,13 @@ Class {
 2. [Installation](#installation)
 3. [Examples](#examples)
 4. [Creating your own scripts](#creating-your-own-scripts)
-4. [Debugging scripts](#debugging-scripts)
+5. [Debugging scripts](#debugging-scripts)
+6. [Topaz Solo script support] (#topaz-solo-script-support)
 # Script execution environment
 Stash scripts are executed in a GemStone session that is running against a 
 particular GemStone Object Server or against a single user GemStone extent
-file, using a topaz solo login.
+file, using a topaz solo login (see 
+[Topaz Solo script support](#topaz-solo-script-support) for more info).
 A combination of environmentvariables and command line arguments are used to
 select the desired execution environment.
 There are two execution environments that are currently supported:
@@ -268,7 +270,7 @@ From this point you can use the [topaz debugger][11] or you can quit execution.
 If you hit a command line error (i.e., unknown option, etc.), the error message
 is displayed in red and the topaz process exits:
 ![](docs/error.png?raw=true)
-If you use the stash interpretter option `--debugCommandError`, then topaz will be left open and ready to debug instead of exiting: 
+If you use the stash interpreter option `--debugCommandError`, then topaz will be left open and ready to debug instead of exiting: 
 ```bash
 bash> error.st --b -- -lq --debugCommandError
 ERROR 2710 , a StashCommandError occurred (error 2710), , Unknown option: b (StashCommandError)
@@ -294,7 +296,28 @@ topaz > exec iferr 1 : stk
 Stopping at line 25 of /tmp/tmp.kEjxfwNJ52
 topaz 1>
 ```
+# Topaz Solo script support
+Starting with GemStone/S 64 3.5.0, a topaz executable can be used to execute
+smalltalk code without running a stone.
+A topaz *solo* session uses an extent file and creates a gem session that can
+perform most code execution execution, although no persistent objects in the 
+extents can be modified.
 
+In order to initiate a topaz *solo* session, you need to specify the location of the extent by using the configuration parapeter **GEM_SOLO_EXTENT**. The configuration parameter can be specified on a script command line using the `-C` topaz option.
+### solo topaz script
+For a topaz script, it would look like this:
+```bash
+test.tpz -lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"
+test.tpz -lq -C "GEM_SOLO_EXTENT=./snapshots/extent0.solo.dbf"
+```
+### solo smalltalk script
+For a smalltalk script, it would like this:
+```bash
+hello.st -- -lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"
+error.st --boom -- -lq -C "GEM_SOLO_EXTENT=./snapshots/extent0.solo.dbf"
+```
+
+---------------------------------------------------------------------------------------------------------
 
 [1]: https://downloads.gemtalksystems.com/docs/GemStone64/3.4.x/GS64-ProgGuide-3.4/GS64-ProgGuide-3.4.htm
 [2]: https://downloads.gemtalksystems.com/docs/GemStone64/3.4.x/GS64-Topaz-3.4/GS64-Topaz-3.4.htm
@@ -306,7 +329,6 @@ topaz 1>
 [8]: bin/topaz_350_interpreter
 [9]: bin/install.sh
 [10]: https://github.com/GemTalk/Rowan
-[11]: https://downloads.gemtalksystems.com/docs/GemStone64/3.4.x/GS64-Topaz-3.4/GS64-Topaz-3.4.htm
+[11]: https://downloads.gemtalksystems.com/docs/GemStone64/3.4.x/GS64-Topaz-3.4/2-Debug.htm
 [12]: docs/error.png
 [13]: scripts/
-

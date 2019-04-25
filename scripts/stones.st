@@ -98,10 +98,10 @@ DESCRIPTION
 		installations
 
 EXAMPLES
-	error.st --help -- MyStone -lq							# GsDevKit_home
-	error.st --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.solo.dbf" \
+	stones.st --help -- MyStone -lq							# GsDevKit_home
+	stones.st --help -- MyStone -lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf" \
 				--solo							# SOLO
-	error.st -h -- MyStone -lq							# GsDevKit_home
+	stones.st -h -- MyStone -lq							# GsDevKit_home
 
 	stones.st -- MyStone -lq							# GsDevKit_home
 
