@@ -4,8 +4,6 @@
 #
 login
 
-# status
-
 run
 	| commandString arr out err result |
 	commandString := '/bin/ls'.

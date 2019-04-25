@@ -124,10 +124,10 @@ DESCRIPTION
 EXAMPLES
 	snapshot.st --help -- MyStone -lq						# GsDevKit_home
 
-	snapshot.st --dir=$GS_HOME/gemstone/snapshots solo.dbf -- -lq			# GEMSTONE
-	snapshot.st --dir=$GEMSTONE/data/snapshots --commit solo.dbf -- MyStone -lq	# GsDevKit_home
-	snapshot.st --dir=$GS_HOME/gemstone/snapshots --safely solo.dbf-- -lq		# GEMSTONE
-	snapshot.st --dir=$GEMSTONE/data//snapshots solo.dbf	-- MyStone -lq		# GsDevKit_home
+	snapshot.st --dir=$GEMSTONE/data/snapshots solo.dbf -- -lq			# GEMSTONE
+	snapshot.st --dir=$GS_HOME/gemstone/snapshots --commit solo.dbf -- MyStone -lq	# GsDevKit_home
+	snapshot.st --dir=$GEMSTONE/data/snapshots --safely solo.dbf-- -lq		# GEMSTONE
+	snapshot.st --dir=$GS_HOME/gemstone/snapshots solo.dbf	-- MyStone -lq		# GsDevKit_home
 
 	snapshot.st --dir=./snapshots solo.dbf-- -lq					# GEMSTONE
 

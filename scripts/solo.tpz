@@ -1,0 +1,12 @@
+#!/usr/bin/gemstone/topaz
+##
+# just for solo tests
+#
+
+set solologin on
+login
+
+run
+	GsFile stdout nextPutAll: 'I am being run from a topaz solo session'
+%
+exit

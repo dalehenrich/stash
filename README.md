@@ -49,7 +49,7 @@ Class {
 3. [Examples](#examples)
 4. [Creating your own scripts](#creating-your-own-scripts)
 5. [Debugging scripts](#debugging-scripts)
-6. [Topaz Solo script support] (#topaz-solo-script-support)
+6. [Topaz Solo script support](#topaz-solo-script-support)
 # Script execution environment
 Stash scripts are executed in a GemStone session that is running against a 
 particular GemStone Object Server or against a single user GemStone extent
@@ -303,18 +303,51 @@ A topaz *solo* session uses an extent file and creates a gem session that can
 perform most code execution execution, although no persistent objects in the 
 extents can be modified.
 
-In order to initiate a topaz *solo* session, you need to specify the location of the extent by using the configuration parapeter **GEM_SOLO_EXTENT**. The configuration parameter can be specified on a script command line using the `-C` topaz option.
+In order to initiate a topaz *solo* session
+1. you need to specify the location
+of the extent by using the configuration parameter **GEM_SOLO_EXTENT**. The
+configuration parameter can be specified on a script command line using the 
+`-C` topaz option or specified in a `gem.conf` file.
+2. you need to include a `set solologin on` topz command in your topaz script.
 ### solo topaz script
-For a topaz script, it would look like this:
+For a topaz script, you need to explicitly include the `set solologin on` in 
+your topaz script (see [solo.tpz][14]:
+```
+#!/usr/bin/gemstone/topaz
+##
+# just for solo tests
+#
+
+set solologin on
+login
+
+run
+	GsFile stdout nextPutAll: 'I am being run from a topaz solo session'
+%
+exit
+```
+Here's an example script invocation of `solo.tpz` where the **GEM_SOLO_EXTENT**
+is specified on the command line:
 ```bash
-test.tpz -lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"
-test.tpz -lq -C "GEM_SOLO_EXTENT=./snapshots/extent0.solo.dbf"
+solo.tpz -lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"
+```
+If the **GEM_SOLO_EXTENT** is specified in a `gem.conf` file, then all that is
+needed is the `set solologin on` command in your topaz script:
+```bash
+solo.tpz -lq
 ```
 ### solo smalltalk script
-For a smalltalk script, it would like this:
+For a smalltalk script, you don't have direct control over the topaz script, so
+your need to use the `--solo` stash interpreter option which will cause 
+`solologin' to be set `on`.
+As with the [solo topaz script](#solo-topaz-script), the **GEM_SOLO_EXTENT**
+must be set on the command line:
 ```bash
-hello.st -- -lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf"
-error.st --boom -- -lq -C "GEM_SOLO_EXTENT=./snapshots/extent0.solo.dbf"
+hello.st -- -lq -C "GEM_SOLO_EXTENT=$GEMSTONE/bin/extent0.dbf" --solo
+```
+Or in a `gem.conf` file:
+```bash
+error.st --boom -- MyStone -lq --solo
 ```
 
 ---------------------------------------------------------------------------------------------------------
@@ -332,3 +365,4 @@ error.st --boom -- -lq -C "GEM_SOLO_EXTENT=./snapshots/extent0.solo.dbf"
 [11]: https://downloads.gemtalksystems.com/docs/GemStone64/3.4.x/GS64-Topaz-3.4/2-Debug.htm
 [12]: docs/error.png
 [13]: scripts/
+[14]: scripts/solo.tpz
