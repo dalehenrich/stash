@@ -309,7 +309,8 @@ of the extent by using the configuration parameter **GEM_SOLO_EXTENT**. The
 configuration parameter can be specified on a script command line using the 
 `-C` topaz option or specified in a `gem.conf` file.
 2. you need to include a `set solologin on` topz command in your topaz script.
-###snapshot.st script
+
+### `snapshot.st` script
 The `snapshot.st` script can be used to safely copy an extent from a running
 stone that is suitable to be used as **GEM_SOLO_EXTENT**:
 ```bash
