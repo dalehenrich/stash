@@ -1,0 +1,63 @@
+#!/usr/bin/gemstone/topaz
+#
+# Create a snapshot of a an extent from a running stone named extent0.solo.dbf
+# 	in the current directory.
+# 	
+# Suitable for use as a topaz solo extent.
+#
+# GemStone Invocation:
+# 	snapshot.tpz -lq
+#
+# GsDevKit_home Invocation:
+# 	snapshot.tpz <stone-name> -lq
+#
+
+login
+
+run
+	| suspendInMinutes snapshots |
+	suspendInMinutes:= 15.
+	snapshots := {}.
+	[ 
+	(System checkpointStatus at: 1) "checkpoints suspended?"
+		ifTrue: [ self error: 'Checkpoints currently suspended. Please wait and try again. Use `System resumeCheckpoints` to resume checkpoints or run the resumeCheckpoints.tpz script.' ].
+	System startCheckpointSync
+		ifFalse: [ 
+			self
+				error:
+					'Could not start a checkpoint, See comment in System class>>startCheckpointSync for possible reasons for failure.' ].
+	(System suspendCheckpointsForMinutes: suspendInMinutes)
+		ifFalse: [ 
+			self
+				error:
+					'Could not suspend checkpoints, See comment in System class>>suspendCheckpointsForMinutes: for possible reasons for failure.' ].
+	SystemRepository fileNames
+		do: [ :extentPath | 
+			| extentName snapshotName snapshotFile performCopy |
+			extentName := (extentPath subStringsDelimitedBy: $/) last.
+			snapshotName := (extentName copyFrom: 1 to: extentName size - 3)
+						, 'solo.dbf'.
+			snapshotFile:= './', snapshotName.
+			GsFile stdout lf.
+			GsFile stdout nextPutAll:
+					'---Starting snapshot to ' , (extentPath , ' ', snapshotFile) printString
+								, ' -- ' , DateAndTime now asString;
+					lf.
+			GsHostProcess _execute: '/bin/cp -f ', extentPath, ' ', snapshotFile input: nil.
+			GsHostProcess _execute: '/bin/chmod -w ', snapshotFile input: nil.
+			snapshots add: snapshotFile.
+			GsFile stdout
+				nextPutAll:
+					'---Finishing snapshot ' , DateAndTime now asString , ' -- ' , snapshotFile;
+					lf ].
+	(System checkpointStatus at: 1) "checkpoints suspended?"
+		ifFalse: [ 
+			snapshots do: [ :snapshotFile|
+				GsFile removeServerFile: snapshotFile ].
+			self
+				error:
+					'Checkpoints were resumed before the extent copies were completed. Extent copies have been deleted.' ] ]
+		ensure: [ System resumeCheckpoints ].
+	^ snapshots
+%
+exit

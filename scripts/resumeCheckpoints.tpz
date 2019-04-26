@@ -1,0 +1,23 @@
+#!/usr/bin/gemstone/topaz
+#
+# resume checkpoints ...
+#
+#
+# GemStone Invocation:
+# 	resumeCheckpoints.tpz -lq
+# 	
+# GsDevKit_home Invocation:
+# 	resumeCheckpoints.tpz <stone-name> -lq
+#
+
+login
+
+run
+(System checkpointStatus at: 1) "checkpoints suspended?"
+		ifTrue: [
+			System resumeCheckpoints
+			GsFile stdout nextPutAll: 'Checkpoints have been resumed' ]
+		ifFalse: [
+			GsFile stdout nextPutAll: 'Checkpoints are not suspended' ].
+%
+exit
