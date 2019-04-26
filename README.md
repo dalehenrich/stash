@@ -314,7 +314,7 @@ The `snapshot.st` script can be used to safely copy an extent from a running
 stone that is suitable to be used as **GEM_SOLO_EXTENT**:
 ```bash
 $ROWAN_PROJECTS_HOME/stash/scripts/snapshot.st --dir="." solo.dbf -- -lq	#GEMSTONE
-$ROWAN_PROJECTS_HOME/stash/scripts/snapshot.st --dir="$GS_HOME/server/stones/<stone-name>/snapshots solo.dbf -- <stone-name> -lq	#GsDevKit_home
+$ROWAN_PROJECTS_HOME/stash/scripts/snapshot.st --dir="$GS_HOME/server/stones/<stone-name>/snapshots" solo.dbf -- <stone-name> -lq	#GsDevKit_home
 ```
 ### solo topaz script
 For a topaz script, you need to explicitly include the `set solologin on` in 
