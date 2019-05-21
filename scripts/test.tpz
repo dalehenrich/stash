@@ -2,6 +2,8 @@
 ##
 # just for tests
 #
+
+omit pushonly
 login
 
 run
