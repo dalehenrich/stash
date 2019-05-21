@@ -1,4 +1,4 @@
-#!/usr/bin/gemstone/smalltalk
+#!/usr/bin/gemstone/stash
 "
 	Bring up topaz debugger when a script error is encountered
 "

@@ -1,4 +1,4 @@
-#!/usr/bin/gemstone/smalltalk
+#!/usr/bin/gemstone/stash
 "
 a Stash Script
 "

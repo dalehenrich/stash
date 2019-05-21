@@ -41,6 +41,9 @@ pushd  /usr/bin
 	if [ ! -e smalltalk ] ; then
 		sudo ln -s $scriptDir/smalltalk_350_interpreter smalltalk
 	fi
+	if [ ! -e stash ] ; then
+		sudo ln -s $scriptDir/stash_350_interpreter stash
+	fi
 	if [ ! -e topaz ] ; then
 		sudo ln -s $scriptDir/topaz_350_interpreter topaz
 	fi

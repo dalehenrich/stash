@@ -1,4 +1,4 @@
-#!/usr/bin/gemstone/smalltalk
+#!/usr/bin/gemstone/stash
 "
 a command line interface to Rowan. See `rowan.st -h` for more information.
 "
