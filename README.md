@@ -17,10 +17,19 @@ run
 %
 exit
 ```
-### smalltalk script
-Here is a [`hello world` smalltalk script][4]:
+### smalltalk workspace script
+Here is a [`hello world` workspace script][15]:
 ```smalltalk
 #!/usr/bin/gemstone/smalltalk
+
+GsFile stdout nextPutAll: 'hello world'; lf
+```
+
+### stash script
+
+Here is a [`hello world` stash script][4]:
+```smalltalk
+#!/usr/bin/gemstone/stash
 "
 	Write `Hello World` to stdout and exit.
 "
@@ -153,16 +162,16 @@ example script and then edit it as needed:
 ```bash
 cp $ROWAN_PROJECTS_HOME/stash/scripts/template.tpz myscript.tpz
 ```
-### smalltalk script creation
-To create a new smalltalk script, use the `createTemplateScript.st` script
+### stash script creation
+To create a new stash script, use the `createTemplateScript.st` script
 ```bash
 $ROWAN_PROJECTS_HOME/stash/scripts/createTemplateScript.st \
 	--script=myScript --class=MyScript --dir=/home/me/bin -- MyStone -lq	
 ```
-If take a close look at a smalltalk script, you will notice that this is simply
+If take a close look at a stash script, you will notice that this is simply
 a Tonel class file and that the class is a subclass of StashScript:
 ```smalltalk
-#!/usr/bin/gemstone/smalltalk
+#!/usr/bin/gemstone/stash
 "
 	Write `Hello World` to stdout and exit.
 "
@@ -414,3 +423,4 @@ Category__________ (as yet unclassified)
 [12]: docs/error.png
 [13]: scripts/
 [14]: scripts/solo.tpz#L6
+[15]: scripts/hello.st
