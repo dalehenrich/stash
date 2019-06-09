@@ -17,8 +17,8 @@ run
 %
 exit
 ```
-### smalltalk workspace script
-Here is a [`hello world` workspace script][15]:
+### smalltalk doit script
+Here is a [`hello world` doit script][15]:
 ```smalltalk
 #!/usr/bin/gemstone/smalltalk
 
@@ -84,7 +84,7 @@ A command line invocation of the `hello.tpz` script using the
 bash> hello.tpz -lq -I ./.topazini
 hello world
 ```
-### smalltalk script invocation
+### doit script invocation
 A command line invocation of the `hello.st` script using the 
 [Classic GemStone environment](#classic-gemstone-environment) would look like the following:
 ```bash
@@ -104,7 +104,7 @@ A command line invocation of the `hello.tpz` script using the
 bash> hello.tpz <stone-name> -lq
 hello world
 ```
-### smalltalk script invocation
+### doit script invocation
 A command line invocation of the `hello.st` script using the 
 [GsDevKit_home environment](#gsdevkit_home-environment) would look like the following:
 ```bash
@@ -194,7 +194,7 @@ Class {
 	self usage: 'hello.st' description: 'Write `hello world` to stdout and exit.'
 ]
 ```
-The implication here is that this is not just a chunk of workspace code, but a
+The implication here is that this is not just a doit, but a
 real live class to which you can add methods and instance variables, etc. 
 
 It is also worth taking a close look at the 
