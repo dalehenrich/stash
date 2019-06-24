@@ -33,20 +33,25 @@ shift
 scriptFile=`realpath $0`
 scriptDir=`dirname "$scriptFile"`
 
-pushd  /usr/bin
-	if [ ! -d gemstone ] ; then
-		sudo mkdir gemstone
+pushd  /usr/local/bin
+	if [ ! -d smalltalk ] ; then
+		sudo mkdir smalltalk
 	fi
-	cd gemstone
-	if [ ! -e smalltalk ] ; then
-		sudo ln -s $scriptDir/smalltalk_350_interpreter smalltalk
-	fi
-	if [ ! -e stash ] ; then
-		sudo ln -s $scriptDir/stash_350_interpreter stash
-	fi
-	if [ ! -e topaz ] ; then
-		sudo ln -s $scriptDir/topaz_350_interpreter topaz
-	fi
+	pushd smalltalk
+		if [ ! -d gemstone ] ; then
+			sudo mkdir gemstone
+		fi
+		cd gemstone
+		if [ ! -e smalltalk ] ; then
+			sudo ln -s $scriptDir/smalltalk_350_interpreter smalltalk
+		fi
+		if [ ! -e stash ] ; then
+			sudo ln -s $scriptDir/stash_350_interpreter stash
+		fi
+		if [ ! -e topaz ] ; then
+			sudo ln -s $scriptDir/topaz_350_interpreter topaz
+		fi
+	popd
 popd
 
 if [ ! -d "$ROWAN_PROJECTS_HOME/Rowan" ] ; then

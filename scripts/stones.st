@@ -1,4 +1,4 @@
-#!/usr/bin/gemstone/stash
+#!/usr/local/bin/smalltalk/gemstone/stash
 "
 $GS_HOME/bin/stones implementation in GemStone Smalltalk
 "

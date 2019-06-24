@@ -1,4 +1,4 @@
-#!/usr/bin/gemstone/stash
+#!/usr/local/bin/smalltalk/gemstone/stash
 "
 Make a snapshot of the extent files for the current stone
 "

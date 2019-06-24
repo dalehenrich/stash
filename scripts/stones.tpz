@@ -1,4 +1,4 @@
-#!/usr/bin/gemstone/topaz
+#!/usr/local/bin/smalltalk/gemstone/topaz
 #
 # example use of GsHostProcess
 #

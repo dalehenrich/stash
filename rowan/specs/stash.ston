@@ -1,20 +1,14 @@
-RwSimpleProjectSpecification {
+RwComponentSpecification{
 	#specName : 'stash',
 	#version : '0.3.0',
 	#projectUrl : 'https://github.com/dalehenrich/stash',
 	#configsPath : 'rowan/configs',
-	#specsPath : 'rowan/specs',
-	#repoSpec : RwGitRepositorySpecification {
-		#committish : 'master',
-		#committishType : 'branch',
-		#remoteUrl : 'git@github.com:dalehenrich/stash.git '
-	},
+	#projectsPath : 'rowan/projects',
 	#repoPath : 'rowan/src',
-	#comment : 'command line scripting support',
-	#defaultConfigurationNames : [
-		'Main'
-	],
+	#specsPath : 'rowan/specs',
+	#defaultComponentName : 'Main',
 	#defaultGroupNames : [
 		'tests'
-	]
+	],
+	#comment : 'command line scripting support for GemStone 3.5.0 and later'
 }

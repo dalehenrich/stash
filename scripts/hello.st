@@ -1,4 +1,4 @@
-#!/usr/bin/gemstone/stash
+#!/usr/local/bin/smalltalk/gemstone/stash
 "
 	Write `Hello World` to stdout and exit.
 "

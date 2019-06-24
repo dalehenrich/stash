@@ -7,7 +7,7 @@ Note that **GemStone/S 64 3.5.0** or later is required.
 ### topaz script
 Here is a [`hello world` topaz script][3]:
 ```smalltalk
-#!/usr/bin/gemstone/topaz
+#!/usr/local/bin/smalltalk/gemstone/topaz
 #
 #	Write `hello world` to stdout and exit.
 #
@@ -20,7 +20,7 @@ exit
 ### smalltalk doit script
 Here is a [`hello world` doit script][15]:
 ```smalltalk
-#!/usr/bin/gemstone/smalltalk
+#!/usr/local/bin/smalltalk/gemstone/smalltalk
 
 GsFile stdout nextPutAll: 'hello world'; lf
 ```
@@ -29,7 +29,7 @@ GsFile stdout nextPutAll: 'hello world'; lf
 
 Here is a [`hello world` stash script][4]:
 ```smalltalk
-#!/usr/bin/gemstone/stash
+#!/usr/local/bin/smalltalk/gemstone/stash
 "
 	Write `Hello World` to stdout and exit.
 "
@@ -114,7 +114,7 @@ Hello World
 # Installation 
 To install Stash, you need to have `sudo` privileges, as the shell interpreters
 ([smalltalk_350_interpreter][7] and [topaz_350_interpreter][8]) need to be
-installed in `/usr/bin/gemstone`.
+installed in `/usr/local/bin/smalltalk/gemstone`.
 
 Stash will install [Rowan][10] into your stone as it is required.
 The Rowan environment needs to have the **ROWAN_PROJECTS_HOME** environment 
@@ -171,7 +171,7 @@ $ROWAN_PROJECTS_HOME/stash/scripts/createTemplateScript.st \
 If take a close look at a stash script, you will notice that this is simply
 a Tonel class file and that the class is a subclass of StashScript:
 ```smalltalk
-#!/usr/bin/gemstone/stash
+#!/usr/local/bin/smalltalk/gemstone/stash
 "
 	Write `Hello World` to stdout and exit.
 "
@@ -330,7 +330,7 @@ $ROWAN_PROJECTS_HOME/stash/scripts/snapshot.st --dir="$GS_HOME/server/stones/<st
 For a topaz script, you need to explicitly include the `set solologin on` in 
 your topaz script (see [solo.tpz][14]:
 ```
-#!/usr/bin/gemstone/topaz
+#!/usr/local/bin/smalltalk/gemstone/topaz
 ##
 # just for solo tests
 #

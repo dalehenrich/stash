@@ -1,4 +1,4 @@
-#!/usr/bin/gemstone/topaz
+#!/usr/local/bin/smalltalk/gemstone/topaz
 #
 # Create a snapshot of a an extent from a running stone named extent0.solo.dbf
 # 	in the current directory.
