@@ -21,7 +21,8 @@ iferr 1 exit 1
 	| url |
 	url := 'file:$ROWAN_PROJECTS_HOME/stash/rowan/specs/stash.ston'.
 	(RwComponentProjectDefinition newForUrl: url)
-		projectHome: '$ROWAN_PROJECTS_HOME'
+		projectHome: '$ROWAN_PROJECTS_HOME';
+		load
 %
 
 	commit
