@@ -20,7 +20,7 @@ StashGemStoneSnapshotScript >> scriptOptions [
 	}
 ]
 
-{ #category : '' }
+{ #category : 'solo support' }
 StashGemStoneSnapshotScript >> commit [
 
 	self deleteScriptProject.
