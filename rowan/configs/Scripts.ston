@@ -1,0 +1,33 @@
+RwProjectLoadConfiguration {
+	#name : 'Scripts',
+	#comment : 'Example scripts',
+	#projectName : 'stash',
+	#version : '0.1.0',
+	#definedGroupNames : {
+		'core' : [ ],
+		'tests' : [ 'core' ]
+	},
+	#configurationNames : [
+		'Main'
+	],
+	#conditionalPackages : {
+		[
+			'common'
+		] : {
+			'core' : {
+				#packageNames : [
+					'Stash-Scripts'
+				]
+			}
+		},
+		[
+			'gemstone'
+		] : {
+			'core' : {
+				#packageNames : [
+					'Stash-GemStone-Scripts'
+				]
+			}
+		}
+	}
+}
