@@ -5,7 +5,8 @@ RwProjectLoadConfiguration {
 	#version : '0.1.0',
 	#definedGroupNames : {
 		'core' : [ ],
-		'tests' : [ 'core' ]
+		'tools' : [ 'core' ],
+		'tests' : [ 'tools' ]
 	},
 	#configurationNames : [
 		'Main'
