@@ -49,7 +49,7 @@ StashClassTool >> _scriptOptionsSource [
 { #category : 'writing' }
 StashClassTool >> _shebang [
 
-	^ '#!/usr/bin/gemstone/smalltalk'
+	^ '#!/usr/local/bin/smalltalk/gemstone/stash'
 ]
 
 { #category : 'stash script creation' }
