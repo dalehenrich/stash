@@ -427,6 +427,12 @@ StashScript >> stashFilePath: aString [
 	stashFile := aString asFileReference
 ]
 
+{ #category : 'script utilities' }
+StashScript >> stdout [
+
+	^ GsFile stdout
+]
+
 { #category : 'error handling' }
 StashScript >> stError: aString [
 

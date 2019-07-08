@@ -1,13 +1,7 @@
 RwProjectLoadConfiguration {
 	#name : 'Scripts',
 	#comment : 'Example scripts',
-	#projectName : 'stash',
 	#version : '0.1.0',
-	#definedGroupNames : {
-		'core' : [ ],
-		'tools' : [ 'core' ],
-		'tests' : [ 'tools' ]
-	},
 	#configurationNames : [
 		'Main'
 	],
@@ -30,5 +24,15 @@ RwProjectLoadConfiguration {
 				]
 			}
 		}
+	},
+	#conditionalPackageMapSpecs : { },
+	#definedGroupNames : {
+		'tests' : [
+			'tools'
+		],
+		'core' : [ ],
+		'tools' : [
+			'core'
+		]
 	}
 }
