@@ -3,13 +3,25 @@
 	Bring up topaz debugger when a script error is encountered
 "
 Class {
-     #name : 'StashErrorScript',
-     #superclass : 'StashScript',
-     #category : 'Stash-Scripts'
+	#name : 'StashErrorScript',
+	#superclass : 'StashScript',
+	#category : 'Stash-Scripts'
 }
 
 { #category : 'script execution' }
- StashErrorScript>> scriptOptions [
+StashErrorScript >> executeScript [
+
+	opts
+		at: 'help'
+    ifAbsent: [
+			opts at: 'boom' ifPresent: [ self error: 'BOOM' ].
+			opts at: 'bang' ifPresent: [ self stError: 'BANG' ].
+			GsFile stderr nextPutAll: 'No error today'; lf  ] 
+    ifPresent: [ ^ self usage ]
+]
+
+{ #category : 'script execution' }
+StashErrorScript >> scriptOptions [
 	^ {
 			#('help' $h #'none').
 			#('bang' nil #'none').
@@ -17,20 +29,8 @@ Class {
 	}
 ]
 
-{ #category : 'script execution' }
- StashErrorScript>> executeScript [
-
-	opts
-		at: 'help'
-    ifAbsent: [
-			opts at: 'boom' ifPresent: [ self error: 'BOOM' ].
-			opts at: 'bang' ifPresent: [ self stError: 'BANG' ].
-			GsFile stdout nextPutAll: 'No error today'; lf  ] 
-    ifPresent: [ ^ self usage ]
-]
-
 { #category : 'usage' }
- StashErrorScript>> usage [
+StashErrorScript >> usage [
 	| dashes |
 	dashes := '----------------------------------------------------
 '.

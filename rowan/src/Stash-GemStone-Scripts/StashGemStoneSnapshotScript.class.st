@@ -3,22 +3,10 @@
 Make a snapshot of the extent files for the current stone
 "
 Class {
-     #name : 'StashGemStoneSnapshotScript',
-     #superclass : 'StashScript',
-     #category : 'Stash-GemStone-Scripts'
+	#name : 'StashGemStoneSnapshotScript',
+	#superclass : 'StashScript',
+	#category : 'Stash-GemStone-Scripts'
 }
-
-{ #category : 'script execution' }
-StashGemStoneSnapshotScript >> scriptOptions [
-	^ {
-			#('help' $h #'none').
-			#('safely' $s #'none').
-			#('commit' $c #'none').
-			#('suspend' $m #'required').
-			#('dir' $d #'required').
-			#('resume' nil #'none').
-	}
-]
 
 { #category : 'solo support' }
 StashGemStoneSnapshotScript >> commit [
@@ -37,7 +25,7 @@ StashGemStoneSnapshotScript >> executeScript [
 			opts at: 'resume' ifPresent: [
 				"resume snapshots, if they have already been suspended and the timeout hasn't expired yet"
 				System resumeCheckpoints.
-				GsFile stdout nextPutAll: 'Checkpoints resumed.'; lf.
+				GsFile stderr nextPutAll: 'Checkpoints resumed.'; lf.
 				^ self ].
 			args size < 1
 				ifTrue: [ self error: 'Required argument <snapshot-extension> missing.' ].
@@ -56,8 +44,20 @@ StashGemStoneSnapshotScript >> executeScript [
 			snapShots do: [:snapShotFileRef |
 				| resultString |
 				resultString := GsHostProcess execute: '/bin/chmod -w ', snapShotFileRef pathString.
-				GsFile stdout nextPutAll: resultString ] ] 
+				GsFile stderr nextPutAll: resultString ] ] 
     ifPresent: [ ^ self usage ]
+]
+
+{ #category : 'script execution' }
+StashGemStoneSnapshotScript >> scriptOptions [
+	^ {
+			#('help' $h #'none').
+			#('safely' $s #'none').
+			#('commit' $c #'none').
+			#('suspend' $m #'required').
+			#('dir' $d #'required').
+			#('resume' nil #'none').
+	}
 ]
 
 { #category : 'usage' }

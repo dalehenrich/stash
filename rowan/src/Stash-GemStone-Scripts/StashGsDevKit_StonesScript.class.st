@@ -3,21 +3,10 @@
 $GS_HOME/bin/stones implementation in GemStone Smalltalk
 "
 Class {
-     #name : 'StashGsDevKit_StonesScript',
-     #superclass : 'StashScript',
-     #category : 'Stash-GemStone-Scripts'
+	#name : 'StashGsDevKit_StonesScript',
+	#superclass : 'StashScript',
+	#category : 'Stash-GemStone-Scripts'
 }
-
-{ #category : 'script execution' }
-StashGsDevKit_StonesScript >> scriptOptions [
-	^ {
-			#('help' $h #'none').
-			#('all' $a #'none').
-			#('running' $r #'none').
-			#('installed' $i #'optional').
-			#('netldi' $n #'none').
-	}
-]
 
 { #category : 'script execution' }
 StashGsDevKit_StonesScript >> executeScript [
@@ -36,10 +25,21 @@ StashGsDevKit_StonesScript >> executeScript [
 			installed
 				ifTrue: [ Rowan stashTools stones installedStonesReportOn: GsFile stdout sortKey: installedSortKey ].
 			running
-				ifTrue: [ Rowan stashTools stones runningStonesReportOn: GsFile stdout ].
+				ifTrue: [ Rowan stashTools stones runningStonesReportOn: GsFile stderr ].
 			netldi
-				ifTrue: [ Rowan stashTools stones runningNetldiReportOn: GsFile stdout ] ] 
+				ifTrue: [ Rowan stashTools stones runningNetldiReportOn: GsFile stderr ] ] 
     ifPresent: [ ^ self usage ]
+]
+
+{ #category : 'script execution' }
+StashGsDevKit_StonesScript >> scriptOptions [
+	^ {
+			#('help' $h #'none').
+			#('all' $a #'none').
+			#('running' $r #'none').
+			#('installed' $i #'optional').
+			#('netldi' $n #'none').
+	}
 ]
 
 { #category : 'usage' }

@@ -46,7 +46,7 @@ StashGemStoneTool >> snapshot: snapshotExtension to: snapshotDirPath suspendInMi
 			GsFile stdout lf.
 			performCopy
 				ifTrue: [ 
-					GsFile stdout nextPutAll:
+					GsFile stderr nextPutAll:
 							'---Starting snapshot to ' , (extentPath , ' ' , snapshotFile pathString) printString
 								, '(' , DateAndTime now asString , ')';
 						lf.
@@ -54,12 +54,12 @@ StashGemStoneTool >> snapshot: snapshotExtension to: snapshotDirPath suspendInMi
 						ifTrue: [ snapshotFile delete ].
 					extent copyTo: snapshotFile.
 					snapshots add: snapshotFile.
-					GsFile stdout
+					GsFile stderr
 						nextPutAll:
 								'---Finishing snapshot ' , DateAndTime now asString , ' -- ' , snapshotFile pathString;
 						lf]
 				ifFalse: [ 
-					GsFile stdout nextPutAll:
+					GsFile stderr nextPutAll:
 							'The snapshot file exists, --safely present, copy skipped for: '
 								, snapshotFile printString;
 						lf ] ].
