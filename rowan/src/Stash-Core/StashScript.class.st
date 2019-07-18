@@ -428,6 +428,12 @@ StashScript >> stashFilePath: aString [
 ]
 
 { #category : 'script utilities' }
+StashScript >> stderr [
+
+	^ GsFile stderr
+]
+
+{ #category : 'script utilities' }
 StashScript >> stdout [
 
 	^ GsFile stdout
