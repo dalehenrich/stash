@@ -32,6 +32,15 @@ RwProjectLoadConfiguration {
 					'Stash-Tests'
 				]
 			}
+		},
+		[
+			'gemstone'
+		] : {
+			'core' : {
+				#packageNames : [
+					'Stash-CommandLine-GemStone-Tests'
+				]
+			}
 		}
 	},
 	#conditionalPackageMapSpecs : {

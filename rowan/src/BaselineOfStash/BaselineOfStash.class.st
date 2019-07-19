@@ -14,6 +14,7 @@ BaselineOfStash >> baseline: spec [
 				package: #'Stash-Core';
 				package: #'Stash-CommandLine' with: [ spec requires: #('Stash-Core') ];
 				package: #'Stash-CommandLine-Tests' with: [ spec requires: #('Stash-Core') ];
+				package: #'Stash-CommandLine-Pharo-Tests' with: [ spec requires: #('Stash-CommandLine-Tests') ];
 				yourself ].
 
 ]

@@ -4,11 +4,6 @@ Class {
 	#category : 'Stash-CommandLine-Tests'
 }
 
-{ #category : 'as yet unclassified' }
-StashCommandGetOptsTestCase >> assert: aString includesSubstring: subString [
-
-	self assert: (aString _findString: aString startingAt: 1 ignoreCase: false) ~~ 0
-]
 
 { #category : 'as yet unclassified' }
 StashCommandGetOptsTestCase >> longOptionSpec [
