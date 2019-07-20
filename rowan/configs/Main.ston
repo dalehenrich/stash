@@ -15,6 +15,7 @@ RwProjectLoadConfiguration {
 			'core' : {
 				#packageNames : [
 					'Stash-Core',
+					'Stash-Rowan-Core',
 					'Stash-CommandLine',
 					'Stash-CommandLine-Tests',
 					'Stash-Kernel-Extensions'
@@ -38,6 +39,7 @@ RwProjectLoadConfiguration {
 		] : {
 			'core' : {
 				#packageNames : [
+					'Stash-GemStone-Core',
 					'Stash-CommandLine-GemStone-Tests'
 				]
 			}
@@ -50,7 +52,9 @@ RwProjectLoadConfiguration {
 					'Stash-Rowan-Tools-Extensions' : { 'symbolDictName' : 'RowanTools' },
 					'Stash-Rowan-Kernel-Extensions' : { 'symbolDictName' : 'RowanKernel' },
 					'Stash-Kernel-Extensions' : { 'symbolDictName' : 'Globals' },
-					'Stash-Core' : { 'symbolDictName' : 'Globals' }
+					'Stash-Core' : { 'symbolDictName' : 'Globals' },
+					'Stash-GemStone-Core' : { 'symbolDictName' : 'Globals' },
+					'Stash-Rowan-Core' : { 'symbolDictName' : 'Globals' }
 				}
 			}
 		}

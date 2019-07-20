@@ -45,62 +45,11 @@ StashScript class >> _ansiReset [
 	^ (Character esc) asString, '[0m'
 ]
 
-{ #category : 'private' }
-StashScript class >> _createScriptExecutionSymbolDictionaryNamed: dictName [
-
-	"create and add a symbol dictionary to the current sessions transient symbol list
-		throw and error if there is already a symbol dictionary of the same name in
-		the symbol list. "
-
-	| symbolName session transientSymbolList symbolDict |
-	symbolName := dictName asSymbol.
-	session := GsCurrentSession currentSession.
-	transientSymbolList := session symbolList.
-	symbolDict := transientSymbolList
-		detect: [ :each | (each at: symbolName ifAbsent: [ nil ]) == each ]
-		ifNone: [ 
-			| newDict|
-			newDict := SymbolDictionary new
-				name: symbolName;
-				objectSecurityPolicy: transientSymbolList objectSecurityPolicy;
-				yourself.
-			transientSymbolList insertObject: newDict at: 1.
-			^ newDict ].
-	self error: 'a symbol dictionary named ', dictName printString, ' is already present in the transient symbol list'
-]
-
 { #category : 'script utilities' }
 StashScript class >> ansiRedOn: stream during: aBlock [
 
 	stream nextPutAll: self _ansiRed.
 	aBlock ensure: [ stream nextPutAll: self _ansiReset ].
-]
-
-{ #category : 'script launching' }
-StashScript class >> loadAndExecuteScriptClassFile: script_file stashArgs: stash_args topazArgs: topaz_args workingDir: working_dir projectName: projectName packageName: packageName symDictName: symbolDictName [
-
-	| projectDefinition scriptClassDefinition stash |
-	self _createScriptExecutionSymbolDictionaryNamed: symbolDictName.
-	projectDefinition := Rowan stashTools classTool 
-		loadTonelClassFile: script_file
-		projectName: projectName
-		packageName: packageName
-		symDictName: symbolDictName.
-	scriptClassDefinition := (projectDefinition packages values any) classDefinitions values any.
-	stash := ((GsCurrentSession currentSession symbolList objectNamed: scriptClassDefinition name) 
-		stashFilePath: script_file 
-		topazArgs: topaz_args 
-		stashArgs: stash_args
-		workingDir: working_dir)
-			projectName: projectName;
-			packageName: packageName;
-			yourself.
-	^ stash setupAndExecuteScript
-]
-
-{ #category : 'script implementation' }
-StashScript class >> saveScript [
-	self writeToDirectory: scriptDir as: scriptName
 ]
 
 { #category : 'accessing' }
@@ -124,25 +73,6 @@ StashScript class >> stashFilePath: stashFilePath topazArgs: topazArgs stashArgs
 		stashArgString: stashArgs; 
 		workingDirectoryPath: workingDir;
 		yourself
-]
-
-{ #category : 'script implementation' }
-StashScript class >> writeToDirectory: directoryPath as: filename [
-	"Run script with --save option to invoke this method"
-	| classDefinition |
-	classDefinition := (Rowan image loadedClassNamed: self name) asDefinition.
-	Rowan stashTools classTool 
-		writeTonelClassDefinition: classDefinition 
-		toDirectory: directoryPath
-		as: filename.
-]
-
-{ #category : 'script utilities' }
-StashScript >> _downloadErrorFileNameFor: outputFileName [
-	| pid |
-	pid := (System gemVersionReport at: 'processId') printString.
-	^ '/tmp/curl-' , pid , '-' , (outputFileName select: [ :c | c isAlphaNumeric ])
-		, '.err'
 ]
 
 { #category : 'script utilities' }
@@ -252,64 +182,10 @@ StashScript >> command [
 	^ command
 ]
 
-{ #category : 'solo support' }
-StashScript >> commit [
-	"Commits are not allowed when running with a solo session, so skip the commit if running against a solo extent"
-
-	self sessionIsSolo
-		ifTrue: [^ true ].
-	^ System commit
-]
-
-{ #category : 'script utilities' }
-StashScript >> deleteScriptProject [
-	"should be used before doing a commit from within the script, to avoid persisting script project artifacts"
-
-	Rowan image loadedProjectNamed: self projectName ifAbsent: [ ^ self ].
-	Rowan projectTools delete deleteProjectNamed: self projectName.
-]
-
 { #category : 'script utilities' }
 StashScript >> dirname [
 
 	^ self stashFile parent
-]
-
-{ #category : 'script utilities' }
-StashScript >> downloadHttpsFile: httpsUrl to: outputFileName username: username pass: pass [
-	"download from <httpsUrl> into <outputFileName>"
-
-	| errorFileName theArgs |
-	"Make a unique name for the error log and ensure that we can write the files"
-	errorFileName := self _downloadErrorFileNameFor: outputFileName.
-	outputFileName asFileReference ensureCreateFile.
-	errorFileName asFileReference ensureCreateFile.
-	theArgs := username ifNotNil: [ ' -u ' , username , ':' , pass ] ifNil: [ '' ].
-	System
-		performOnServer:
-			'/usr/bin/curl' , theArgs , ' -L ' , httpsUrl , ' > ' , outputFileName , ' 2> '
-				, errorFileName.
-	^ errorFileName
-]
-
-{ #category : 'script implementation' }
-StashScript >> edit [
-	"add to script if you want to be able to edit your script using smalltalk tools"
-
-	"use `<script-class> saveScript` in image to save any script changes you have made"
-
-	| projName |
-	projName := 'EDIT-', self class name asString.
-	Rowan stashTools classTool 
-		loadTonelClassFile: self stashFile 
-			projectName: projName
-			packageName: 'EDIT-', self class name asString, '-PKG'.
-	self class
-		scriptDir: self dirname;
-		scriptName: self basename.
-	self deleteScriptProject.
-	System commit.
-	^ 'script can be found in the project ', projName printString
 ]
 
 { #category : 'error handling' }
@@ -322,13 +198,6 @@ StashScript >> error: aString [
 StashScript >> executeScript [
 
 	self subclassResponsibility: #executeScript
-]
-
-{ #category : 'script utilities' }
-StashScript >> globalNamed: aString [
-	"return nil if no global found"
-
-	^ Rowan globalNamed: aString
 ]
 
 { #category : 'script utilities' }
@@ -377,14 +246,6 @@ StashScript >> scriptOptions [
 	}
 ]
 
-{ #category : 'testing' }
-StashScript >> sessionIsSolo [
-
-	^(GsSession respondsTo: #isSolo)
-		ifTrue: [ GsSession perform: #isSolo ]
-		ifFalse: [ false ]
-]
-
 { #category : 'script execution' }
 StashScript >> setupAndExecuteScript [
 
@@ -427,18 +288,6 @@ StashScript >> stashFilePath: aString [
 	stashFile := aString asFileReference
 ]
 
-{ #category : 'script utilities' }
-StashScript >> stderr [
-
-	^ GsFile stderr
-]
-
-{ #category : 'script utilities' }
-StashScript >> stdout [
-
-	^ GsFile stdout
-]
-
 { #category : 'error handling' }
 StashScript >> stError: aString [
 
@@ -462,7 +311,7 @@ StashScript >> usage: scriptName description: description [
 	| dashes |
 	dashes := '----------------------------------------------------
 '.
-  GsFile stdout nextPutAll: dashes,
+  self stdout nextPutAll: dashes,
 		(self manPageClass
           fromString:
 'NAME
