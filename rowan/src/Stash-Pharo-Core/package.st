@@ -1,1 +1,1 @@
-Package { #name : 'Stash-Pharo-Core' }
+Package { #name : #'Stash-Pharo-Core' }
