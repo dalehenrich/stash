@@ -3,21 +3,20 @@
 	Write `Hello World` to stdout and exit.
 "
 Class {
-     #name : 'StashHelloWorldScript',
-     #superclass : 'StashScript',
-     #category : 'Stash-Scripts'
+	#name : 'StashHelloWorldScript',
+	#superclass : 'StashScript',
+	#category : 'Stash-Scripts'
 }
 
 { #category : 'script execution' }
- StashHelloWorldScript>> executeScript [
+StashHelloWorldScript >> executeScript [
 
 	opts at: 'help' ifPresent: [ ^ self usage ].
 	GsFile stdout nextPutAll: 'Hello World'; lf
 ]
 
 { #category : 'usage' }
- StashHelloWorldScript>> usage [
+StashHelloWorldScript >> usage [
 
-	self usage: 'hello.st' description: 'Write `hello world` to stdout and exit.'
+	^ self usage: 'hello.st' description: 'Write `hello world` to stdout and exit.'
 ]
-
