@@ -82,7 +82,9 @@ StashManPage class >> fromString: manPageString [
   | summaryIndex synopsisIndex descriptIndex optionsIndex exampleIndex manPage seeAlsoIndex |
   summaryIndex := 'NAME' size.
   synopsisIndex := manPageString indexOfSubCollection: 'SYNOPSIS' startingAt: 1.
-  descriptIndex := manPageString indexOfSubCollection: 'DESCRIPTION' startingAt: 1.
+  descriptIndex := manPageString
+    indexOfSubCollection: 'DESCRIPTION'
+    startingAt: 1.
   optionsIndex := manPageString indexOfSubCollection: 'OPTIONS' startingAt: 1.
   exampleIndex := manPageString indexOfSubCollection: 'EXAMPLES' startingAt: 1.
   seeAlsoIndex := manPageString indexOfSubCollection: 'SEE ALSO' startingAt: 1.
@@ -96,25 +98,42 @@ StashManPage class >> fromString: manPageString [
     ifTrue: [ descriptIndex := optionsIndex ].
   synopsisIndex == 0
     ifTrue: [ synopsisIndex := descriptIndex ].
-  manPage := self new
-    summary:
-        (manPageString copyFrom: summaryIndex + 1 to: synopsisIndex - 1) trimBoth;
-    synopsis:
-        (manPageString copyFrom: synopsisIndex + 'SYNOPSIS' size to: descriptIndex - 1)
-            trimBoth;
-    description:
-        (manPageString copyFrom: descriptIndex + 'DESCRIPTION' size to: optionsIndex - 1)
-            trimBoth;
-    options:
-        (manPageString copyFrom: optionsIndex + 'OPTIONS' size to: exampleIndex - 1)
-            trimBoth;
-    examples:
-        (manPageString copyFrom: exampleIndex + 'EXAMPLES' size to: seeAlsoIndex - 1)
-            trimBoth;
-    seeAlso:
-        (manPageString copyFrom: seeAlsoIndex + 'SEE ALSO' size to: manPageString size)
-            trimBoth;
-    yourself.
+  manPage := self new.
+  summaryIndex < synopsisIndex
+    ifTrue: [ 
+      manPage
+        summary:
+          (manPageString copyFrom: summaryIndex + 1 to: synopsisIndex - 1) trimBoth ].
+  synopsisIndex + 'SYNOPSIS' size < descriptIndex
+    ifTrue: [ 
+      manPage
+        synopsis:
+          (manPageString copyFrom: synopsisIndex + 'SYNOPSIS' size to: descriptIndex - 1)
+            trimBoth ].
+  descriptIndex + 'DESCRIPTION' size < optionsIndex
+    ifTrue: [ 
+      manPage
+        description:
+          (manPageString copyFrom: descriptIndex + 'DESCRIPTION' size to: optionsIndex - 1)
+            trimBoth ].
+  optionsIndex + 'OPTIONS' size < exampleIndex
+    ifTrue: [ 
+      manPage
+        options:
+          (manPageString copyFrom: optionsIndex + 'OPTIONS' size to: exampleIndex - 1)
+            trimBoth ].
+  exampleIndex + 'EXAMPLES' size < seeAlsoIndex
+    ifTrue: [ 
+      manPage
+        examples:
+          (manPageString copyFrom: exampleIndex + 'EXAMPLES' size to: seeAlsoIndex - 1)
+            trimBoth ].
+  seeAlsoIndex + 'SEE ALSO' size < manPageString size
+    ifTrue: [ 
+      manPage
+        seeAlso:
+          (manPageString copyFrom: seeAlsoIndex + 'SEE ALSO' size to: manPageString size)
+            trimBoth ].
   ^ manPage
 ]
 
