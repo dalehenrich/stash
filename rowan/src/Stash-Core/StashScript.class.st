@@ -84,7 +84,7 @@ StashScript >> ansiRedOn: stream during: aBlock [
 { #category : 'script utilities' }
 StashScript >> args [
 
-	^args
+	^ args ifNil: [ args := {} ]
 ]
 
 { #category : 'formatting' }
