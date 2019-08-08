@@ -249,7 +249,7 @@ StashScript >> scriptOptions [
 { #category : 'script execution' }
 StashScript >> setupAndExecuteScript [
 
-	command := StashCommandLine 
+	command := StashBashCommandLine 
 		commandLine: self class name asString, ' ', self stashArgs 
 		redirectTarget: nil.
      command

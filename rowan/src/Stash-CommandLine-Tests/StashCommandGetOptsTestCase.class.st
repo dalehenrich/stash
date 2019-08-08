@@ -4,8 +4,7 @@ Class {
 	#category : 'Stash-CommandLine-Tests'
 }
 
-
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> longOptionSpec [
   ^ Dictionary new
     at: 'argA' put: #'none';
@@ -14,7 +13,7 @@ StashCommandGetOptsTestCase >> longOptionSpec [
     yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> shortOptionAliases [
   ^ Dictionary new
     at: $a put: 'argA';
@@ -23,7 +22,7 @@ StashCommandGetOptsTestCase >> shortOptionAliases [
     yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> test01 [
   | parser |
   parser := StashCommandGetOpts parseCommand: (ReadStream on: 'testopt').
@@ -34,7 +33,7 @@ StashCommandGetOptsTestCase >> test01 [
     nonOptionsDo: [ :nonOption | self assert: false ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> test02 [
   | parser options processedOption |
   options := Dictionary new
@@ -53,7 +52,7 @@ StashCommandGetOptsTestCase >> test02 [
   self assert: processedOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> test03 [
   | parser options processedOption |
   options := Dictionary new
@@ -72,7 +71,7 @@ StashCommandGetOptsTestCase >> test03 [
   self assert: processedOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> test04 [
   | parser options processedOption |
   options := Dictionary new
@@ -91,7 +90,7 @@ StashCommandGetOptsTestCase >> test04 [
   self assert: processedOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> test05 [
   | parser options processedOption |
   options := Dictionary new
@@ -109,7 +108,7 @@ StashCommandGetOptsTestCase >> test05 [
   self assert: processedOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> test06 [
   | parser options processedOption |
   options := Dictionary new
@@ -127,7 +126,7 @@ StashCommandGetOptsTestCase >> test06 [
   self assert: processedOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> test07 [
   | parser processedNonOption |
   parser := StashCommandGetOpts parseCommand: (ReadStream on: 'testopt arg1').
@@ -142,7 +141,7 @@ StashCommandGetOptsTestCase >> test07 [
   self assert: processedNonOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> test08 [
   | parser options processedOption processNonOption |
   options := Dictionary new
@@ -163,7 +162,7 @@ StashCommandGetOptsTestCase >> test08 [
   self assert: processNonOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> test09 [
   | parser options processedOption processNonOption |
   options := Dictionary new
@@ -185,7 +184,7 @@ StashCommandGetOptsTestCase >> test09 [
   self assert: processNonOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> test10 [
   | parser options processedOption processNonOption |
   options := Dictionary new
@@ -206,7 +205,7 @@ StashCommandGetOptsTestCase >> test10 [
   self assert: processNonOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> test11 [
   | parser options processedOption processNonOption |
   options := Dictionary new
@@ -227,7 +226,7 @@ StashCommandGetOptsTestCase >> test11 [
   self assert: processNonOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> test15 [
   | parser options processedOption processNonOption |
   options := Dictionary new
@@ -251,7 +250,7 @@ StashCommandGetOptsTestCase >> test15 [
   self assert: processNonOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> testLong01 [
   | parser |
   parser := StashCommandGetOpts parseCommand: (ReadStream on: 'testopt').
@@ -262,7 +261,7 @@ StashCommandGetOptsTestCase >> testLong01 [
     nonOptionsDo: [ :nonOption | self assert: false ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> testLong02 [
   | parser options processedOption |
   options := Dictionary new
@@ -282,7 +281,7 @@ StashCommandGetOptsTestCase >> testLong02 [
   self assert: processedOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> testLong05 [
   | parser options processedOption |
   options := Dictionary new
@@ -300,7 +299,7 @@ StashCommandGetOptsTestCase >> testLong05 [
   self assert: processedOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> testLong07 [
   | parser processedNonOption |
   parser := StashCommandGetOpts parseCommand: (ReadStream on: 'testopt arg1').
@@ -315,7 +314,7 @@ StashCommandGetOptsTestCase >> testLong07 [
   self assert: processedNonOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> testLong08 [
   | parser options processedOption processNonOption |
   options := Dictionary new
@@ -337,7 +336,7 @@ StashCommandGetOptsTestCase >> testLong08 [
   self assert: processNonOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> testLong09 [
   | parser options processedOption processNonOption |
   options := Dictionary new
@@ -359,7 +358,7 @@ StashCommandGetOptsTestCase >> testLong09 [
   self assert: processNonOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> testLong10 [
   | parser options processedOption processNonOption |
   options := Dictionary new
@@ -381,7 +380,7 @@ StashCommandGetOptsTestCase >> testLong10 [
   self assert: processNonOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> testLong11 [
   | parser options processedOption processNonOption |
   options := Dictionary new
@@ -402,7 +401,7 @@ StashCommandGetOptsTestCase >> testLong11 [
   self assert: processNonOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> testLong14 [
   | parser options processedOption processNonOption |
   options := Dictionary new
@@ -424,7 +423,7 @@ StashCommandGetOptsTestCase >> testLong14 [
   self assert: processNonOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> testLong15 [
   | parser options processedOption processNonOption |
   options := Dictionary new
@@ -448,7 +447,7 @@ StashCommandGetOptsTestCase >> testLong15 [
   self assert: processNonOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> testLong21 [
   | parser options processedOption processNonOption parsedOptions optionsSpec |
   options := Dictionary new
@@ -483,7 +482,7 @@ StashCommandGetOptsTestCase >> testLong21 [
   self assert: processNonOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> testMixed02 [
   | parser options processedOption |
   options := Dictionary new
@@ -503,7 +502,7 @@ StashCommandGetOptsTestCase >> testMixed02 [
   self assert: processedOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> testMixed12 [
   | parser options processedOption processNonOption |
   options := Dictionary new
@@ -528,7 +527,7 @@ StashCommandGetOptsTestCase >> testMixed12 [
   self assert: processNonOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> testMixed13 [
   | parser options processedOption processNonOption |
   options := Dictionary new
@@ -553,7 +552,7 @@ StashCommandGetOptsTestCase >> testMixed13 [
   self assert: processNonOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> testMixed14 [
   | parser options processedOption processNonOption |
   options := Dictionary new
@@ -578,7 +577,7 @@ StashCommandGetOptsTestCase >> testMixed14 [
   self assert: processNonOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> testMixed15 [
   | parser options processedOption processNonOption |
   options := Dictionary new
@@ -605,7 +604,7 @@ StashCommandGetOptsTestCase >> testMixed15 [
   self assert: processNonOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> testMixed16 [
   | parser options processedOption processNonOption |
   options := Dictionary new
@@ -631,7 +630,7 @@ StashCommandGetOptsTestCase >> testMixed16 [
   self assert: processNonOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> testMixed17 [
   | parser options processedOption processNonOption |
   options := Dictionary new
@@ -657,7 +656,7 @@ StashCommandGetOptsTestCase >> testMixed17 [
   self assert: processNonOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> testMixed18 [
   | parser errorSignalled exception |
   parser := StashCommandGetOpts
@@ -683,7 +682,7 @@ StashCommandGetOptsTestCase >> testMixed18 [
     includesSubstring: 'Missing required argument for option: category'
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> testMixed19 [
   | parser errorSignalled exception |
   parser := StashCommandGetOpts
@@ -711,7 +710,7 @@ StashCommandGetOptsTestCase >> testMixed19 [
     includesSubstring: 'Missing required argument for option: category'
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> testMixed20 [
   | parser options processedOption processNonOption parsedOptions |
   options := Dictionary new
@@ -744,7 +743,7 @@ StashCommandGetOptsTestCase >> testMixed20 [
   self assert: processNonOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> testMixed21 [
   | parser options processedOption processNonOption parsedOptions |
   options := Dictionary new
@@ -777,7 +776,7 @@ StashCommandGetOptsTestCase >> testMixed21 [
   self assert: processNonOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> testMixed22 [
   | parser options processedOption processNonOption parsedOptions |
   options := Dictionary new
@@ -808,7 +807,7 @@ StashCommandGetOptsTestCase >> testMixed22 [
   self assert: processNonOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> testMixed23 [
   | parser errorSignalled exception |
   parser := StashCommandGetOpts
@@ -836,7 +835,7 @@ StashCommandGetOptsTestCase >> testMixed23 [
     includesSubstring: 'Missing required argument for option: category'
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> testMixed24 [
   | parser options processedOption processNonOption parsedOptions |
   options := Dictionary new
@@ -868,7 +867,7 @@ StashCommandGetOptsTestCase >> testMixed24 [
   self assert: processNonOption
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 StashCommandGetOptsTestCase >> testMixed25 [
   | parser options processedOption processNonOption parsedOptions |
   options := Dictionary new
@@ -899,4 +898,122 @@ StashCommandGetOptsTestCase >> testMixed25 [
     keysAndValuesDo: [ :key :value | self assert: (parsedOptions at: key) = (options at: key) ].
   self assert: processedOption.
   self assert: processNonOption
+]
+
+{ #category : 'tests' }
+StashCommandGetOptsTestCase >> testMixedQuotedArg01 [
+  | parser options processedOption |
+  options := Dictionary new
+    add: 'argA' -> nil;
+    add: 'argB' -> nil;
+    yourself.
+  parser := StashBashCommandGetOpts parseCommand: (ReadStream on: 'testopt `(self at: 1) - 1` ').
+  self assert: parser command = 'testopt'.
+  processedOption := false.
+  parser
+    getOptsLong: self longOptionSpec
+    short: self shortOptionAliases
+    do: [ :opt :optArg | 
+      self assert: false ]
+    nonOptionsDo: [ :nonOption | processedOption := true ].
+  self assert: processedOption
+]
+
+{ #category : 'tests' }
+StashCommandGetOptsTestCase >> testMixedQuotedBashArg01 [
+  | parser options processedOption |
+  options := Dictionary new
+    add: 'argA' -> nil;
+    add: 'argB' -> nil;
+    yourself.
+  parser := StashBashCommandGetOpts parseCommand: (ReadStream on: 'testopt "(self at: 1) - 1" ').
+  self assert: parser command = 'testopt'.
+  processedOption := false.
+  parser
+    getOptsLong: self longOptionSpec
+    short: self shortOptionAliases
+    do: [ :opt :optArg | 
+      self assert: false ]
+    nonOptionsDo: [ :nonOption | processedOption := true ].
+  self assert: processedOption
+]
+
+{ #category : 'tests' }
+StashCommandGetOptsTestCase >> testMixedSingleDashArg01 [
+  | parser options processedOption |
+  options := Dictionary new
+    add: 'argA' -> nil;
+    add: 'argB' -> nil;
+    yourself.
+  parser := StashBashCommandGetOpts parseCommand: (ReadStream on: 'testopt -').
+  self assert: parser command = 'testopt'.
+  processedOption := false.
+  parser
+    getOptsLong: self longOptionSpec
+    short: self shortOptionAliases
+    do: [ :opt :optArg | 
+      self assert: false ]
+    nonOptionsDo: [ :nonOption | processedOption := true ].
+  self assert: processedOption
+]
+
+{ #category : 'tests' }
+StashCommandGetOptsTestCase >> testMixedSingleDashArg02 [
+  | parser options processedOption |
+  options := Dictionary new
+    add: 'argA' -> nil;
+    add: 'argB' -> nil;
+    yourself.
+  parser := StashBashCommandGetOpts parseCommand: (ReadStream on: 'testopt - ').
+  self assert: parser command = 'testopt'.
+  processedOption := false.
+  parser
+    getOptsLong: self longOptionSpec
+    short: self shortOptionAliases
+    do: [ :opt :optArg | 
+      self assert: false ]
+    nonOptionsDo: [ :nonOption | processedOption := true ].
+  self assert: processedOption
+]
+
+{ #category : 'tests' }
+StashCommandGetOptsTestCase >> testMixedSingleDashQuotedBashArg01 [
+  | parser options optionCount processedOption |
+  options := Dictionary new
+    add: 'argA' -> nil;
+    add: 'argB' -> nil;
+    yourself.
+  parser := StashBashCommandGetOpts
+    parseCommand: (ReadStream on: 'testopt --argA - --argB "(self at: 1) - 1" ').
+  self assert: parser command = 'testopt'.
+  processedOption := false.
+  optionCount := 0.
+  parser
+    getOptsLong: self longOptionSpec
+    short: self shortOptionAliases
+    do: [ :opt :optArg | 
+      optionCount := optionCount + 1.
+      self assert: (options at: opt) = optArg ]
+    nonOptionsDo: [ :nonOption | processedOption := true ].
+  self assert: processedOption.
+  self assert: optionCount = 2.
+]
+
+{ #category : 'tests' }
+StashCommandGetOptsTestCase >> testMixedSingleDashQuotedBashArg02 [
+  | parser options processedOption |
+  options := Dictionary new
+    add: 'argA' -> nil;
+    add: 'argB' -> nil;
+    yourself.
+  parser := StashBashCommandGetOpts parseCommand: (ReadStream on: 'testopt "(self at: 1) - 1" - ').
+  self assert: parser command = 'testopt'.
+  processedOption := false.
+  parser
+    getOptsLong: self longOptionSpec
+    short: self shortOptionAliases
+    do: [ :opt :optArg | 
+      self assert: false ]
+    nonOptionsDo: [ :nonOption | processedOption := true ].
+  self assert: processedOption
 ]

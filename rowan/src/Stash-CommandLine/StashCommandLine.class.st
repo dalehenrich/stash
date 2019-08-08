@@ -177,7 +177,7 @@ StashCommandLine >> getCommandLongOpts: optionSpec short: shortOptionAliases do:
   | optionStream optionString |
   optionString := commandLine copyFrom: self commandArgPtr to: commandLine size.
   optionStream := ReadStream on: optionString.
-  StashCommandGetOpts
+  self getOptsParserClass
     getOptsLongFor: optionStream
     longOptionSpec: optionSpec
     shortOptionAliases: shortOptionAliases
@@ -190,7 +190,7 @@ StashCommandLine >> getCommandOpts: optionSpec do: optionBlock argsDo: argBlock 
   | optionStream optionString |
   optionString := commandLine copyFrom: self commandArgPtr to: commandLine size.
   optionStream := ReadStream on: optionString.
-  StashCommandGetOpts
+  self getOptsParserClass
     getOptsFor: optionStream
     spec: optionSpec
     do: optionBlock
@@ -317,6 +317,12 @@ StashCommandLine >> getOptsMixedLongShort: mixedOptionSpecs optionsAndArguments:
     optionsAndArguments: optsAndArgsBlock
 ]
 
+{ #category : 'accessing' }
+StashCommandLine >> getOptsParserClass [
+
+	^ StashCommandGetOpts
+]
+
 { #category : 'obsolete' }
 StashCommandLine >> getSubCommandLongOpts: optionSpec short: shortOptionAliases do: optionBlock argsDo: argBlock [
   | optionStream optionString |
@@ -324,7 +330,7 @@ StashCommandLine >> getSubCommandLongOpts: optionSpec short: shortOptionAliases 
     copyFrom: self subCommandArgPtr
     to: commandLine size.
   optionStream := ReadStream on: optionString.
-  StashCommandGetOpts
+  self getOptsParserClass
     getOptsLongFor: optionStream
     longOptionSpec: optionSpec
     shortOptionAliases: shortOptionAliases
@@ -339,7 +345,7 @@ StashCommandLine >> getSubCommandOpts: optionSpec do: optionBlock argsDo: argBlo
     copyFrom: self subCommandArgPtr
     to: commandLine size.
   optionStream := ReadStream on: optionString.
-  StashCommandGetOpts
+  self getOptsParserClass
     getOptsFor: optionStream
     spec: optionSpec
     do: optionBlock

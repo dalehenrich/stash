@@ -34,6 +34,12 @@ StashCommandGetOpts class >> parseCommand: aStream [
     yourself
 ]
 
+{ #category : 'private' }
+StashCommandGetOpts >> _argQuoteCharacters [
+
+	^ #( $` )
+]
+
 { #category : 'accessing' }
 StashCommandGetOpts >> command [
   ^ command
@@ -127,7 +133,7 @@ StashCommandGetOpts >> parseArgToken: tokenBlock [
   self skipWhiteSpace.
   atEndBlock value.
   peek := stream peek.
-  escaped := peek == $`.
+  escaped := self _argQuoteCharacters includesIdentical: peek .
   escaped
     ifTrue: [ 
       stream next.
@@ -139,7 +145,7 @@ StashCommandGetOpts >> parseArgToken: tokenBlock [
       stream next.
       atEndBlock value.
       peek := stream peek.
-      peek == $`
+     (self _argQuoteCharacters includesIdentical: peek)
         ifTrue: [ 
           escaped := escaped not.
           stream next.
