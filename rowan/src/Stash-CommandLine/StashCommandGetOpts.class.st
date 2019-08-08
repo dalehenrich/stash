@@ -133,7 +133,7 @@ StashCommandGetOpts >> parseArgToken: tokenBlock [
   self skipWhiteSpace.
   atEndBlock value.
   peek := stream peek.
-  escaped := self _argQuoteCharacters includesIdentical: peek .
+  escaped := self _argQuoteCharacters includes: peek .
   escaped
     ifTrue: [ 
       stream next.
