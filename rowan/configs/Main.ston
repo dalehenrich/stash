@@ -43,6 +43,15 @@ RwProjectLoadConfiguration {
 					'Stash-CommandLine-GemStone-Tests'
 				]
 			}
+		},
+		[
+			'gs3.[2-4]'
+		] : {
+			'core' : {
+				#packageNames : [
+					'Stash-GemStone-32x-Extensions'
+				]
+			}
 		}
 	},
 	#conditionalPackageMapSpecs : {
@@ -54,6 +63,7 @@ RwProjectLoadConfiguration {
 					'Stash-Kernel-Extensions' : { 'symbolDictName' : 'Globals' },
 					'Stash-Core' : { 'symbolDictName' : 'Globals' },
 					'Stash-GemStone-Core' : { 'symbolDictName' : 'Globals' },
+					'Stash-GemStone-32x-Extensions' : { 'symbolDictName' : 'Globals' },
 					'Stash-Rowan-Core' : { 'symbolDictName' : 'Globals' }
 				}
 			}
