@@ -1,0 +1,45 @@
+RwProjectLoadConfiguration {
+	#name : 'CommandLine',
+	#comment : 'Command line options handling and abstract script classes. packages for rowan-core and gemstone-core will be needed here .... ',
+	#version : '0.1.0',
+	#configurationNames : [ ],
+	#conditionalPackages : {
+		[
+			'common'
+		] : {
+			'core' : {
+				#packageNames : [
+					'Stash-Abstract',
+					'Stash-CommandLine'
+				]
+			},
+			'tests' : {
+				#packageNames : [
+					'Stash-CommandLine-Tests'
+				]
+			}
+		},
+		[
+			'gemstone'
+		] : {
+			'core' : {
+				#packageNames : [
+					'Stash-CommandLine-GemStone-Tests'
+				]
+			}
+		}
+	},
+	#conditionalPackageMapSpecs : {
+		'gemstone' : {
+			'SystemUser' : {
+				#packageNameToPlatformPropertiesMap : {
+					'Stash-Abstract' : { 'symbolDictName' : 'Globals' }
+				}
+			}
+		}
+	},
+	#definedGroupNames : {
+		'tests' : [ 'core' ],
+		'core' : [ ]
+	}
+}

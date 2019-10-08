@@ -3,6 +3,7 @@ RwProjectLoadConfiguration {
 	#comment : '',
 	#projectName : 'stash',
 	#version : '0.1.0',
+	#configurationNames : [ 'CommandLine' ],
 	#definedGroupNames : {
 		'core' : [ ],
 		'tools' : [ 'core' ],
@@ -16,8 +17,6 @@ RwProjectLoadConfiguration {
 				#packageNames : [
 					'Stash-Core',
 					'Stash-Rowan-Core',
-					'Stash-CommandLine',
-					'Stash-CommandLine-Tests',
 					'Stash-Kernel-Extensions'
 				]
 			},
@@ -39,8 +38,7 @@ RwProjectLoadConfiguration {
 		] : {
 			'core' : {
 				#packageNames : [
-					'Stash-GemStone-Core',
-					'Stash-CommandLine-GemStone-Tests'
+					'Stash-GemStone-Core'
 				]
 			}
 		},
