@@ -22,7 +22,7 @@ RwProjectLoadConfiguration {
 		[
 			'gemstone'
 		] : {
-			'core' : {
+			'tests' : {
 				#packageNames : [
 					'Stash-CommandLine-GemStone-Tests'
 				]
