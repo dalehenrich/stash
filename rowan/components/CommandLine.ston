@@ -10,7 +10,8 @@ RwProjectLoadConfiguration {
 			'core' : {
 				#packageNames : [
 					'Stash-Abstract',
-					'Stash-CommandLine'
+					'Stash-CommandLine',
+					'Stash-Rowan-Abstract'
 				]
 			},
 			'tests' : {
@@ -22,6 +23,11 @@ RwProjectLoadConfiguration {
 		[
 			'gemstone'
 		] : {
+			'core' : {
+				#packageNames : [
+					'Stash-GemStone-Abstract'
+				]
+			},
 			'tests' : {
 				#packageNames : [
 					'Stash-CommandLine-GemStone-Tests'
@@ -33,7 +39,9 @@ RwProjectLoadConfiguration {
 		'gemstone' : {
 			'SystemUser' : {
 				#packageNameToPlatformPropertiesMap : {
-					'Stash-Abstract' : { 'symbolDictName' : 'Globals' }
+					'Stash-GemStone-Abstract' : { 'symbolDictName' : 'Globals' },
+					'Stash-Abstract' : { 'symbolDictName' : 'Globals' },
+					'Stash-Rowan-Abstract' : { 'symbolDictName' : 'Globals' }
 				}
 			}
 		}

@@ -9,15 +9,6 @@ StashScript >> _downloadErrorFileNameFor: outputFileName [
 ]
 
 { #category : '*stash-gemstone-core' }
-StashScript >> commit [
-	"Commits are not allowed when running with a solo session, so skip the commit if running against a solo extent"
-
-	self sessionIsSolo
-		ifTrue: [^ true ].
-	^ System commit
-]
-
-{ #category : '*stash-gemstone-core' }
 StashScript >> downloadHttpsFile: httpsUrl to: outputFileName username: username pass: pass [
 	"download from <httpsUrl> into <outputFileName>"
 
@@ -32,24 +23,4 @@ StashScript >> downloadHttpsFile: httpsUrl to: outputFileName username: username
 			'/usr/bin/curl' , theArgs , ' -L ' , httpsUrl , ' > ' , outputFileName , ' 2> '
 				, errorFileName.
 	^ errorFileName
-]
-
-{ #category : '*stash-gemstone-core' }
-StashScript >> sessionIsSolo [
-
-	^(GsSession respondsTo: #isSolo)
-		ifTrue: [ GsSession perform: #isSolo ]
-		ifFalse: [ false ]
-]
-
-{ #category : '*stash-gemstone-core' }
-StashScript >> stderr [
-
-	^ GsFile stderr
-]
-
-{ #category : '*stash-gemstone-core' }
-StashScript >> stdout [
-
-	^ GsFile stdout
 ]

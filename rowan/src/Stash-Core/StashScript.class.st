@@ -18,8 +18,6 @@ Class {
 	#name : 'StashScript',
 	#superclass : 'AbstractStashScript',
 	#instVars : [
-		'topazArgs',
-		'stashArgs'
 	],
 	#classInstVars : [
 		'scriptDir',
@@ -27,23 +25,6 @@ Class {
 	],
 	#category : 'Stash-Core'
 }
-
-{ #category : 'private' }
-StashScript class >> _ansiRed [
-	^ (Character esc) asString, '[91;1m'
-]
-
-{ #category : 'private' }
-StashScript class >> _ansiReset [
-	^ (Character esc) asString, '[0m'
-]
-
-{ #category : 'script utilities' }
-StashScript class >> ansiRedOn: stream during: aBlock [
-
-	stream nextPutAll: self _ansiRed.
-	aBlock ensure: [ stream nextPutAll: self _ansiReset ].
-]
 
 { #category : 'accessing' }
 StashScript class >> scriptDir: aStringOrFileReference [
@@ -55,23 +36,6 @@ StashScript class >> scriptDir: aStringOrFileReference [
 StashScript class >> scriptName: aStringOrFileReference [
 
 	scriptName := aStringOrFileReference
-]
-
-{ #category : 'instance creation' }
-StashScript class >> stashFilePath: stashFilePath topazArgs: topazArgs stashArgs: stashArgs workingDir: workingDir [
-
-	^ self new
-		stashFilePath: stashFilePath;
-		topazArgString: topazArgs; 
-		stashArgString: stashArgs; 
-		workingDirectoryPath: workingDir;
-		yourself
-]
-
-{ #category : 'script utilities' }
-StashScript >> ansiRedOn: stream during: aBlock [
-
-	self class ansiRedOn: stream during: aBlock
 ]
 
 { #category : 'formatting' }
@@ -155,34 +119,6 @@ StashScript >> asciiTabulate: columnWidth titleRow: titleRow bodyRows: bodyRows 
 			rowStream := WriteStream on: String new.
 			dashCount timesRepeat: [ rowStream nextPut: $- ].
 			rowBlock cull: rowStream contents cull: nil ]
-]
-
-{ #category : 'accessing' }
-StashScript >> stashArgs [
-
-	^ stashArgs ifNil: [ '' ]
-]
-
-{ #category : 'accessing' }
-StashScript >> stashArgString: aString [
-
-	| index |
-	index := aString indexOfSubCollection:  ' -- ' startingAt: 1.
-	stashArgs := index = 0
-		ifTrue: [ aString]
-		ifFalse: [ aString copyFrom: 1 to: index - 1 ]
-]
-
-{ #category : 'accessing' }
-StashScript >> topazArgs [
-
-	^topazArgs
-]
-
-{ #category : 'accessing' }
-StashScript >> topazArgString: aString [
-
-	topazArgs := aString
 ]
 
 { #category : 'usage' }
