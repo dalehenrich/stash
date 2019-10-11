@@ -1,5 +1,5 @@
 Class {
 	#name : 'StashCommandError',
 	#superclass : 'Error',
-	#category : 'Stash-Core'
+	#category : 'Stash-Abstract'
 }

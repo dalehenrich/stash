@@ -16,17 +16,10 @@ To debug a script in the image.
 "
 Class {
 	#name : 'StashScript',
-	#superclass : 'Object',
+	#superclass : 'AbstractStashScript',
 	#instVars : [
-		'stashFile',
 		'topazArgs',
-		'stashArgs',
-		'workingDirectory',
-		'opts',
-		'args',
-		'command',
-		'projectName',
-		'packageName'
+		'stashArgs'
 	],
 	#classInstVars : [
 		'scriptDir',
@@ -79,12 +72,6 @@ StashScript class >> stashFilePath: stashFilePath topazArgs: topazArgs stashArgs
 StashScript >> ansiRedOn: stream during: aBlock [
 
 	self class ansiRedOn: stream during: aBlock
-]
-
-{ #category : 'script utilities' }
-StashScript >> args [
-
-	^ args ifNil: [ args := {} ]
 ]
 
 { #category : 'formatting' }
@@ -170,96 +157,6 @@ StashScript >> asciiTabulate: columnWidth titleRow: titleRow bodyRows: bodyRows 
 			rowBlock cull: rowStream contents cull: nil ]
 ]
 
-{ #category : 'script utilities' }
-StashScript >> basename [
-
-	^ self stashFile basename
-]
-
-{ #category : 'script utilities' }
-StashScript >> command [
-
-	^ command
-]
-
-{ #category : 'script utilities' }
-StashScript >> dirname [
-
-	^ self stashFile parent
-]
-
-{ #category : 'error handling' }
-StashScript >> error: aString [
-
-	^ StashCommandError signal: aString
-]
-
-{ #category : 'script execution' }
-StashScript >> executeScript [
-
-	self subclassResponsibility: #executeScript
-]
-
-{ #category : 'script utilities' }
-StashScript >> manPageClass [
-
-	^ StashManPage
-]
-
-{ #category : 'script utilities' }
-StashScript >> opts [
-
-	^opts
-]
-
-{ #category : 'accessing' }
-StashScript >> packageName [
-
-	^ packageName
-]
-
-{ #category : 'accessing' }
-StashScript >> packageName: aString [
-
-	packageName := aString
-]
-
-{ #category : 'accessing' }
-StashScript >> projectName [
-
-	^ projectName
-]
-
-{ #category : 'accessing' }
-StashScript >> projectName: aString [
-
-	projectName := aString
-]
-
-{ #category : 'script execution' }
-StashScript >> scriptOptions [
-
-	"help should always be available"
-
-	^ {
-			#('help' $h #'none').
-	}
-]
-
-{ #category : 'script execution' }
-StashScript >> setupAndExecuteScript [
-
-	command := StashBashCommandLine 
-		commandLine: self class name asString, ' ', self stashArgs 
-		redirectTarget: nil.
-     command
-		getOptsMixedLongShort: self scriptOptions
-		optionsAndArguments: [ :options :operands |
-			opts := options.
-			args := operands ].
-	^ self executeScript
-]
-
 { #category : 'accessing' }
 StashScript >> stashArgs [
 
@@ -274,24 +171,6 @@ StashScript >> stashArgString: aString [
 	stashArgs := index = 0
 		ifTrue: [ aString]
 		ifFalse: [ aString copyFrom: 1 to: index - 1 ]
-]
-
-{ #category : 'accessing' }
-StashScript >> stashFile [
-
-	^stashFile
-]
-
-{ #category : 'accessing' }
-StashScript >> stashFilePath: aString [
-
-	stashFile := aString asFileReference
-]
-
-{ #category : 'error handling' }
-StashScript >> stError: aString [
-
-	^ Error signal: aString
 ]
 
 { #category : 'accessing' }
@@ -355,16 +234,4 @@ EXAMPLES
 
 	', scriptName, ' 	-- MyStone -lq									# GsDevKit_home
 ') printString, dashes
-]
-
-{ #category : 'script utilities' }
-StashScript >> workingDirectory [
-
-	^ workingDirectory
-]
-
-{ #category : 'accessing' }
-StashScript >> workingDirectoryPath: aString [
-
-	workingDirectory := aString asFileReference
 ]
