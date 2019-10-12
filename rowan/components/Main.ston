@@ -22,9 +22,7 @@ RwProjectLoadConfiguration {
 			},
 			'tools' : {
 				#packageNames : [
-					'Stash-Tools',
-					'Stash-Rowan-Tools-Extensions',
-					'Stash-Rowan-Kernel-Extensions'
+					'Stash-Tools'
 				]
 			},
 			'tests' : {
@@ -55,15 +53,7 @@ RwProjectLoadConfiguration {
 	#conditionalPackageMapSpecs : {
 		'gemstone' : {
 			'SystemUser' : {
-				#packageNameToPlatformPropertiesMap : {
-					'Stash-Rowan-Tools-Extensions' : { 'symbolDictName' : 'RowanTools' },
-					'Stash-Rowan-Kernel-Extensions' : { 'symbolDictName' : 'RowanKernel' },
-					'Stash-Kernel-Extensions' : { 'symbolDictName' : 'Globals' },
-					'Stash-Core' : { 'symbolDictName' : 'Globals' },
-					'Stash-GemStone-Core' : { 'symbolDictName' : 'Globals' },
-					'Stash-GemStone-32x-Extensions' : { 'symbolDictName' : 'Globals' },
-					'Stash-Rowan-Core' : { 'symbolDictName' : 'Globals' }
-				}
+				#defaultSymbolDictName : 'Globals'
 			}
 		}
 	}

@@ -25,7 +25,13 @@ RwProjectLoadConfiguration {
 			}
 		}
 	},
-	#conditionalPackageMapSpecs : { },
+	#conditionalPackageMapSpecs : {
+		'gemstone' : {
+			'SystemUser' : {
+				#defaultSymbolDictName : 'Globals'
+			}
+		}
+	},
 	#definedGroupNames : {
 		'tests' : [
 			'tools'

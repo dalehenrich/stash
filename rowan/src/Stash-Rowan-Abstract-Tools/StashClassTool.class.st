@@ -14,7 +14,7 @@ Rowan classTools stashClassLoadTool loadFiletreeClassDirectories:
 Class {
 	#name : 'StashClassTool',
 	#superclass : 'StashAbstractTool',
-	#category : 'Stash-Tools'
+	#category : 'Stash-Rowan-Abstract-Tools'
 }
 
 { #category : 'stash script creation' }
