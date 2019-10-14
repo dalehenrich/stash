@@ -16,12 +16,12 @@ RwProjectLoadConfiguration {
 			'core' : {
 				#packageNames : [
 					'Stash-Core',
-					'Stash-Rowan-Core',
 					'Stash-Kernel-Extensions'
 				]
 			},
 			'tools' : {
 				#packageNames : [
+					'Stash-Rowan-Core',
 					'Stash-Tools'
 				]
 			},
