@@ -15,8 +15,7 @@ RwProjectLoadConfiguration {
 		] : {
 			'core' : {
 				#packageNames : [
-					'Stash-Core',
-					'Stash-Kernel-Extensions'
+					'Stash-Core'
 				]
 			},
 			'tools' : {

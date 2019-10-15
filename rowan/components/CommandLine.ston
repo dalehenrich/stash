@@ -13,7 +13,8 @@ RwProjectLoadConfiguration {
 					'Stash-CommandLine',
 					'Stash-Rowan-Abstract',
 					'Stash-Rowan-Kernel-Extensions',
-					'Stash-Rowan-Abstract-Tools'
+					'Stash-Rowan-Abstract-Tools',
+					'Stash-Kernel-Extensions'
 				]
 			},
 			'tests' : {
