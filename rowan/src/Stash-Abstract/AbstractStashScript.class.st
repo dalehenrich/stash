@@ -7,8 +7,8 @@ Class {
 		'args',
 		'command',
 		'stashFile',
-		'projectName',
-		'packageName',
+		'_projectName',
+		'_packageName',
 		'topazArgs',
 		'stashArgs'
 	],
@@ -100,25 +100,25 @@ AbstractStashScript >> opts [
 { #category : 'accessing' }
 AbstractStashScript >> packageName [
 
-	^ packageName
+	^ _packageName
 ]
 
 { #category : 'accessing' }
 AbstractStashScript >> packageName: aString [
 
-	packageName := aString
+	_packageName := aString
 ]
 
 { #category : 'accessing' }
 AbstractStashScript >> projectName [
 
-	^ projectName
+	^ _projectName
 ]
 
 { #category : 'accessing' }
 AbstractStashScript >> projectName: aString [
 
-	projectName := aString
+	_projectName := aString
 ]
 
 { #category : 'script execution' }
@@ -191,18 +191,6 @@ AbstractStashScript >> topazArgString: aString [
 	topazArgs := aString
 ]
 
-{ #category : 'script utilities' }
-AbstractStashScript >> workingDirectory [
-
-	^ workingDirectory
-]
-
-{ #category : 'accessing' }
-AbstractStashScript >> workingDirectoryPath: aString [
-
-	workingDirectory := aString asFileReference
-]
-
 { #category : 'usage' }
 AbstractStashScript >> usage: scriptName description: description [
 	| dashes |
@@ -224,4 +212,16 @@ EXAMPLES
 
 	', scriptName, '
 ') printString, dashes
+]
+
+{ #category : 'script utilities' }
+AbstractStashScript >> workingDirectory [
+
+	^ workingDirectory
+]
+
+{ #category : 'accessing' }
+AbstractStashScript >> workingDirectoryPath: aString [
+
+	workingDirectory := aString asFileReference
 ]

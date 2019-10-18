@@ -43,13 +43,17 @@ RwProjectLoadConfiguration {
 			'SystemUser' : {
 				#defaultSymbolDictName : 'Globals',
 				#packageNameToPlatformPropertiesMap : {
-					'Stash-Rowan-Kernel-Extensions' : { 'symbolDictName' : 'RowanKernel' }
+					'Stash-Rowan-Kernel-Extensions' : {
+						'symbolDictName' : 'RowanKernel'
+					}
 				}
 			}
 		}
 	},
 	#definedGroupNames : {
-		'tests' : [ 'core' ],
+		'tests' : [
+			'core'
+		],
 		'core' : [ ]
 	}
 }
